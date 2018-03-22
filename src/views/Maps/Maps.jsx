@@ -6,10 +6,6 @@ import {
   Marker
 } from "react-google-maps";
 
-
-
-
-
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
@@ -86,7 +82,7 @@ const CustomSkinMap = withScriptjs(
   ))
 );
 
-const listMarkers = (props) => {
+const markers = (props) => {
   if (props.google) {
     return props.devices.map(device => (
       <Marker
@@ -106,14 +102,16 @@ class Maps extends PureComponent {
 
   state = {
     googleReady: false,
-    markers: listMarkers(this.props),
+    markers: markers(this.props),
   }
 
-
+  componentDidMount=()=>{
+    this.setState({ markersList: markers(this.props) })
+  }
   componentDidUpdate = () => {
     if (this.props.google && !this.state.googleReady) {
       this.setState({ googleReady: true })
-      this.setState({ markersList: listMarkers(this.props) })
+      this.setState({ markersList: markers(this.props) })
     }
   }
   render() {
