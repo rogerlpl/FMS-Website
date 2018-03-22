@@ -12,9 +12,9 @@ const CustomSkinMap = withScriptjs(
       defaultZoom={7}
       defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
       defaultOptions={{
+        streetViewControl: false,
         scrollwheel: true,
-        zoomControl: true,
-        fullscreenControl: true,
+        zoomControl: false,
         styles: [
           {
             featureType: "water",
@@ -119,7 +119,7 @@ class Maps extends PureComponent {
       <CustomSkinMap
         googleMapURL={"https://maps.googleapis.com/maps/api/js?key=AIzaSyAkm0weImm7VL1Mgk_ske45uxXCcfOUzrw&libraries=drawing"}
         loadingElement={<div style={{ height: `100%` }} />}
-        containerElement={<div style={{ height: `100vh` }} />}
+        containerElement={<div style={{ height: `100vh`}} />}
         mapElement={<div style={{ height: `100%` }} />}
         devices={this.props.devices}
         iconAddress={this.props.iconAddress}
