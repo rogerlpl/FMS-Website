@@ -6,13 +6,13 @@ import {
   Marker
 } from "react-google-maps";
 
-let maps, google
+
+
 
 
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
-      onReady={props.onReady(google, maps)}
       defaultZoom={7}
       defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
       defaultOptions={{
@@ -81,50 +81,54 @@ const CustomSkinMap = withScriptjs(
         ]
       }}
     >
-
-      {
-        props.devices ?
-          props.devices.map(device => (
-            <Marker
-              position={{ lat: device.lat, lng: device.lng }}
-              key={device.id}
-            />
-          ))
-          :
-          console.log(google.maps)
-        // props.devices.map(device =>(
-        //   <Marker 
-        //   position={{ lat: device.lat, lng: device.lng}} 
-        //   key={device.id} 
-        //   defaultIcon={{
-        //     url: props.icon, // url
-        //     scaledSize: new google.maps.Size(30, 30), // scaled size
-        //     origin: new google.maps.Point(0,0), // origin
-        //     anchor: new google.maps.Point(0,0) // anchor
-        //   }}/> 
-        //))
-      }
+      {props.markers}
     </GoogleMap>
   ))
 );
 
-
+const listMarkers = (props) => {
+  if (props.google) {
+    return props.devices.map(device => (
+      <Marker
+        position={{ lat: device.lat, lng: device.lng }}
+        key={device.id}
+        defaultIcon={{
+          url: props.iconAddress, // url
+          scaledSize: new props.google.maps.Size(30, 30), // scaled size
+        }} 
+        defaultAnimation={1}
+        />
+    ))
+  }
+}
 
 class Maps extends PureComponent {
+
+  state = {
+    googleReady: false,
+    markers: listMarkers(this.props),
+  }
+
+
+  componentDidUpdate = () => {
+    if (this.props.google && !this.state.googleReady) {
+      this.setState({ googleReady: true })
+      this.setState({ markersList: listMarkers(this.props) })
+    }
+  }
   render() {
-      return (
-
-        <CustomSkinMap
-          googleMapURL={"https://maps.googleapis.com/maps/api/js?key=AIzaSyAkm0weImm7VL1Mgk_ske45uxXCcfOUzrw&libraries=drawing"}
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `100vh` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-          devices={this.props.devices}
-          icon={this.props.icon}
-          onReady={this.props.onReady}
-        />
-
-      );
+    return (
+      <CustomSkinMap
+        googleMapURL={"https://maps.googleapis.com/maps/api/js?key=AIzaSyAkm0weImm7VL1Mgk_ske45uxXCcfOUzrw&libraries=drawing"}
+        loadingElement={<div style={{ height: `100%` }} />}
+        containerElement={<div style={{ height: `100vh` }} />}
+        mapElement={<div style={{ height: `100%` }} />}
+        devices={this.props.devices}
+        iconAddress={this.props.iconAddress}
+        google={this.props.google}
+        markers={this.state.markersList}
+      />
+    );
   }
 }
 
