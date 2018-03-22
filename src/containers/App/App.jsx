@@ -31,8 +31,10 @@ const switchRoutes = (
 );
 
 class App extends React.Component {
+
   state = {
-    mobileOpen: false
+    mobileOpen: false,
+    google: false,
   };
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -41,24 +43,20 @@ class App extends React.Component {
     return this.props.location.pathname !== "/maps";
   }
   componentDidMount() {
-    if(navigator.platform.indexOf('Win') > -1){
+    if (navigator.platform.indexOf('Win') > -1) {
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
-     
+
     }
-   
+
   }
-  componentWillUpdate(){
-    
-    
+  componentDidMount = () => {
+    window.addEventListener('load', this.handleLoad);
   }
-  initializeGoogle(google, maps,markerIconAddress,icon){
-    google = window.google
-    maps = google.maps
-   
-    console.log("Inicializado")
-    
+  handleLoad = () => {
+    this.setState({ google: window.google })
   }
+
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
@@ -80,7 +78,7 @@ class App extends React.Component {
           <Header
             routes={appRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
-            color = "danger"
+            color="danger"
             {...rest}
           />
           {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
@@ -89,19 +87,20 @@ class App extends React.Component {
               <div className={classes.container}>{switchRoutes}</div>
             </div>
           ) : (
-            // <div className={classes.map}>{switchRoutes} </div>
-            <Map  
-              devices={[
-                  {'lat':18.474195,'lng':-69.9189654,'id':1},
-                  {'lat':18.474195,'lng':-69.919518,'id':2},
-                  {'lat':18.474195,'lng':-69.914615, 'id':3},
+              // <div className={classes.map}>{switchRoutes} </div>
+
+              <Map
+              routes={appRoutes}
+                devices={[
+                  { 'lat': 18.474195, 'lng': -69.9189654, 'id': 1 },
+                  { 'lat': 18.474195, 'lng': -69.919518, 'id': 2 },
+                  { 'lat': 18.474195, 'lng': -69.914615, 'id': 3 },
                 ]}
-                icon={Bus}
-                onReady={this.initializeGoogle}
-            
-            />
-          
-          )}
+                iconAddress={Bus}
+                google={this.state.google}
+              />
+
+            )}
           {this.getRoute() ? <Footer /> : null}
         </div>
       </div>
