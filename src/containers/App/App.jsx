@@ -16,6 +16,9 @@ import appStyle from "variables/styles/appStyle.jsx";
 
 import image from "assets/img/caribe-tours-2.jpg";
 import logo from "assets/img/I-trackLogo.png";
+import Bus from '../../components/Icons/bus.svg'
+
+
 
 const switchRoutes = (
   <Switch>
@@ -41,7 +44,20 @@ class App extends React.Component {
     if(navigator.platform.indexOf('Win') > -1){
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
+     
     }
+   
+  }
+  componentWillUpdate(){
+    
+    
+  }
+  initializeGoogle(google, maps,markerIconAddress,icon){
+    google = window.google
+    maps = google.maps
+   
+    console.log("Inicializado")
+    
   }
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
@@ -73,8 +89,18 @@ class App extends React.Component {
               <div className={classes.container}>{switchRoutes}</div>
             </div>
           ) : (
-            // <div className={classes.map} name={"Rogelio"}>{switchRoutes}</div>
-            <Map nameR={"rogelio"}/>
+            // <div className={classes.map}>{switchRoutes} </div>
+            <Map  
+              devices={[
+                  {'lat':18.474195,'lng':-69.9189654,'id':1},
+                  {'lat':18.474195,'lng':-69.919518,'id':2},
+                  {'lat':18.474195,'lng':-69.914615, 'id':3},
+                ]}
+                icon={Bus}
+                onReady={this.initializeGoogle}
+            
+            />
+          
           )}
           {this.getRoute() ? <Footer /> : null}
         </div>
@@ -83,6 +109,7 @@ class App extends React.Component {
   }
 }
 
+//const icon= new google.maps.MarkerImage(markerImage,null, null, null, new google.maps.Size(200,200)); 
 App.propTypes = {
   classes: PropTypes.object.isRequired
 };
