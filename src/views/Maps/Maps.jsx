@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import {
   withScriptjs,
   withGoogleMap,
@@ -6,14 +6,19 @@ import {
   Marker
 } from "react-google-maps";
 
+let maps, google
+
+
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
+      onReady={props.onReady(google, maps)}
       defaultZoom={7}
-      defaultCenter={{ lat: 18.555353,lng: -70.8627778 }}
+      defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
       defaultOptions={{
         scrollwheel: true,
         zoomControl: true,
+        fullscreenControl: true,
         styles: [
           {
             featureType: "water",
@@ -76,25 +81,51 @@ const CustomSkinMap = withScriptjs(
         ]
       }}
     >
-    {
-      <Marker position={{ lat: props.lat, lng: props.lng }} />
-    } 
+
+      {
+        props.devices ?
+          props.devices.map(device => (
+            <Marker
+              position={{ lat: device.lat, lng: device.lng }}
+              key={device.id}
+            />
+          ))
+          :
+          console.log(google.maps)
+        // props.devices.map(device =>(
+        //   <Marker 
+        //   position={{ lat: device.lat, lng: device.lng}} 
+        //   key={device.id} 
+        //   defaultIcon={{
+        //     url: props.icon, // url
+        //     scaledSize: new google.maps.Size(30, 30), // scaled size
+        //     origin: new google.maps.Point(0,0), // origin
+        //     anchor: new google.maps.Point(0,0) // anchor
+        //   }}/> 
+        //))
+      }
     </GoogleMap>
   ))
 );
 
-function Maps({ ...props }) {
-  return (
-    
-    <CustomSkinMap
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkm0weImm7VL1Mgk_ske45uxXCcfOUzrw&libraries=drawing"
-      loadingElement={<div style={{ height: `100%` }} />}
-      containerElement={<div style={{ height: `100vh` }} />}
-      mapElement={<div style={{ height: `100%` }} />}
-      lat={18.555353} lng={-70.8627778}
-    />
-    
-  );
+
+
+class Maps extends PureComponent {
+  render() {
+      return (
+
+        <CustomSkinMap
+          googleMapURL={"https://maps.googleapis.com/maps/api/js?key=AIzaSyAkm0weImm7VL1Mgk_ske45uxXCcfOUzrw&libraries=drawing"}
+          loadingElement={<div style={{ height: `100%` }} />}
+          containerElement={<div style={{ height: `100vh` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+          devices={this.props.devices}
+          icon={this.props.icon}
+          onReady={this.props.onReady}
+        />
+
+      );
+  }
 }
 
 export default Maps;
