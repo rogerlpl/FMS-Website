@@ -17,8 +17,8 @@ class HeaderLinks extends React.Component {
   handleClick = () => {
     this.setState({ open: !this.state.open });
   };
-  routeIsMap() {
-    return this.props.location.pathname === "/maps";
+  getRoute() {
+    return  window.location.pathname 
   }
   handleClose = () => {
     this.setState({ open: false });
@@ -29,7 +29,7 @@ class HeaderLinks extends React.Component {
       <div className={classes.top}>
       {/* Botones de los mapas */}
       {
-       this.routeIsMap() && <MapHeaderButtons classes={classes} />
+       this.getRoute() === "/maps" && <MapHeaderButtons classes={classes} />
       }
         {/* Boton para las cuentas */}
         <IconButton
