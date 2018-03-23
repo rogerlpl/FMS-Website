@@ -8,6 +8,7 @@ import {
     if (props.google) {
       return props.devices.map(device => (
         <Marker
+          onClick={props._onClick}
           position={{ lat: device.latitude, lng: device.longitude }}
           key={device.id}
           defaultIcon={{

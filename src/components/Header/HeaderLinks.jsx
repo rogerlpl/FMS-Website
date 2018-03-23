@@ -29,7 +29,7 @@ class HeaderLinks extends React.Component {
       <div className={classes.top}>
       {/* Botones de los mapas */}
       {
-       this.getRoute() === "/maps" && <MapHeaderButtons classes={classes} />
+       this.getRoute() === "/maps" && <MapHeaderButtons openGeofenceModal={this.props.openGeofenceModal} classes={classes} />
       }
         {/* Boton para las cuentas */}
         <IconButton

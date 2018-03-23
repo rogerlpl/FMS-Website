@@ -10,7 +10,7 @@ import Markers from '../../components/Map/markers'
 // }
 
 
-class Maps extends PureComponent {
+class LocationsMap extends PureComponent {
 
   state = {
     googleReady: false,
@@ -23,12 +23,12 @@ class Maps extends PureComponent {
   }
 
   componentDidMount=()=>{
-    this.setState({ markersList: <Markers google={this.props.google} devices={this.state.devices} iconAddress={this.props.iconAddress} />})
+    this.setState({ markersList: <Markers _onClick={this.props.handleOpenModal} google={this.props.google} devices={this.state.devices} iconAddress={this.props.iconAddress} />})
   }
   componentDidUpdate = () => {
     if (this.props.google && !this.state.googleReady) {
       this.setState({ googleReady: true })
-      this.setState({ markersList: <Markers google={this.props.google} devices={this.state.devices} iconAddress={this.props.iconAddress} /> })
+      this.setState({ markersList: <Markers _onClick={this.props.handleOpenModal} google={this.props.google} devices={this.state.devices} iconAddress={this.props.iconAddress} /> })
     }
   }
   render() {
@@ -36,7 +36,7 @@ class Maps extends PureComponent {
       <CustomSkinMap
         googleMapURL={"https://maps.googleapis.com/maps/api/js?key=AIzaSyAkm0weImm7VL1Mgk_ske45uxXCcfOUzrw&libraries=drawing"}
         loadingElement={<div style={{ height: `100%` }} />}
-        containerElement={<div style={{ height: `100vh`}} />}
+        containerElement={<div style={this.props.containerHeight} />}
         mapElement={<div style={{ height: `100%` }} />}
         devices={this.state.devices}
         iconAddress={this.props.iconAddress}
@@ -48,4 +48,4 @@ class Maps extends PureComponent {
   }
 }
 
-export default Maps;
+export default LocationsMap;
