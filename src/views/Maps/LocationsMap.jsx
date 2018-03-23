@@ -34,7 +34,6 @@ class LocationsMap extends PureComponent {
   render() {
     return (
       <CustomSkinMap
-        googleMapURL={"https://maps.googleapis.com/maps/api/js?key=AIzaSyAkm0weImm7VL1Mgk_ske45uxXCcfOUzrw"}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100vh`}}/>}
         mapElement={<div style={{ height: `100%` }} />}
