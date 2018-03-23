@@ -93,6 +93,7 @@ class App extends React.Component {
                 routes={appRoutes}
                 iconAddress={Bus}
                 google={this.state.google}
+                defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
               />
 
             )}
