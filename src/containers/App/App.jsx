@@ -9,6 +9,7 @@ import { withStyles } from "material-ui";
 import { Header, Footer, Sidebar } from "components";
 
 import LocationsMap from 'views/Maps/LocationsMap.jsx'
+import GeofenceMap from "../../views/Maps/GeofenceMap";
 
 import appRoutes from "routes/app.jsx";
 
@@ -105,21 +106,17 @@ class App extends React.Component {
               // <div className={classes.map}>{switchRoutes} </div>
 
               <LocationsMap
-                routes={appRoutes}
                 iconAddress={Bus}
                 google={this.state.google}
                 defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
-                containerHeight={{ height: `100vh`}}
               />
 
             )}
             <ModalContainer>
               { this.state.modalVisible &&
               <Modal handleClick={this.handleCloseModal} >
-                  <LocationsMap
-                    routes={appRoutes}
+                  <GeofenceMap
                     iconAddress={Bus}
-                    containerHeight={{ height: `70vh`}}
                     google={this.state.google}
                     defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
                   />
