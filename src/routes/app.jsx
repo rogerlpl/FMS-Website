@@ -1,5 +1,5 @@
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
-import Maps from "views/Maps/Maps.jsx";
+import LocationsMap from "views/Maps/LocationsMap.jsx";
 
 import {
   Dashboard,
@@ -19,7 +19,7 @@ const appRoutes = [
     sidebarName: "Rastreo",
     navbarName: "Rastreo Vehicular",
     icon: LocationOn,
-    component: Maps
+    component: LocationsMap
   },
   { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
