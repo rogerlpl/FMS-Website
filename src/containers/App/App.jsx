@@ -90,12 +90,7 @@ class App extends React.Component {
               // <div className={classes.map}>{switchRoutes} </div>
 
               <Map
-              routes={appRoutes}
-                devices={[
-                  { 'lat': 18.474195, 'lng': -69.9189654, 'id': 1 },
-                  { 'lat': 18.474195, 'lng': -69.919518, 'id': 2 },
-                  { 'lat': 18.474195, 'lng': -69.914615, 'id': 3 },
-                ]}
+                routes={appRoutes}
                 iconAddress={Bus}
                 google={this.state.google}
               />
