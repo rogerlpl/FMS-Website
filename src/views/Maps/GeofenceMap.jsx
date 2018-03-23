@@ -14,10 +14,7 @@ class GeofenceMap extends PureComponent {
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `60vh`}}/>}
         mapElement={<div style={{ height: `100%` }} />}
-        devices={this.state.devices}
-        iconAddress={this.props.iconAddress}
         google={this.props.google}
-        markers={this.state.markersList}
         defaultCenter={this.props.defaultCenter}
       />
     );

@@ -103,8 +103,6 @@ class App extends React.Component {
               <div className={classes.container}>{switchRoutes}</div>
             </div>
           ) : (
-              // <div className={classes.map}>{switchRoutes} </div>
-
               <LocationsMap
                 iconAddress={Bus}
                 google={this.state.google}
@@ -116,7 +114,6 @@ class App extends React.Component {
               { this.state.modalVisible &&
               <Modal handleClick={this.handleCloseModal} >
                   <GeofenceMap
-                    iconAddress={Bus}
                     google={this.state.google}
                     defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
                   />
