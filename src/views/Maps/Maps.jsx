@@ -82,17 +82,26 @@ const CustomSkinMap = withScriptjs(
   ))
 );
 
-const markers = (props) => {
-  if (props.google) {
-    return props.devices.map(device => (
+async function devicesList() {
+  const response = await fetch('http://localhost:58496/api/positions', {});
+  const devices = await response.json();
+
+  return devices;
+}
+
+ const  markers = (google,devices,iconAddress) => {
+
+  if (google) {
+    return devices.map(device => (
       <Marker
-        position={{ lat: device.lat, lng: device.lng }}
+        position={{ lat: device.latitude, lng: device.longitude }}
         key={device.id}
         defaultIcon={{
-          url: props.iconAddress, // url
-          scaledSize: new props.google.maps.Size(30, 30), // scaled size
+          url: iconAddress, // url
+          scaledSize: new google.maps.Size(30, 30), // scaled size
         }} 
         defaultAnimation={1}
+         title={device.name}
         />
     ))
   }
@@ -102,16 +111,21 @@ class Maps extends PureComponent {
 
   state = {
     googleReady: false,
-    markers: markers(this.props),
+    markers: [],
+    devices:[
+      { 'latitude': 18.474195, 'longitude': -69.9189654, 'id': 1 ,'name': 'prueba'},
+      { 'latitude': 18.474195, 'longitude': -69.919518, 'id': 2 },
+      { 'latitude': 18.474195, 'longitude': -69.914615, 'id': 3 },
+    ],
   }
 
   componentDidMount=()=>{
-    this.setState({ markersList: markers(this.props) })
+    this.setState({ markersList: markers(this.props.google,this.state.devices,this.props.iconAddress) })
   }
   componentDidUpdate = () => {
     if (this.props.google && !this.state.googleReady) {
       this.setState({ googleReady: true })
-      this.setState({ markersList: markers(this.props) })
+      this.setState({ markersList: markers(this.props.google,this.state.devices,this.props.iconAddress) })
     }
   }
   render() {
@@ -121,7 +135,7 @@ class Maps extends PureComponent {
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100vh`}} />}
         mapElement={<div style={{ height: `100%` }} />}
-        devices={this.props.devices}
+        devices={this.state.devices}
         iconAddress={this.props.iconAddress}
         google={this.props.google}
         markers={this.state.markersList}
