@@ -9,7 +9,7 @@ class GeofenceMap extends PureComponent {
 
   render() {
     return (
-      <CustomSkinMap
+        <CustomSkinMap
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `60vh`}}/>}
         mapElement={<div style={{ height: `100%` }} />}

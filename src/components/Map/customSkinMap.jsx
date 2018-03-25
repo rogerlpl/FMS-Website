@@ -79,6 +79,5 @@ const CustomSkinMap =
         {props.markers}
       </GoogleMap>
     ))
-  ;
 
 export default CustomSkinMap
