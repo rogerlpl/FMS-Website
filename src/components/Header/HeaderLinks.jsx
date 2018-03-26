@@ -10,10 +10,17 @@ import headerLinksStyle from "variables/styles/headerLinksStyle";
 
 import MapHeaderButtons from '../Map/headerButtons'
 
+import {connect} from 'react-redux'
+import {toggleGeofenceModal}  from '../../actions/actions-creators'
+import {bindActionCreators} from 'redux'
+
 class HeaderLinks extends React.Component {
   state = {
     open: false
   };
+  handleToggleGeofenceModal = () =>{
+    this.props.toggleGeofenceModal()
+  }
   handleClick = () => {
     this.setState({ open: !this.state.open });
   };
@@ -29,7 +36,7 @@ class HeaderLinks extends React.Component {
       <div className={classes.top}>
       {/* Botones de los mapas */}
       {
-       this.getRoute() === "/maps" && <MapHeaderButtons openGeofenceModal={this.props.openGeofenceModal} classes={classes} />
+       this.getRoute() === "/maps" && <MapHeaderButtons handleToggleGeofenceModal={this.handleToggleGeofenceModal} classes={classes} />
       }
         {/* Boton para las cuentas */}
         <IconButton
@@ -47,4 +54,10 @@ class HeaderLinks extends React.Component {
   }
 }
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+function mapDispatchToProps (dispatch){
+  return {
+    toggleGeofenceModal: bindActionCreators(toggleGeofenceModal,dispatch)
+  }
+} 
+
+export default connect(null,mapDispatchToProps)(withStyles(headerLinksStyle)(HeaderLinks));

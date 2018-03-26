@@ -16,7 +16,7 @@ const headerButtons = (props) => (
             color="inherit"
             aria-label="AddLocation"
             className={props.classes.buttonLink}
-            onClick={props.openGeofenceModal}
+            onClick={props.handleToggleGeofenceModal}
         >
             <Directions className={props.classes.links} />
             <Hidden mdUp>

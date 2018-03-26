@@ -40,7 +40,7 @@ function Header({ ...props }) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          <HeaderLinks openGeofenceModal={props.openGeofenceModal}/>
+          <HeaderLinks />
         </Hidden>
         <Hidden mdUp>
           <IconButton

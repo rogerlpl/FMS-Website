@@ -22,6 +22,9 @@ import Bus from '../../components/Icons/bus.svg'
 import ModalContainer from '../../widgets/containers/modal';
 import Modal from '../../widgets/components/modal';
 
+import {connect} from 'react-redux'
+import * as actions from '../../actions/actions-creators'
+import {bindActionCreators} from 'redux'
 
 const switchRoutes = (
   <Switch>
@@ -38,18 +41,9 @@ class App extends React.Component {
   state = {
     mobileOpen: false,
     google: false,
-    modalVisible: false,
   };
-  handleOpenModal = () => {
-    this.setState({
-      modalVisible: true,
-    })
-  }
-
-  handleCloseModal = (event) => {
-    this.setState({
-      modalVisible: false,
-    })
+  handleToggleGeofenceModal = () => {
+    this.props.actions.toggleGeofenceModal()
   }
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -91,7 +85,6 @@ class App extends React.Component {
             routes={appRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
             color="danger"
-            openGeofenceModal={this.handleOpenModal}
             {...rest}
           />
           {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
@@ -108,8 +101,8 @@ class App extends React.Component {
 
             )}
             <ModalContainer>
-              { this.state.modalVisible &&
-              <Modal handleClick={this.handleCloseModal} >
+              { this.props.modal.get('visibility') &&
+              <Modal handleClick={this.handleToggleGeofenceModal} >
                   <GeofenceMap
                     google={this.state.google}
                     defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
@@ -129,4 +122,16 @@ App.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(appStyle)(App);
+function mapStateToProps(state,props){
+
+  return{
+    modal: state.get('modal')
+  }
+
+}
+function mapDispatchToProps(dispatch){
+  return{
+    actions: bindActionCreators(actions,dispatch)
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(appStyle)(App));
