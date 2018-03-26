@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import CustomSkinMap from '../../components/Map/customSkinMap'
+import {GreenSkinMap} from '../../components/Map/map-skins'
 
 class GeofenceMap extends PureComponent {
 
@@ -9,7 +9,7 @@ class GeofenceMap extends PureComponent {
 
   render() {
     return (
-        <CustomSkinMap
+        <GreenSkinMap
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `60vh`}}/>}
         mapElement={<div style={{ height: `100%` }} />}
