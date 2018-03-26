@@ -63,9 +63,6 @@ class App extends React.Component {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
 
     }
-
-  }
-  componentDidMount = () => {
     window.addEventListener('load', this.handleLoad);
   }
   handleLoad = () => {
