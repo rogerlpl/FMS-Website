@@ -46,7 +46,7 @@ class LocationsMap extends PureComponent {
         />
       );
     } 
-    return 'h'
+    return 'No ha cargado google'
       
     
   }
