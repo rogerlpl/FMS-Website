@@ -1,7 +1,8 @@
 import { fromJS } from 'immutable'
 import { 
   GOOGLE_IS_INITALIZED,
-  FETCH_DEVICES_DATA
+  FETCH_DEVICES_DATA,
+ 
 } from '../action-types/index'
 
 
@@ -10,8 +11,9 @@ const initialState = fromJS({
        google: '',
        locationMap: {
          devices: [],
-        googleReady: false
-       }
+         googleReady: false,
+       },
+       
 })
 
 const mapData = ( state = initialState, action ) => {

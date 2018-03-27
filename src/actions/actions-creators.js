@@ -2,6 +2,9 @@ import {
     TOGGLE_GEOFENCE_MODAL,
     GOOGLE_IS_INITALIZED,
     FETCH_DEVICES_DATA,
+    DRAWING_GEOFENCES,
+    DREW_GEOFENCES,
+    RESET_DREW_GEOFENCES
 }
     from '../action-types/index'
 
@@ -9,6 +12,24 @@ import {
 export function toggleGeofenceModal() {
     return {
         type: TOGGLE_GEOFENCE_MODAL,
+    }
+}
+export function isDrawingGeofences() {
+    return {
+        type: DRAWING_GEOFENCES,
+    }
+}
+export function drewGeofences(geofence) {
+    return {
+        type: DREW_GEOFENCES,
+        payload:{
+            geofence
+        }
+    }
+}
+export function resetDrewGeofences() {
+    return {
+        type: RESET_DREW_GEOFENCES,
     }
 }
 

@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import { withStyles } from "material-ui";
+import { withStyles, Button } from "material-ui";
 
 import { Header, Footer, Sidebar } from "components";
 
@@ -22,9 +22,9 @@ import Bus from '../../components/Icons/bus.svg'
 import ModalContainer from '../../widgets/containers/modal';
 import Modal from '../../widgets/components/modal';
 
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import * as actions from '../../actions/actions-creators'
-import {bindActionCreators} from 'redux'
+import { bindActionCreators } from 'redux'
 
 const switchRoutes = (
   <Switch>
@@ -57,6 +57,15 @@ class App extends React.Component {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
 
     }
+  }
+  deleteGeofencesFromMap=()=>{
+    this.props.drewGeofences.get(0).overlay.setMap(null)
+  }
+  handleReDrawOnClick =()=>{
+      this.deleteGeofencesFromMap()
+      this.props.actions.resetDrewGeofences()
+      this.props.actions.isDrawingGeofences()
+      
   }
   
   componentDidUpdate() {
@@ -96,16 +105,27 @@ class App extends React.Component {
               />
 
             )}
-            <ModalContainer>
-              { this.props.modal.get('visibility') &&
+          <ModalContainer>
+            {this.props.modal.get('visibility') &&
               <Modal handleClick={this.handleToggleGeofenceModal} >
-                  <GeofenceMap
-                    google={this.props.google}
-                    defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
-                  />
+                {!this.props.isDrawingGeofences &&
+                  <Button
+                    variant="raised"
+                    color="primary"
+                    className={classes.button}
+                    fullWidth={true}
+                    onClick={this.handleReDrawOnClick}
+                    >
+                    Volver a dibujar
+                  </Button>
+                }
+                <GeofenceMap
+                  google={this.props.google}
+                  defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
+                />
               </ Modal>
-              }
-            </ ModalContainer>
+            }
+          </ ModalContainer>
           {this.getRoute() ? <Footer /> : null}
         </div>
       </div>
@@ -118,16 +138,18 @@ App.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state,props){
+function mapStateToProps(state, props) {
 
-  return{
-    modal: state.get('modal'),
+  return {
+    modal: state.get('modal'), 
+    isDrawingGeofences: state.getIn(['modal','geofencesMap','isDrawingGeofences']),
+    drewGeofences: state.getIn(['modal','geofencesMap','drewGeofences'])
   }
 
 }
-function mapDispatchToProps(dispatch){
-  return{
-    actions: bindActionCreators(actions,dispatch)
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
   }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(withStyles(appStyle)(App));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(appStyle)(App));

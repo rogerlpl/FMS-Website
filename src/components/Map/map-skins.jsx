@@ -3,6 +3,7 @@ import {
   withGoogleMap,
   GoogleMap
 } from "react-google-maps";
+import {DrawingManager} from 'react-google-maps/lib/components/drawing/DrawingManager'
 import DevicesList from './Markers/devicesList'
 
 export const LocationGreenSkinMap =
@@ -14,8 +15,12 @@ export const LocationGreenSkinMap =
         streetViewControl: false,
         scrollwheel: true,
         zoomControl: false,
-        fullscreenControlOptions: {
+        mapTypeControlOptions: {
+          style: props.google.maps.MapTypeControlStyle.DROPDOWN_MENU,
           position: props.google.maps.ControlPosition.LEFT_CENTER
+        },
+        fullscreenControlOptions: {
+          position: props.google.maps.ControlPosition.RIGHT_BOTTOM
         },
         styles: [
           {
@@ -80,7 +85,7 @@ export const LocationGreenSkinMap =
       }}
     >
       <DevicesList google={props.google} devices={props.devices} iconAddress={props.iconAddress} />
-      
+
     </GoogleMap>
   ))
 
@@ -93,9 +98,7 @@ export const GeofenceGreenSkinMap =
         streetViewControl: false,
         scrollwheel: true,
         zoomControl: false,
-        fullscreenControlOptions: {
-          position: props.google.maps.ControlPosition.LEFT_CENTER
-        },
+        mapTypeControl: false,
         styles: [
           {
             featureType: "water",
@@ -158,7 +161,24 @@ export const GeofenceGreenSkinMap =
         ]
       }}
     >
-      
-      
+{ props.isDrawingGeofences &&
+      <DrawingManager
+        onOverlayComplete={props.handleOverlayComplete}
+        defaultDrawingMode={props.google.maps.drawing.OverlayType.POLYGON}
+        defaultOptions={
+          {
+            drawingControl: props.google.maps.drawing.OverlayType.POLYLINE,
+            drawingControlOptions: {
+              position: props.google.maps.ControlPosition.TOP_CENTER,
+              drawingModes: [
+                 props.google.maps.drawing.OverlayType.POLYGON,
+                 props.google.maps.drawing.OverlayType.POLYLINE
+
+              ],
+            }
+          }
+        }
+      />
+    }
     </GoogleMap>
   ))
