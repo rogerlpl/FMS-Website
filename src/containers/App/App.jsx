@@ -60,7 +60,7 @@ class App extends React.Component {
     window.addEventListener('load', this.handleLoad);
   }
   handleLoad = () => {
-    this.setState({ google: window.google })
+    this.props.actions.googleIsInitalized()
   }
 
   componentDidUpdate() {
@@ -95,7 +95,6 @@ class App extends React.Component {
           ) : (
               <LocationsMap
                 iconAddress={Bus}
-                google={this.state.google}
                 defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
               />
 
@@ -104,7 +103,6 @@ class App extends React.Component {
               { this.props.modal.get('visibility') &&
               <Modal handleClick={this.handleToggleGeofenceModal} >
                   <GeofenceMap
-                    google={this.state.google}
                     defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
                   />
               </ Modal>
