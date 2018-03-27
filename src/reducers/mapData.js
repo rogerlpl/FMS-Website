@@ -1,7 +1,6 @@
 import { fromJS } from 'immutable'
 import { 
   GOOGLE_IS_INITALIZED,
-  GOOGLE_IS_READY,
   FETCH_DEVICES_DATA
 } from '../action-types/index'
 

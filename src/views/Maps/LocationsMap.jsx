@@ -20,7 +20,6 @@ class LocationsMap extends PureComponent {
     this.props.actions.googleIsInitalized()
   }
   render() {
-    console.log(this.props.devices)
     if (this.props.google) {
       return (
         <LocationGreenSkinMap
