@@ -3,9 +3,6 @@ import {GreenSkinMap} from '../../components/Map/map-skins'
 
 class GeofenceMap extends PureComponent {
 
-  state = {
-    googleReady: false,
-  }
 
   render() {
     return (

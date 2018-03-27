@@ -3,20 +3,20 @@ import {
     Marker
   } from "react-google-maps";
 
- const  Markers = (props) => {
+ const  DevicesList = (props) => {
 
     if (props.google) {
       return props.devices.map(device => (
         <Marker
           onClick={props._onClick}
-          position={{ lat: device.latitude, lng: device.longitude }}
-          key={device.id}
+          position={{ lat: device.get('latitude'), lng: device.get('longitude')}}
+          key={device.get('id')}
           defaultIcon={{
             url: props.iconAddress, // url
             scaledSize: new props.google.maps.Size(30, 30), // scaled size
           }} 
           defaultAnimation={1}
-           title={device.name}
+           title={device.get('name')}
           />
       ))
     }else{
@@ -24,4 +24,4 @@ import {
     }
   }
 
-  export default Markers
+  export default DevicesList

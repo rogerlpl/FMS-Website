@@ -1,44 +1,39 @@
 import React, { PureComponent } from "react";
 import { GreenSkinMap } from '../../components/Map/map-skins'
-import Markers from '../../components/Map/markers'
+import DevicesList from '../../components/Map/Markers/devicesList'
 
-// async function devicesList() {
-//   const response = await fetch('http://localhost:58496/api/positions', {});
-//   const devices = await response.json();
-
-//   return devices;
-// }
+import {connect} from 'react-redux'
+import  * as actions from '../../actions/actions-creators'
+import {bindActionCreators} from 'redux'
 
 
 class LocationsMap extends PureComponent {
 
-  state = {
-    googleReady: false,
-    markers: [],
-    devices: [
-      { 'latitude': 18.474195, 'longitude': -69.9189654, 'id': 1, 'name': 'prueba' },
-      { 'latitude': 18.474195, 'longitude': -69.919518, 'id': 2 },
-      { 'latitude': 18.474195, 'longitude': -69.914615, 'id': 3 },
-    ],
-  }
 
-  componentDidMount = () => {
-    this.setState({ markersList: <Markers _onClick={this.props.handleOpenModal} google={this.props.google} devices={this.state.devices} iconAddress={this.props.iconAddress} /> })
+  componentDidMount = async () => {
+    window.addEventListener('load', this.handleLoad);
+    this.props.actions.fetchDevicesData()
+    this.setState({ markersList: <DevicesList _onClick={this.props.handleOpenModal} google={this.props.google} devices={this.props.devices} iconAddress={this.props.iconAddress} /> })
+    
+    
+  }
+  handleLoad = () => {
+    this.props.actions.googleIsInitalized()
   }
   componentDidUpdate = () => {
-    if (this.props.google && !this.state.googleReady) {
-      this.setState({ googleReady: true })
-      this.setState({ markersList: <Markers _onClick={this.props.handleOpenModal} google={this.props.google} devices={this.state.devices} iconAddress={this.props.iconAddress} /> })
+    if (this.props.google && !this.props.googleReady) {
+      this.props.actions.googleIsReady();
+      this.setState({ markersList: <DevicesList _onClick={this.props.handleOpenModal} google={this.props.google} devices={this.props.devices} iconAddress={this.props.iconAddress} /> })
     }
   }
   render() {
+    console.log(this.props.devices)
     if (this.props.google) {
       return (
         <GreenSkinMap
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `100vh` }} />}
           mapElement={<div style={{ height: `100%` }} />}
-          devices={this.state.devices}
           iconAddress={this.props.iconAddress}
           google={this.props.google}
           markers={this.state.markersList}
@@ -47,9 +42,20 @@ class LocationsMap extends PureComponent {
       );
     } 
     return 'No ha cargado google'
-      
-    
   }
 }
+function mapStateToProps(state,props){
+ 
+  return{
+    google: state.get('mapData').get('google'),
+    devices: state.getIn(['mapData','locationMap','devices']),
+    googleReady: state.getIn(['mapData', 'locationMap','googleReady'])
+  }
 
-export default LocationsMap;
+}
+function mapDispatchToProps(dispatch){
+  return{
+    actions: bindActionCreators(actions,dispatch)
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(LocationsMap);

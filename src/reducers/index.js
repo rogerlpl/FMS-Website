@@ -1,10 +1,10 @@
 import modal from  './modal';
-import data from './data';
+import mapData from './mapData';
 import { combineReducers } from 'redux-immutable'; 
 
 const rootReducer = combineReducers({
     modal,
-    data
+    mapData
 })
 
 

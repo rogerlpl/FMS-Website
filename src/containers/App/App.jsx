@@ -57,12 +57,8 @@ class App extends React.Component {
       const ps = new PerfectScrollbar(this.refs.mainPanel);
 
     }
-    window.addEventListener('load', this.handleLoad);
   }
-  handleLoad = () => {
-    this.props.actions.googleIsInitalized()
-  }
-
+  
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
@@ -94,6 +90,7 @@ class App extends React.Component {
             </div>
           ) : (
               <LocationsMap
+                // google={this.props.google}
                 iconAddress={Bus}
                 defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
               />
@@ -103,6 +100,7 @@ class App extends React.Component {
               { this.props.modal.get('visibility') &&
               <Modal handleClick={this.handleToggleGeofenceModal} >
                   <GeofenceMap
+                    google={this.props.google}
                     defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
                   />
               </ Modal>
@@ -123,7 +121,7 @@ App.propTypes = {
 function mapStateToProps(state,props){
 
   return{
-    modal: state.get('modal')
+    modal: state.get('modal'),
   }
 
 }
