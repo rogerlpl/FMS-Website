@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
-import {GreenSkinMap} from '../../components/Map/map-skins'
+import {GeofenceGreenSkinMap} from '../../components/Map/map-skins'
+import {connect} from 'react-redux'
 
 class GeofenceMap extends PureComponent {
 
 
   render() {
     return (
-        <GreenSkinMap
+        <GeofenceGreenSkinMap
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `60vh`}}/>}
         mapElement={<div style={{ height: `100%` }} />}
@@ -17,4 +18,10 @@ class GeofenceMap extends PureComponent {
   }
 }
 
-export default GeofenceMap;
+function mapStateToProps(state, props){
+  return{
+    google: state.get('mapData').get('google')
+  }
+}
+
+export default connect(mapStateToProps)(GeofenceMap);

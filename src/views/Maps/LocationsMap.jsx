@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
-import { GreenSkinMap } from '../../components/Map/map-skins'
-import DevicesList from '../../components/Map/Markers/devicesList'
+import { LocationGreenSkinMap } from '../../components/Map/map-skins'
 
 import {connect} from 'react-redux'
 import  * as actions from '../../actions/actions-creators'
@@ -17,16 +16,11 @@ class LocationsMap extends PureComponent {
   handleLoad = () => {
     this.props.actions.googleIsInitalized()
   }
-  componentDidUpdate = () => {
-    if (this.props.google && !this.props.googleReady) {
-      this.props.actions.googleIsReady();
-    }
-  }
   render() {
     console.log(this.props.devices)
     if (this.props.google) {
       return (
-        <GreenSkinMap
+        <LocationGreenSkinMap
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `100vh` }} />}
           mapElement={<div style={{ height: `100%` }} />}
