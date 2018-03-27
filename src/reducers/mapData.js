@@ -20,8 +20,6 @@ const mapData = ( state = initialState, action ) => {
       case GOOGLE_IS_INITALIZED: {
         return state.set('google', window.google)
       }
-      case GOOGLE_IS_READY :
-        return state.setIn(['locationMap','googleReady'], true)
       case FETCH_DEVICES_DATA:
         return state.setIn(['locationMap','devices'], action.payload.devicesData)
       default:

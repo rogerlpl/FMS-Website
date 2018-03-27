@@ -1,7 +1,6 @@
 import {
     TOGGLE_GEOFENCE_MODAL,
     GOOGLE_IS_INITALIZED,
-    GOOGLE_IS_READY,
     FETCH_DEVICES_DATA,
 }
     from '../action-types/index'
@@ -19,11 +18,6 @@ export function googleIsInitalized() {
     }
 }
 
-export function googleIsReady() {
-    return {
-        type: GOOGLE_IS_READY,
-    }
-}
 export function fetchDevicesSucced(devicesData) {
     return {
         type: FETCH_DEVICES_DATA,

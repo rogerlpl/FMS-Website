@@ -11,7 +11,10 @@ class LocationsMap extends PureComponent {
 
   componentDidMount = async () => {
     window.addEventListener('load', this.handleLoad);
-    this.props.actions.fetchDevicesData()
+   this.refreshLocation = setInterval(()=>this.props.actions.fetchDevicesData(),30000)
+  }
+  componentWillUnmount = () => {
+    clearInterval(this.refreshLocation);
   }
   handleLoad = () => {
     this.props.actions.googleIsInitalized()
