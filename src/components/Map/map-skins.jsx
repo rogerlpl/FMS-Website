@@ -3,7 +3,7 @@ import {
   withGoogleMap,
   GoogleMap
 } from "react-google-maps";
-
+import DevicesList from './Markers/devicesList'
 
 export const GreenSkinMap =
   withGoogleMap(props => (
@@ -79,6 +79,6 @@ export const GreenSkinMap =
         ]
       }}
     >
-      {props.markers}
+      <DevicesList google={props.google} devices={props.devices} iconAddress={props.iconAddress} />
     </GoogleMap>
   ))

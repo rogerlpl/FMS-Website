@@ -13,9 +13,6 @@ class LocationsMap extends PureComponent {
   componentDidMount = async () => {
     window.addEventListener('load', this.handleLoad);
     this.props.actions.fetchDevicesData()
-    this.setState({ markersList: <DevicesList _onClick={this.props.handleOpenModal} google={this.props.google} devices={this.props.devices} iconAddress={this.props.iconAddress} /> })
-    
-    
   }
   handleLoad = () => {
     this.props.actions.googleIsInitalized()
@@ -23,7 +20,6 @@ class LocationsMap extends PureComponent {
   componentDidUpdate = () => {
     if (this.props.google && !this.props.googleReady) {
       this.props.actions.googleIsReady();
-      this.setState({ markersList: <DevicesList _onClick={this.props.handleOpenModal} google={this.props.google} devices={this.props.devices} iconAddress={this.props.iconAddress} /> })
     }
   }
   render() {
@@ -36,7 +32,7 @@ class LocationsMap extends PureComponent {
           mapElement={<div style={{ height: `100%` }} />}
           iconAddress={this.props.iconAddress}
           google={this.props.google}
-          markers={this.state.markersList}
+          devices={this.props.devices}
           defaultCenter={this.props.defaultCenter}
         />
       );

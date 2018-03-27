@@ -3,7 +3,6 @@ import {
     GOOGLE_IS_INITALIZED,
     GOOGLE_IS_READY,
     FETCH_DEVICES_DATA,
-    SET_DEVICES_ON_MAP
 }
     from '../action-types/index'
 
@@ -30,14 +29,6 @@ export function fetchDevicesSucced(devicesData) {
         type: FETCH_DEVICES_DATA,
         payload:{
             devicesData
-        }
-    }
-}
-export function setDevicesOnMap(devices) {
-    return {
-        type: SET_DEVICES_ON_MAP,
-        payload:{
-            devices
         }
     }
 }
