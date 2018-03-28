@@ -4,7 +4,8 @@ import {
     FETCH_DEVICES_DATA,
     DRAWING_GEOFENCES,
     DREW_GEOFENCES,
-    RESET_DREW_GEOFENCES
+    RESET_DREW_GEOFENCES,
+    DELETE_CURRENT_GEOFENCES
 }
     from '../action-types/index'
 
@@ -12,6 +13,14 @@ import {
 export function toggleGeofenceModal() {
     return {
         type: TOGGLE_GEOFENCE_MODAL,
+    }
+}
+export function deleteCurrentGeofence(geofence) {
+    return {
+        type: DELETE_CURRENT_GEOFENCES,
+        payload:{
+            geofence
+        }
     }
 }
 export function isDrawingGeofences() {

@@ -3,7 +3,8 @@ import {
     TOGGLE_GEOFENCE_MODAL,
     DRAWING_GEOFENCES,
     DREW_GEOFENCES,
-    RESET_DREW_GEOFENCES 
+    RESET_DREW_GEOFENCES,
+    DELETE_CURRENT_GEOFENCES
 } from '../action-types/index'
 
 const initialState = fromJS({
@@ -14,7 +15,7 @@ const initialState = fromJS({
        }
 
 })
-
+// state.getIn(['geofencesMap', 'drewGeofences']).get(0).overlay.setMap(null)
 function modal(state = initialState, action) {
     switch (action.type) {
         case TOGGLE_GEOFENCE_MODAL:
@@ -27,6 +28,11 @@ function modal(state = initialState, action) {
         }
         case RESET_DREW_GEOFENCES:
             return state.setIn(['geofencesMap', 'drewGeofences'], state.getIn(['geofencesMap', 'drewGeofences']).splice(0, 1))
+        case DELETE_CURRENT_GEOFENCES:{
+             action.payload.geofence.setMap(null)
+             return state
+        }
+           
         default:
             return state
     }

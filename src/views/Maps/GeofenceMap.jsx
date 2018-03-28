@@ -1,33 +1,23 @@
 import React, { PureComponent } from "react";
-import {GeofenceGreenSkinMap} from '../../components/Map/map-skins'
-import {connect} from 'react-redux'
+import { GeofenceGreenSkinMap } from '../../components/Map/map-skins'
+import { connect } from 'react-redux'
 import * as actions from '../../actions/actions-creators'
-import {bindActionCreators} from 'redux'
+import { bindActionCreators } from 'redux'
 
 class GeofenceMap extends PureComponent {
 
-  handleOverlayComplete =(e) =>{
-    this.props.actions.isDrawingGeofences()
-    this.props.actions.drewGeofences(e)
-    e.overlay.setEditable(true)
-    e.overlay.setDraggable(true)
-    this.handleOnPolygonComplete(e)
-  }
-  handleOnPolygonComplete =(e) =>{
-            const polygonBounds = e.overlay.getPath()
-            let coordinates = [];
+      
+  
+  handleOverlayComplete = (event) => {
 
-            for (let i = 0; i < polygonBounds.length; i++)
-            {
-                coordinates.push({lat:polygonBounds.getAt(i).lat(), lng:polygonBounds.getAt(i).lng()});
-            } 
-            console.log(coordinates);
+    this.props.actions.isDrawingGeofences()
+    this.props.actions.drewGeofences(event)
   }
   render() {
     return (
-        <GeofenceGreenSkinMap
+      <GeofenceGreenSkinMap
         loadingElement={<div style={{ height: `100%` }} />}
-        containerElement={<div style={{ height: `60vh`}}/>}
+        containerElement={<div style={{ height: `60vh` }} />}
         mapElement={<div style={{ height: `100%` }} />}
         google={this.props.google}
         defaultCenter={this.props.defaultCenter}
@@ -38,16 +28,16 @@ class GeofenceMap extends PureComponent {
   }
 }
 
-function mapStateToProps(state, props){
-  return{
+function mapStateToProps(state, props) {
+  return {
     google: state.get('mapData').get('google'),
-    isDrawingGeofences: state.getIn(['modal','geofencesMap','isDrawingGeofences']),
-    drewGeofences: state.getIn(['modal','geofencesMap','drewGeofences'])
+    isDrawingGeofences: state.getIn(['modal', 'geofencesMap', 'isDrawingGeofences']),
+    drewGeofences: state.getIn(['modal', 'geofencesMap', 'drewGeofences'])
   }
 }
-function mapDispatchToProps(dispatch){
-  return{
-    actions: bindActionCreators(actions,dispatch)
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GeofenceMap);

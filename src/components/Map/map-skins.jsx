@@ -174,9 +174,20 @@ export const GeofenceGreenSkinMap =
                  props.google.maps.drawing.OverlayType.POLYGON,
                  props.google.maps.drawing.OverlayType.POLYLINE
               ],
-            }
+            },
+            polygonOptions:{
+              fillColor: '#199ee0',
+              fillOpacity: 0.2,
+              strokeWeight: 2,
+              strokeColor: '#113460',
+              clickable: true,
+              draggable: true,
+              editable: true,
+              zIndex: 1
+              }
           }
         }
+        
       />
     }
     </GoogleMap>

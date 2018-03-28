@@ -58,14 +58,20 @@ class App extends React.Component {
 
     }
   }
-  deleteGeofencesFromMap=()=>{
-    this.props.drewGeofences.get(0).overlay.setMap(null)
+  handleSaveGeofence =()=>{
+    const polygonBounds = this.props.drewGeofences.get(0).overlay.getPath()
+    let paths = [];
+
+    for (let i = 0; i < polygonBounds.length; i++) {
+      paths.push({ lat: polygonBounds.getAt(i).lat(), lng: polygonBounds.getAt(i).lng() });
+    }
+    console.log(paths);
   }
   handleReDrawOnClick =()=>{
-      this.deleteGeofencesFromMap()
       this.props.actions.resetDrewGeofences()
       this.props.actions.isDrawingGeofences()
-      
+      this.props.actions.deleteCurrentGeofence(this.props.drewGeofences.get(0).overlay)
+      //this.deleteGeofencesFromMap()
   }
   
   componentDidUpdate() {
@@ -115,6 +121,7 @@ class App extends React.Component {
                     color="primary"
                     className={classes.button}
                     fullWidth={true}
+                    onClick={this.handleSaveGeofence}
                     >
                     Guardar
                   </Button>
