@@ -65,7 +65,9 @@ class App extends React.Component {
     for (let i = 0; i < polygonBounds.length; i++) {
       paths.push({ lat: polygonBounds.getAt(i).lat(), lng: polygonBounds.getAt(i).lng() });
     }
-    console.log(paths);
+    //console.log(paths);
+    const currentPosition = new this.props.google.maps.LatLng(18.4744866666667,-69.9149133333333)
+    console.log(this.props.google.maps.geometry.poly.containsLocation(currentPosition, this.props.drewGeofences.get(0).overlay))
   }
   handleReDrawOnClick =()=>{
       this.props.actions.resetDrewGeofences()
@@ -159,6 +161,7 @@ App.propTypes = {
 function mapStateToProps(state, props) {
 
   return {
+    google: state.getIn(['mapData','google']),
     modal: state.get('modal'), 
     isDrawingGeofences: state.getIn(['modal','geofencesMap','isDrawingGeofences']),
     drewGeofences: state.getIn(['modal','geofencesMap','drewGeofences'])

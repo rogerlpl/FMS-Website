@@ -9,7 +9,6 @@ class GeofenceMap extends PureComponent {
       
   
   handleOverlayComplete = (event) => {
-
     this.props.actions.isDrawingGeofences()
     this.props.actions.drewGeofences(event)
   }
@@ -32,7 +31,6 @@ function mapStateToProps(state, props) {
   return {
     google: state.get('mapData').get('google'),
     isDrawingGeofences: state.getIn(['modal', 'geofencesMap', 'isDrawingGeofences']),
-    drewGeofences: state.getIn(['modal', 'geofencesMap', 'drewGeofences'])
   }
 }
 function mapDispatchToProps(dispatch) {
