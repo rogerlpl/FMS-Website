@@ -173,7 +173,6 @@ export const GeofenceGreenSkinMap =
               drawingModes: [
                  props.google.maps.drawing.OverlayType.POLYGON,
                  props.google.maps.drawing.OverlayType.POLYLINE
-
               ],
             }
           }

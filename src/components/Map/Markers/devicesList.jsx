@@ -15,7 +15,7 @@ import {
             url: props.iconAddress, // url
             scaledSize: new props.google.maps.Size(30, 30), // scaled size
           }} 
-          defaultAnimation={1}
+          defaultAnimation={2}
            title={device.name}
           />
       ))

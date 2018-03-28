@@ -9,9 +9,20 @@ class GeofenceMap extends PureComponent {
   handleOverlayComplete =(e) =>{
     this.props.actions.isDrawingGeofences()
     this.props.actions.drewGeofences(e)
-
+    e.overlay.setEditable(true)
+    e.overlay.setDraggable(true)
+    this.handleOnPolygonComplete(e)
   }
+  handleOnPolygonComplete =(e) =>{
+            const polygonBounds = e.overlay.getPath()
+            let coordinates = [];
 
+            for (let i = 0; i < polygonBounds.length; i++)
+            {
+                coordinates.push({lat:polygonBounds.getAt(i).lat(), lng:polygonBounds.getAt(i).lng()});
+            } 
+            console.log(coordinates);
+  }
   render() {
     return (
         <GeofenceGreenSkinMap

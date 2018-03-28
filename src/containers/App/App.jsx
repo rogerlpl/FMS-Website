@@ -109,15 +109,26 @@ class App extends React.Component {
             {this.props.modal.get('visibility') &&
               <Modal handleClick={this.handleToggleGeofenceModal} >
                 {!this.props.isDrawingGeofences &&
-                  <Button
+                <div>
+                   <Button
                     variant="raised"
                     color="primary"
+                    className={classes.button}
+                    fullWidth={true}
+                    >
+                    Guardar
+                  </Button>
+                  <Button
+                    variant="raised"
+                    color="secondary"
                     className={classes.button}
                     fullWidth={true}
                     onClick={this.handleReDrawOnClick}
                     >
                     Volver a dibujar
                   </Button>
+                 
+                  </div>
                 }
                 <GeofenceMap
                   google={this.props.google}
