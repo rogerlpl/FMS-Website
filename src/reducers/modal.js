@@ -4,7 +4,8 @@ import {
     DRAWING_GEOFENCES,
     DREW_GEOFENCES,
     RESET_DREW_GEOFENCES,
-    DELETE_CURRENT_GEOFENCES
+    DELETE_CURRENT_GEOFENCES,
+    SAVE_CURRENT_GEOFENCES
 } from '../action-types/index'
 
 const initialState = fromJS({
@@ -30,6 +31,9 @@ function modal(state = initialState, action) {
             return state.setIn(['geofencesMap', 'drewGeofences'], state.getIn(['geofencesMap', 'drewGeofences']).splice(0, 1))
         case DELETE_CURRENT_GEOFENCES:{
              action.payload.geofence.setMap(null)
+             return state
+        }
+        case SAVE_CURRENT_GEOFENCES:{
              return state
         }
            

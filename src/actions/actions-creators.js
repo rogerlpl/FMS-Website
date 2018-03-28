@@ -5,7 +5,8 @@ import {
     DRAWING_GEOFENCES,
     DREW_GEOFENCES,
     RESET_DREW_GEOFENCES,
-    DELETE_CURRENT_GEOFENCES
+    DELETE_CURRENT_GEOFENCES,
+    SAVE_CURRENT_GEOFENCES
 }
     from '../action-types/index'
 
@@ -13,6 +14,14 @@ import {
 export function toggleGeofenceModal() {
     return {
         type: TOGGLE_GEOFENCE_MODAL,
+    }
+}
+export function saveCurrentGeofence(geofence) {
+    return {
+        type: SAVE_CURRENT_GEOFENCES,
+        payload:{
+            geofence
+        }
     }
 }
 export function deleteCurrentGeofence(geofence) {
