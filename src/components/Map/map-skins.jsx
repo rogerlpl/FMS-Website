@@ -184,7 +184,16 @@ export const GeofenceGreenSkinMap =
               draggable: true,
               editable: true,
               zIndex: 1
-              }
+              },
+              polylineOptions:{
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.50,
+                strokeWeight: 12,
+                clickable: true,
+                draggable: true,
+                editable: true,
+                zIndex: 1
+                }
           }
         }
         

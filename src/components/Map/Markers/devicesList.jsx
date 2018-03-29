@@ -13,9 +13,8 @@ import {
           key={device.id}
           defaultIcon={{
             url: props.iconAddress, // url
-            scaledSize: new props.google.maps.Size(30, 30), // scaled size
+            scaledSize: new props.google.maps.Size(40, 40), // scaled size
           }} 
-          defaultAnimation={2}
            title={device.name}
           />
       ))

@@ -58,6 +58,10 @@ class App extends React.Component {
 
     }
   }
+  isInsideTheGeofence=()=>{
+    const currentPosition = new this.props.google.maps.LatLng(18.4744866666667,-69.9149133333333)
+    console.log(this.props.google.maps.geometry.poly.containsLocation(currentPosition, this.props.drewGeofences.get(0).overlay))
+  }
   handleSaveGeofence =()=>{
     const polygonBounds = this.props.drewGeofences.get(0).overlay.getPath()
     let paths = [];
@@ -66,8 +70,8 @@ class App extends React.Component {
       paths.push({ lat: polygonBounds.getAt(i).lat(), lng: polygonBounds.getAt(i).lng() });
     }
     //console.log(paths);
-    const currentPosition = new this.props.google.maps.LatLng(18.4744866666667,-69.9149133333333)
-    console.log(this.props.google.maps.geometry.poly.containsLocation(currentPosition, this.props.drewGeofences.get(0).overlay))
+    this.isInsideTheGeofence()
+
   }
   handleReDrawOnClick =()=>{
       this.props.actions.resetDrewGeofences()
@@ -107,7 +111,6 @@ class App extends React.Component {
             </div>
           ) : (
               <LocationsMap
-                // google={this.props.google}
                 iconAddress={Bus}
                 defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
               />

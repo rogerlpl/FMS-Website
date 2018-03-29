@@ -15,7 +15,6 @@ class GeofenceMap extends PureComponent {
   render() {
     return (
       <GeofenceGreenSkinMap
-        loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `60vh` }} />}
         mapElement={<div style={{ height: `100%` }} />}
         google={this.props.google}
