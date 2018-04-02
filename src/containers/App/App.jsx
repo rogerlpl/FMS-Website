@@ -17,7 +17,7 @@ import appStyle from "variables/styles/appStyle.jsx";
 
 import image from "assets/img/caribe-tours-2.jpg";
 import logo from "assets/img/I-trackLogo.png";
-import Bus from '../../components/Icons/bus.svg'
+import Bus from '../../assets/img/bus-marker.png'
 
 import ModalContainer from '../../widgets/containers/modal';
 import Modal from '../../widgets/components/modal';
