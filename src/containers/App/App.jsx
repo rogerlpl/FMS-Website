@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import { withStyles, Button } from "material-ui";
+import  { withStyles, Button } from "material-ui";
 
 import { Header, Footer, Sidebar } from "components";
 
@@ -26,7 +26,7 @@ import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
+  DialogTitle
 } from 'material-ui/Dialog';
 
 import TextField from 'material-ui/TextField';
@@ -78,9 +78,12 @@ class App extends React.Component {
     for (let i = 0; i < polygonBounds.length; i++) {
       paths.push({ lat: polygonBounds.getAt(i).lat(), lng: polygonBounds.getAt(i).lng() });
     }
+
+    
+    console.log(paths)
     //console.log(paths);
     //this.isInsideTheGeofence()
-    this.props.actions.saveCurrentGeofence(paths)
+    this.props.actions.saveCurrentGeofence(paths,this.props.geofenceName)
 
   }
   handleReDrawOnClick = () => {
@@ -88,7 +91,9 @@ class App extends React.Component {
     this.props.actions.isDrawingGeofences()
     this.props.actions.deleteCurrentGeofence(this.props.drewGeofences.get(0).overlay)
   }
-
+  handleGeofenceName = event =>{
+    this.props.actions.saveGeofenceName(event.target.value)
+  }
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
@@ -164,17 +169,18 @@ class App extends React.Component {
                     <DialogContentText>
                       Inserte el nombre de la geocerca
                     </DialogContentText>
+
                     <TextField
                       autoFocus
                       margin="dense"
-                      id="name"
+                      id="geofenceName"
                       label="Nombre Geocerca"
-                      type="text"
+                      onChange= {this.handleGeofenceName}
                       fullWidth
                     />
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={this.handleSaveGeofence} color="primary" autoFocus>
+                    <Button onClick={this.handleSaveGeofence} color="primary" >
                             Guardar
                     </Button>
                   </DialogActions>
@@ -208,7 +214,8 @@ function mapStateToProps(state, props) {
     modal: state.get('modal'),
     isDrawingGeofences: state.getIn(['modal', 'geofencesMap', 'isDrawingGeofences']),
     drewGeofences: state.getIn(['modal', 'geofencesMap', 'drewGeofences']),
-    dialogVisibility: state.getIn(['modal', 'dialog', 'visibility'])
+    dialogVisibility: state.getIn(['modal', 'dialog', 'visibility']),
+    geofenceName: state.getIn(['modal', 'dialog', 'geofenceName'])
   }
 
 }

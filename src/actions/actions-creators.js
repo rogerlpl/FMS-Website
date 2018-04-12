@@ -6,11 +6,13 @@ import {
     DREW_GEOFENCES,
     RESET_DREW_GEOFENCES,
     DELETE_CURRENT_GEOFENCES,
-    SAVE_CURRENT_GEOFENCES,
-    TOGGLE_SAVE_GEOFENCE_DIALOG
+    TOGGLE_SAVE_GEOFENCE_DIALOG,
+    SAVE_GEOFENCE_NAME,
+    SAVE_GEOFENCE_PATH
 }
     from '../action-types/index'
 
+const baseAPIURL = 'http://localhost:58496/api'
 
 export function toggleGeofenceModal() {
     return {
@@ -22,9 +24,46 @@ export function toggleSaveGeofenceDialog() {
         type: TOGGLE_SAVE_GEOFENCE_DIALOG,
     }
 }
-export function saveCurrentGeofence(paths) {
+
+export function saveGeofenceName (name){
     return {
-        type: SAVE_CURRENT_GEOFENCES,
+        type: SAVE_GEOFENCE_NAME,
+        payload: {
+            name
+        }
+    }
+}
+export function saveCurrentGeofence (paths,name){
+    return async (dispatch) => {
+        
+        dispatch(toggleSaveGeofenceDialog())
+        dispatch(toggleGeofenceModal())
+        dispatch(isDrawingGeofences())
+        dispatch(saveGeofencePath(paths))
+
+        try{
+         await fetch(`${baseAPIURL}/geofences`, {
+            method: "post",
+            headers: {  
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: name,
+              area: JSON.stringify(paths),
+              type: 'Polygon'
+            })
+          })
+     }catch(err){
+         console.log("Ha ocurrido un error en el servidor guardando la geocerca " + err)
+     }
+     }
+    
+}
+
+export function saveGeofencePath(paths) {
+    return {
+        type: SAVE_GEOFENCE_PATH,
         payload:{
             paths
         }
@@ -75,7 +114,7 @@ export function fetchDevicesSucced(devicesData) {
 export function fetchDevicesData() {
     return async (dispatch) => {
        try{
-        const response = await fetch('http://localhost:58496/api/positions');
+        const response = await fetch(`${baseAPIURL}/positions`);
         const devices = await response.json();
 
         dispatch(fetchDevicesSucced(devices)) 
