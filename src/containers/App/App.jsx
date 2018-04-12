@@ -22,14 +22,7 @@ import Bus from '../../assets/img/bus-marker.png'
 import ModalContainer from '../../widgets/containers/modal';
 import Modal from '../../widgets/components/modal';
 
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle
-} from 'material-ui/Dialog';
-
-import TextField from 'material-ui/TextField';
+import GeofenceNameDialog from '../../components/Dialogs/Maps/geofenceNameDialog'
 
 import { connect } from 'react-redux'
 import * as actions from '../../actions/actions-creators'
@@ -158,34 +151,13 @@ class App extends React.Component {
                 }
 
 
-                <Dialog
-                  fullScreen={false}
-                  open={this.props.dialogVisibility}
-                  onClose={this.props.actions.toggleSaveGeofenceDialog}
-                  aria-labelledby="responsive-dialog-title"
-                >
-                  <DialogTitle id="responsive-dialog-title">{"Proceso de guardado de geocercas"}</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                      Inserte el nombre de la geocerca
-                    </DialogContentText>
-
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="geofenceName"
-                      label="Nombre Geocerca"
-                      onChange= {this.handleGeofenceName}
-                      fullWidth
-                    />
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={this.handleSaveGeofence} color="primary" >
-                            Guardar
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-
+                
+                <GeofenceNameDialog
+                 dialogVisibility={this.props.dialogVisibility} 
+                 handleOnClose={this.props.actions.toggleSaveGeofenceDialog} 
+                 handleGeofenceName={this.handleGeofenceName} 
+                 handleSaveGeofence={this.handleSaveGeofence}
+                 />
 
 
                 <GeofenceMap
