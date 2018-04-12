@@ -5,6 +5,7 @@ import {
 } from "react-google-maps";
 import {DrawingManager} from 'react-google-maps/lib/components/drawing/DrawingManager'
 import DevicesList from './Markers/devicesList'
+import PolygonGeofences from './Polygons/polygon'
 
 export const LocationGreenSkinMap =
   withGoogleMap(props => (
@@ -85,7 +86,7 @@ export const LocationGreenSkinMap =
       }}
     >
       <DevicesList google={props.google} devices={props.devices} iconAddress={props.iconAddress} />
-
+     { props.paths.length > 0 && <PolygonGeofences google={props.google} paths={props.paths}/>}
     </GoogleMap>
   ))
 

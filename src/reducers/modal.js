@@ -5,15 +5,21 @@ import {
     DREW_GEOFENCES,
     RESET_DREW_GEOFENCES,
     DELETE_CURRENT_GEOFENCES,
-    SAVE_CURRENT_GEOFENCES
+    SAVE_CURRENT_GEOFENCES,
+    TOGGLE_SAVE_GEOFENCE_DIALOG
 } from '../action-types/index'
 
 const initialState = fromJS({
     visibility: false,
     geofencesMap:{
         isDrawingGeofences: true,
-        drewGeofences: []
-       }
+        drewGeofences: [],
+        paths: []
+       },
+    dialog:{
+        visibility: false,
+        geofenceName: ''
+    }
 
 })
 // state.getIn(['geofencesMap', 'drewGeofences']).get(0).overlay.setMap(null)
@@ -30,12 +36,14 @@ function modal(state = initialState, action) {
         case RESET_DREW_GEOFENCES:
             return state.setIn(['geofencesMap', 'drewGeofences'], state.getIn(['geofencesMap', 'drewGeofences']).splice(0, 1))
         case DELETE_CURRENT_GEOFENCES:{
-             action.payload.geofence.setMap(null)
+            action.payload.geofence.setMap(null)
              return state
         }
         case SAVE_CURRENT_GEOFENCES:{
-             return state
+            return state.setIn(['geofencesMap','paths'], action.payload.paths)
         }
+        case TOGGLE_SAVE_GEOFENCE_DIALOG:
+             return state.setIn(['dialog','visibility'], !state.getIn(['dialog','visibility']) )
            
         default:
             return state

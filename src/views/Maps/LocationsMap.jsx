@@ -30,6 +30,7 @@ class LocationsMap extends PureComponent {
           google={this.props.google}
           devices={this.props.devices}
           defaultCenter={this.props.defaultCenter}
+          paths ={this.props.paths}
         />
       );
     } 
@@ -41,7 +42,8 @@ function mapStateToProps(state,props){
   return{
     google: state.get('mapData').get('google'),
     devices: state.getIn(['mapData','locationMap','devices']),
-    googleReady: state.getIn(['mapData', 'locationMap','googleReady'])
+    googleReady: state.getIn(['mapData', 'locationMap','googleReady']),
+    paths: state.getIn(['modal','geofencesMap','paths'])
   }
 
 }

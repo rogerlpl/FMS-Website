@@ -22,6 +22,15 @@ import Bus from '../../assets/img/bus-marker.png'
 import ModalContainer from '../../widgets/containers/modal';
 import Modal from '../../widgets/components/modal';
 
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
+
+import TextField from 'material-ui/TextField';
+
 import { connect } from 'react-redux'
 import * as actions from '../../actions/actions-creators'
 import { bindActionCreators } from 'redux'
@@ -58,11 +67,11 @@ class App extends React.Component {
 
     }
   }
-  isInsideTheGeofence=()=>{
-    const currentPosition = new this.props.google.maps.LatLng(18.4744866666667,-69.9149133333333)
+  isInsideTheGeofence = () => {
+    const currentPosition = new this.props.google.maps.LatLng(18.4744866666667, -69.9149133333333)
     console.log(this.props.google.maps.geometry.poly.containsLocation(currentPosition, this.props.drewGeofences.get(0).overlay))
   }
-  handleSaveGeofence =()=>{
+  handleSaveGeofence = () => {
     const polygonBounds = this.props.drewGeofences.get(0).overlay.getPath()
     let paths = [];
 
@@ -70,16 +79,16 @@ class App extends React.Component {
       paths.push({ lat: polygonBounds.getAt(i).lat(), lng: polygonBounds.getAt(i).lng() });
     }
     //console.log(paths);
-    this.isInsideTheGeofence()
+    //this.isInsideTheGeofence()
+    this.props.actions.saveCurrentGeofence(paths)
 
   }
-  handleReDrawOnClick =()=>{
-      this.props.actions.resetDrewGeofences()
-      this.props.actions.isDrawingGeofences()
-      this.props.actions.deleteCurrentGeofence(this.props.drewGeofences.get(0).overlay)
-      //this.deleteGeofencesFromMap()
+  handleReDrawOnClick = () => {
+    this.props.actions.resetDrewGeofences()
+    this.props.actions.isDrawingGeofences()
+    this.props.actions.deleteCurrentGeofence(this.props.drewGeofences.get(0).overlay)
   }
-  
+
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
@@ -120,28 +129,59 @@ class App extends React.Component {
             {this.props.modal.get('visibility') &&
               <Modal handleClick={this.handleToggleGeofenceModal} >
                 {!this.props.isDrawingGeofences &&
-                <div>
-                   <Button
-                    variant="raised"
-                    color="primary"
-                    className={classes.button}
-                    fullWidth={true}
-                    onClick={this.handleSaveGeofence}
+                  <div>
+                    <Button
+                      variant="raised"
+                      color="primary"
+                      className={classes.button}
+                      fullWidth={true}
+                      onClick={this.props.actions.toggleSaveGeofenceDialog}
                     >
-                    Guardar
+                      Guardar
                   </Button>
-                  <Button
-                    variant="raised"
-                    color="secondary"
-                    className={classes.button}
-                    fullWidth={true}
-                    onClick={this.handleReDrawOnClick}
+                    <Button
+                      variant="raised"
+                      color="secondary"
+                      className={classes.button}
+                      fullWidth={true}
+                      onClick={this.handleReDrawOnClick}
                     >
-                    Volver a dibujar
+                      Volver a dibujar
                   </Button>
-                 
+
                   </div>
                 }
+
+
+                <Dialog
+                  fullScreen={false}
+                  open={this.props.dialogVisibility}
+                  onClose={this.props.actions.toggleSaveGeofenceDialog}
+                  aria-labelledby="responsive-dialog-title"
+                >
+                  <DialogTitle id="responsive-dialog-title">{"Proceso de guardado de geocercas"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Inserte el nombre de la geocerca
+                    </DialogContentText>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="name"
+                      label="Nombre Geocerca"
+                      type="text"
+                      fullWidth
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleSaveGeofence} color="primary" autoFocus>
+                            Guardar
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+
+
                 <GeofenceMap
                   google={this.props.google}
                   defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
@@ -164,10 +204,11 @@ App.propTypes = {
 function mapStateToProps(state, props) {
 
   return {
-    google: state.getIn(['mapData','google']),
-    modal: state.get('modal'), 
-    isDrawingGeofences: state.getIn(['modal','geofencesMap','isDrawingGeofences']),
-    drewGeofences: state.getIn(['modal','geofencesMap','drewGeofences'])
+    google: state.getIn(['mapData', 'google']),
+    modal: state.get('modal'),
+    isDrawingGeofences: state.getIn(['modal', 'geofencesMap', 'isDrawingGeofences']),
+    drewGeofences: state.getIn(['modal', 'geofencesMap', 'drewGeofences']),
+    dialogVisibility: state.getIn(['modal', 'dialog', 'visibility'])
   }
 
 }

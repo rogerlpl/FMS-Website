@@ -6,7 +6,8 @@ import {
     DREW_GEOFENCES,
     RESET_DREW_GEOFENCES,
     DELETE_CURRENT_GEOFENCES,
-    SAVE_CURRENT_GEOFENCES
+    SAVE_CURRENT_GEOFENCES,
+    TOGGLE_SAVE_GEOFENCE_DIALOG
 }
     from '../action-types/index'
 
@@ -16,11 +17,16 @@ export function toggleGeofenceModal() {
         type: TOGGLE_GEOFENCE_MODAL,
     }
 }
-export function saveCurrentGeofence(geofence) {
+export function toggleSaveGeofenceDialog() {
+    return {
+        type: TOGGLE_SAVE_GEOFENCE_DIALOG,
+    }
+}
+export function saveCurrentGeofence(paths) {
     return {
         type: SAVE_CURRENT_GEOFENCES,
         payload:{
-            geofence
+            paths
         }
     }
 }

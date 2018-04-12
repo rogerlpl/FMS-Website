@@ -4,17 +4,17 @@ import {
     Hidden
 } from "material-ui";
 
-import { Directions, AddLocation } from "material-ui-icons";
+import { Directions, RemoveRedEye } from "material-ui-icons";
 
 const divStyle = {
     display: 'inline'
 }
 const headerButtons = (props) => (
 <div style={divStyle}>
-        {/* boton para las rutas */}
+        {/* boton para crear geocercas */}
         <IconButton
             color="inherit"
-            aria-label="AddLocation"
+            aria-label="Crear Geocercas"
             className={props.classes.buttonLink}
             onClick={props.handleToggleGeofenceModal}
         >
@@ -23,13 +23,13 @@ const headerButtons = (props) => (
                 <p className={props.classes.linkText}>Rutas</p>
             </Hidden>
         </ IconButton>
-        {/*boton para las geocercas */}
+        {/*boton para ver las geocercas */}
         <IconButton
             color="inherit"
-            aria-label="AddLocation"
+            aria-label="Ver Geocercas"
             className={props.classes.buttonLink}
         >
-            <AddLocation className={props.classes.links} />
+            <RemoveRedEye className={props.classes.links} />
             <Hidden mdUp>
                 <p className={props.classes.linkText}>Geocercas</p>
             </Hidden>
