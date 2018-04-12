@@ -8,7 +8,7 @@ import { Person} from "material-ui-icons";
 
 import headerLinksStyle from "variables/styles/headerLinksStyle";
 
-import MapHeaderButtons from '../Map/headerButtons'
+import MapHeaderButtons from './mapHeaderButtons'
 
 import {connect} from 'react-redux'
 import {toggleGeofenceModal}  from '../../actions/actions-creators'
