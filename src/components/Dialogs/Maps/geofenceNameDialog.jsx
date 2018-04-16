@@ -14,7 +14,6 @@ import Dialog, {
 
 const GeofenceNameDialog = (props) => (
     <Dialog
-        fullScreen={false}
         open={props.dialogVisibility}
         onClose={props.handleOnClose}
         aria-labelledby="responsive-dialog-title"
@@ -23,7 +22,7 @@ const GeofenceNameDialog = (props) => (
         <DialogContent>
             <DialogContentText>
                 Inserte el nombre de la geocerca
-                    </DialogContentText>
+            </DialogContentText>
 
             <TextField
                 autoFocus

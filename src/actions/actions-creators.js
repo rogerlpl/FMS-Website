@@ -8,7 +8,8 @@ import {
     DELETE_CURRENT_GEOFENCES,
     TOGGLE_SAVE_GEOFENCE_DIALOG,
     SAVE_GEOFENCE_NAME,
-    SAVE_GEOFENCE_PATH
+    SAVE_GEOFENCE_PATH,
+    TOGGLE_GEOFENCE_ASSIGNMENT_DIALOG
 }
     from '../action-types/index'
 
@@ -17,6 +18,11 @@ const baseAPIURL = 'http://localhost:58496/api'
 export function toggleGeofenceModal() {
     return {
         type: TOGGLE_GEOFENCE_MODAL,
+    }
+}
+export function toggleGeofenceAssignmentDialog() {
+    return {
+        type: TOGGLE_GEOFENCE_ASSIGNMENT_DIALOG,
     }
 }
 export function toggleSaveGeofenceDialog() {

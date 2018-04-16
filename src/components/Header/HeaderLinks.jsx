@@ -11,16 +11,15 @@ import headerLinksStyle from "variables/styles/headerLinksStyle";
 import MapHeaderButtons from './mapHeaderButtons'
 
 import {connect} from 'react-redux'
-import {toggleGeofenceModal}  from '../../actions/actions-creators'
+import {toggleGeofenceModal, toggleGeofenceAssignmentDialog}  from '../../actions/actions-creators'
 import {bindActionCreators} from 'redux'
+
+import GeofenceAssignment from '../Dialogs/Maps/geofenceAssignment'
 
 class HeaderLinks extends React.Component {
   state = {
     open: false
   };
-  handleToggleGeofenceModal = () =>{
-    this.props.toggleGeofenceModal()
-  }
   handleClick = () => {
     this.setState({ open: !this.state.open });
   };
@@ -36,8 +35,11 @@ class HeaderLinks extends React.Component {
       <div className={classes.top}>
       {/* Botones de los mapas */}
       {
-       this.getRoute() === "/maps" && <MapHeaderButtons handleToggleGeofenceModal={this.handleToggleGeofenceModal} classes={classes} />
+       this.getRoute() === "/maps" && <MapHeaderButtons handleToggleGeofenceModal={this.props.toggleGeofenceModal} handleToggleGeofenceAssignment={this.props.toggleGeofenceAssignmentDialog} classes={classes} />
       }
+    
+      <GeofenceAssignment visibility={this.props.geofenceAssignmentVisibility} handleToggleGeofenceAssignment={this.props.toggleGeofenceAssignmentDialog}/>
+
         {/* Boton para las cuentas */}
         <IconButton
           color="inherit"
@@ -54,10 +56,20 @@ class HeaderLinks extends React.Component {
   }
 }
 
+
+function mapStateToProps(state, props) {
+
+  return {
+    geofenceAssignmentVisibility: state.getIn(['geofenceAssignmentDialog', 'visibility']),
+  }
+
+}
+
 function mapDispatchToProps (dispatch){
   return {
-    toggleGeofenceModal: bindActionCreators(toggleGeofenceModal,dispatch)
+    toggleGeofenceModal: bindActionCreators(toggleGeofenceModal,dispatch),
+    toggleGeofenceAssignmentDialog: bindActionCreators(toggleGeofenceAssignmentDialog,dispatch),
   }
 } 
 
-export default connect(null,mapDispatchToProps)(withStyles(headerLinksStyle)(HeaderLinks));
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(headerLinksStyle)(HeaderLinks));
