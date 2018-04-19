@@ -9,7 +9,8 @@ import {
     TOGGLE_SAVE_GEOFENCE_DIALOG,
     SAVE_GEOFENCE_NAME,
     SAVE_GEOFENCE_PATH,
-    TOGGLE_GEOFENCE_ASSIGNMENT_DIALOG
+    TOGGLE_GEOFENCE_ASSIGNMENT_DIALOG,
+    FETCH_GEOFENCES
 }
     from '../action-types/index'
 
@@ -126,6 +127,28 @@ export function fetchDevicesData() {
         dispatch(fetchDevicesSucced(devices)) 
     }catch(err){
         console.log("Ha ocurrido un error en el servidor trayendo la data de los dispositivos: " + err)
+    }
+    }
+}
+
+export function fetchGeofencesSucced(geofences) {
+    return {
+        type: FETCH_GEOFENCES,
+        payload:{
+            geofences
+        }
+    }
+}
+
+export function fetchGeofencesData() {
+    return async (dispatch) => {
+       try{
+        const response = await fetch(`${baseAPIURL}/geofences`);
+        const geofences = await response.json();
+
+        dispatch(fetchGeofencesSucced(geofences)) 
+    }catch(err){
+        console.log("Ha ocurrido un error en el servidor trayendo la data de las geocercas: " + err)
     }
     }
 }
