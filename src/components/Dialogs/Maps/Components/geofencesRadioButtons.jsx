@@ -1,21 +1,33 @@
 import React from "react";
-import Radio from 'material-ui/Radio';
+import Radio, { RadioGroup } from 'material-ui/Radio';
 import {
-    FormControlLabel,
+  FormControlLabel,
 } from 'material-ui/Form';
 
- const  GeofencesRadioButtons = (props) => {
-    if(props.geofences.length>0 ){
-      return props.geofences.map(geofence => (
-        <FormControlLabel 
-        value={geofence.id} 
-        control={<Radio color='primary'/>} 
-        label={geofence.name} 
-        />
-      ))
-    } else {
-        return 'Las geocercas no se han inicializado'
-    }
-  }
+const GeofencesRadioButtons = (props) => {
 
-  export default GeofencesRadioButtons
+    
+
+    return <RadioGroup
+        aria-label="geofences"
+        name="geofences"
+        className={props.classes.group}
+        value={props.radioButtonValue.toString()}
+        onChange={props.radioChange}
+      >
+        {props.geofences.length > 0 ?
+          props.geofences.map(geofence => (
+          <FormControlLabel
+            value={geofence.id.toString()}
+            control={<Radio color='primary' />}
+            label={geofence.name}
+            key={geofence.id}
+          /> ))
+          :'Las geocercas no se han inicializado'
+        }
+      </RadioGroup>
+    
+
+}
+
+export default GeofencesRadioButtons

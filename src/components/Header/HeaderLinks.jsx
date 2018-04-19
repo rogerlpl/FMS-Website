@@ -11,7 +11,7 @@ import headerLinksStyle from "variables/styles/headerLinksStyle";
 import MapHeaderButtons from './mapHeaderButtons'
 
 import { connect } from 'react-redux'
-import { toggleGeofenceModal, toggleGeofenceAssignmentDialog } from '../../actions/actions-creators'
+import * as actions from '../../actions/actions-creators'
 import { bindActionCreators } from 'redux'
 
 import GeofenceAssignment from '../Dialogs/Maps/geofenceAssignment'
@@ -29,6 +29,9 @@ class HeaderLinks extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+  handleRadioChange = event => {
+    this.props.actions.radioButtonChangeGeofenceAssignmentDialog(event.target.value)
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -37,16 +40,18 @@ class HeaderLinks extends React.Component {
         {
           this.getRoute() === "/maps" &&
           <MapHeaderButtons
-            handleToggleGeofenceModal={this.props.toggleGeofenceModal}
-            handleToggleGeofenceAssignment={this.props.toggleGeofenceAssignmentDialog}
+            handleToggleGeofenceModal={this.props.actions.toggleGeofenceModal}
+            handleToggleGeofenceAssignment={this.props.actions.toggleGeofenceAssignmentDialog}
             classes
           />
         }
 
         <GeofenceAssignment
           visibility={this.props.geofenceAssignmentVisibility}
-          handleToggleGeofenceAssignment={this.props.toggleGeofenceAssignmentDialog}
+          handleToggleGeofenceAssignment={this.props.actions.toggleGeofenceAssignmentDialog}
           geofences={this.props.geofences}
+          radioChange={this.handleRadioChange}
+          radioButtonValue={this.props.radioButtonValue}
         />
 
         {/* Boton para las cuentas */}
@@ -70,15 +75,15 @@ function mapStateToProps(state, props) {
 
   return {
     geofenceAssignmentVisibility: state.getIn(['geofenceAssignmentDialog', 'visibility']),
-    geofences: state.getIn(['geofenceAssignmentDialog', 'geofences'])
+    geofences: state.getIn(['geofenceAssignmentDialog', 'geofences']),
+    radioButtonValue: state.getIn(['geofenceAssignmentDialog','radioButtonValue'])
   }
 
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleGeofenceModal: bindActionCreators(toggleGeofenceModal, dispatch),
-    toggleGeofenceAssignmentDialog: bindActionCreators(toggleGeofenceAssignmentDialog, dispatch),
+    actions: bindActionCreators(actions, dispatch)
   }
 }
 

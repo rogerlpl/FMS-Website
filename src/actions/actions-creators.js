@@ -10,7 +10,8 @@ import {
     SAVE_GEOFENCE_NAME,
     SAVE_GEOFENCE_PATH,
     TOGGLE_GEOFENCE_ASSIGNMENT_DIALOG,
-    FETCH_GEOFENCES
+    FETCH_GEOFENCES,
+    RADIO_BUTTON_CHANGE_GEOFENCE_ASSIGNMENT_DIALOG
 }
     from '../action-types/index'
 
@@ -32,6 +33,14 @@ export function toggleSaveGeofenceDialog() {
     }
 }
 
+export function radioButtonChangeGeofenceAssignmentDialog (value){
+    return {
+        type: RADIO_BUTTON_CHANGE_GEOFENCE_ASSIGNMENT_DIALOG,
+        payload: {
+            value
+        }
+    }
+}
 export function saveGeofenceName (name){
     return {
         type: SAVE_GEOFENCE_NAME,

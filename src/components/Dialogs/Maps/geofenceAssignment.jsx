@@ -16,7 +16,6 @@ import {
     FormControlLabel,
     FormHelperText,
 } from 'material-ui/Form';
-import { RadioGroup } from 'material-ui/Radio';
 import Checkbox from 'material-ui/Checkbox';
 import GeofencesRadioButtons from './Components/geofencesRadioButtons'
 
@@ -36,7 +35,7 @@ function Transition(props) {
 
 const GeofenceAssignment = (props) => {
 
-    const { classes, handleToggleGeofenceAssignment, geofences } = props;
+    const { classes, handleToggleGeofenceAssignment, geofences, radioChange, radioButtonValue } = props;
 
     return (
         <Dialog
@@ -73,16 +72,11 @@ const GeofenceAssignment = (props) => {
                         <Grid item>
                             <FormControl component="fieldset" required className={classes.formControl}>
                                 <FormLabel component="legend">Escoja una geocerca para asignarle vehiculos</FormLabel>
-                                <RadioGroup
-                                    aria-label="geofences"
-                                    name="geofences"
-                                    className={classes.group}
-                                    
-                                >
-                                    
-                                      { geofences.length>0 &&  <GeofencesRadioButtons geofences={geofences}/>}
-                                    
-                                </RadioGroup>
+
+
+                                {geofences.length > 0 && <GeofencesRadioButtons classes={classes} radioButtonValue={radioButtonValue} radioChange={radioChange} geofences={geofences} />}
+
+
                             </FormControl>
                         </Grid>
                     </Grid>
