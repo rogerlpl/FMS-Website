@@ -16,8 +16,9 @@ import {
     FormControlLabel,
     FormHelperText,
 } from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
+import { RadioGroup } from 'material-ui/Radio';
 import Checkbox from 'material-ui/Checkbox';
+import GeofencesRadioButtons from './Components/geofencesRadioButtons'
 
 const styles = {
     appBar: {
@@ -35,7 +36,7 @@ function Transition(props) {
 
 const GeofenceAssignment = (props) => {
 
-    const { classes, handleToggleGeofenceAssignment } = props;
+    const { classes, handleToggleGeofenceAssignment, geofences } = props;
 
     return (
         <Dialog
@@ -70,28 +71,22 @@ const GeofenceAssignment = (props) => {
                     </Typography>
                         </Grid>
                         <Grid item>
-                        <FormControl component="fieldset" required className={classes.formControl}>
-                        <FormLabel component="legend">Gender</FormLabel>
-                        <RadioGroup
-                            aria-label="gender"
-                            name="gender1"
-                            className={classes.group}
-                            value='male'
-                        >
-                            <FormControlLabel value="female" control={<Radio />} label="Female" />
-                            <FormControlLabel value="male" control={<Radio color='primary'/>} label="Male" />
-                            <FormControlLabel value="other" control={<Radio />} label="Other" />
-                            <FormControlLabel
-                                value="disabled"
-                                disabled
-                                control={<Radio />}
-                                label="(Disabled option)"
-                            />
-                        </RadioGroup>
-                    </FormControl>
+                            <FormControl component="fieldset" required className={classes.formControl}>
+                                <FormLabel component="legend">Escoja una geocerca para asignarle vehiculos</FormLabel>
+                                <RadioGroup
+                                    aria-label="geofences"
+                                    name="geofences"
+                                    className={classes.group}
+                                    
+                                >
+                                    
+                                      { geofences.length>0 &&  <GeofencesRadioButtons geofences={geofences}/>}
+                                    
+                                </RadioGroup>
+                            </FormControl>
                         </Grid>
                     </Grid>
-                    
+
                 </Grid>
                 <Grid item xs={6}>
                     <Grid container justify='center'>
@@ -99,23 +94,23 @@ const GeofenceAssignment = (props) => {
                             <Typography variant="title" color="inherit" className={classes.flex}>
                                 Vehiculos
                     </Typography>
-                        <Grid item>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend">Assign responsibility</FormLabel>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                color='primary'
-                                                value="gilad"
-                                            />
-                                        }
-                                        label="Gilad Gray"
-                                    />
-                                </FormGroup>
-                                <FormHelperText>Be careful</FormHelperText>
-                            </FormControl>
-                        </Grid>
+                            <Grid item>
+                                <FormControl component="fieldset">
+                                    <FormLabel component="legend">Assign responsibility</FormLabel>
+                                    <FormGroup>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    color='primary'
+                                                    value="gilad"
+                                                />
+                                            }
+                                            label="Gilad Gray"
+                                        />
+                                    </FormGroup>
+                                    <FormHelperText>Be careful</FormHelperText>
+                                </FormControl>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
