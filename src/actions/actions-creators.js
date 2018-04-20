@@ -11,7 +11,9 @@ import {
     SAVE_GEOFENCE_PATH,
     TOGGLE_GEOFENCE_ASSIGNMENT_DIALOG,
     FETCH_GEOFENCES,
-    RADIO_BUTTON_CHANGE_GEOFENCE_ASSIGNMENT_DIALOG
+    RADIO_BUTTON_CHANGE_GEOFENCE_ASSIGNMENT_DIALOG,
+    FETCH_DEVICES_IN_CURRENT_GEOFENCE,
+    ADD_DEVICES_TO_A_GEOFENCE
 }
     from '../action-types/index'
 
@@ -158,6 +160,46 @@ export function fetchGeofencesData() {
         dispatch(fetchGeofencesSucced(geofences)) 
     }catch(err){
         console.log("Ha ocurrido un error en el servidor trayendo la data de las geocercas: " + err)
+    }
+    }
+}
+
+export function fetchDevicesInGeofenceSucced(devices) {
+    return {
+        type: FETCH_DEVICES_IN_CURRENT_GEOFENCE,
+        payload:{
+            devices
+        }
+    }
+}
+
+export function fetchDevicesInGeofence(geofenceid) {
+    return async (dispatch) => {
+       try{
+        const response = await fetch(`${baseAPIURL}/devicesgeofences/${geofenceid}`);
+        const devices = await response.json();
+
+        dispatch(fetchDevicesInGeofenceSucced(devices)) 
+    }catch(err){
+        console.log("Ha ocurrido un error en el servidor trayendo la data de los dispostivos en geocercas: " + err)
+    }
+    }
+}
+export function fetchAddDevicesToAGeofenceSucced() {
+    return {
+        type: ADD_DEVICES_TO_A_GEOFENCE,
+    }
+}
+
+export function fetchAddDevicesToAGeofence(deviceid,geofenceid) {
+    return async (dispatch) => {
+       try{
+        const response = await fetch(`${baseAPIURL}/devicesgeofences?deviceid=${deviceid}&geofenceid=${geofenceid}`);
+        //const devices = await response.json();
+
+        dispatch(fetchAddDevicesToAGeofenceSucced()) 
+    }catch(err){
+        console.log("Ha ocurrido un error en el servidor insertando la data de los dispositivos en las geocercas: " + err)
     }
     }
 }

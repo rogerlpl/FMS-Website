@@ -14,7 +14,6 @@ import {
     FormControl,
     FormGroup,
     FormControlLabel,
-    FormHelperText,
 } from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import GeofencesRadioButtons from './Components/geofencesRadioButtons'
@@ -62,6 +61,7 @@ const GeofenceAssignment = (props) => {
                 direction='row'
                 justify='flex-start'
             >
+            {/* radiobuttons de las geocercas existentes */}
                 <Grid item xs={6}>
                     <Grid container justify='center' direction='column' alignItems='center'>
                         <Grid item>
@@ -82,6 +82,8 @@ const GeofenceAssignment = (props) => {
                     </Grid>
 
                 </Grid>
+
+                {/* vehiculos dependiendo de la geocerca */}
                 <Grid item xs={6}>
                     <Grid container justify='center'>
                         <Grid item>
@@ -102,7 +104,6 @@ const GeofenceAssignment = (props) => {
                                             label="Gilad Gray"
                                         />
                                     </FormGroup>
-                                    <FormHelperText>Be careful</FormHelperText>
                                 </FormControl>
                             </Grid>
                         </Grid>
