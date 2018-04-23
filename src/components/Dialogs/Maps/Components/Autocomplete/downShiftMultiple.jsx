@@ -13,11 +13,6 @@ import { bindActionCreators } from 'redux'
 
 class DownshiftMultiple extends Component {
 
-    state = {
-        inputValue: '',
-        selectedItem: [],
-    };
-
     renderInput = (inputProps) => {
         const { InputProps, classes, ref, ...other } = inputProps;
 
@@ -37,12 +32,12 @@ class DownshiftMultiple extends Component {
 
     renderSuggestion = ({ suggestion, index, itemProps, highlightedIndex, selectedItem }) => {
         const isHighlighted = highlightedIndex === index;
-        const isSelected = (selectedItem || '').indexOf(suggestion.name) > -1;
+        const isSelected = (selectedItem || '').indexOf(suggestion.uniqueid) > -1;
 
         return (
             <MenuItem
                 {...itemProps}
-                key={suggestion.name}
+                key={suggestion.uniqueid}
                 selected={isHighlighted}
                 component="div"
                 style={{
@@ -59,7 +54,7 @@ class DownshiftMultiple extends Component {
 
         return this.props.devicesSearch.filter(suggestion => {
             const keep =
-                (!inputValue || suggestion.name.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) &&
+                (!inputValue || suggestion.uniqueid.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) &&
                 count < 5;
 
             if (keep) {
@@ -71,41 +66,35 @@ class DownshiftMultiple extends Component {
     }
 
     handleKeyDown = event => {
-        const { inputValue, selectedItem } = this.state;
+        const { inputValue, selectedItem } = this.props;
         if (selectedItem.length && !inputValue.length && keycode(event) === 'backspace') {
-            this.setState({
-                selectedItem: selectedItem.slice(0, selectedItem.length - 1),
-            });
+            this.props.actions.keyDownInputGeofenceAssignmentDialog()
         }
     };
 
     handleInputChange = event => {
-        this.setState({ inputValue: event.target.value });
+        this.props.actions.changeInputGeofenceAssignmentDialog(event.target.value)
     };
 
     handleChange = item => {
-        let { selectedItem } = this.state;
+        let { selectedItem } = this.props;
 
         if (selectedItem.indexOf(item) === -1) {
             selectedItem = [...selectedItem, item];
         }
 
-        this.setState({
-            inputValue: '',
-            selectedItem,
-        });
+        this.props.actions.changeDevicesToAddGeofenceAssignmentDialog(selectedItem)
+       this.props.actions.deteleTextGeofenceAssignmentDialog()
     };
 
     handleDelete = item => () => {
-        const selectedItem = [...this.state.selectedItem];
+        const selectedItem = [...this.props.selectedItem];
         selectedItem.splice(selectedItem.indexOf(item), 1);
-
-        this.setState({ selectedItem });
+        this.props.actions.deleteDeviceToAddGeofenceAssignmentDialog(selectedItem)
     };
 
     render() {
-        const { classes } = this.props;
-        const { inputValue, selectedItem } = this.state;
+        const { classes, inputValue, selectedItem } = this.props;
 
         return (
             <Downshift inputValue={inputValue} onChange={this.handleChange} selectedItem={selectedItem}>
@@ -143,7 +132,7 @@ class DownshiftMultiple extends Component {
                                         this.renderSuggestion({
                                             suggestion,
                                             index,
-                                            itemProps: getItemProps({ item: suggestion.name }),
+                                            itemProps: getItemProps({ item: suggestion.uniqueid }),
                                             highlightedIndex,
                                             selectedItem: selectedItem2,
                                         }),
@@ -161,7 +150,8 @@ function mapStateToProps(state, props) {
 
     return {
         devicesSearch: state.getIn(['geofenceAssignmentDialog', 'addDevicesComponents', 'devicesSearch']),
-        devicesToAdd: state.getIn(['geofenceAssignmentDialog', 'addDevicesComponents', 'devicesToAdd']),
+        selectedItem: state.getIn(['geofenceAssignmentDialog', 'addDevicesComponents', 'devicesToAdd']),
+        inputValue: state.getIn(['geofenceAssignmentDialog', 'addDevicesComponents', 'inputValue'])
     }
 
 }
