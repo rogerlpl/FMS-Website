@@ -20,7 +20,8 @@ import {
     CHANGE_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG,
     CHANGE_INPUT_GEOFENCE_ASSIGNMENT_DIALOG,
     KEY_DOWN_INPUT_GEOFENCE_ASSIGNMENT_DIALOG,
-    DELETE_TEXT_GEOFENCE_ASSIGNMENT_DIALOG
+    DELETE_TEXT_GEOFENCE_ASSIGNMENT_DIALOG,
+    RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG
 }
     from '../action-types/index'
 
@@ -65,6 +66,11 @@ export function saveGeofenceName(name) {
         payload: {
             name
         }
+    }
+}
+export function resetDevicesToAddGeofenceAssignmentDialog() {
+    return {
+        type: RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG,
     }
 }
 export function deleteDeviceToAddGeofenceAssignmentDialog(item) {
@@ -249,10 +255,10 @@ export function fetchSearchDevicesSucced(devices) {
     }
 }
 
-export function fetchSearchDevices() {
+export function fetchSearchDevices(geofenceid) {
     return async (dispatch) => {
         try {
-            const response = await fetch(`${baseAPIURL}/devices/`);
+            const response = await fetch(`${baseAPIURL}/searchdevices?geofenceid=${geofenceid}`);
             const devices = await response.json();
 
             dispatch(fetchSearchDevicesSucced(devices))

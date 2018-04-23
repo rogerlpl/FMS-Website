@@ -44,7 +44,7 @@ class DownshiftMultiple extends Component {
                     fontWeight: isSelected ? 500 : 400,
                 }}
             >
-                {suggestion.name}
+                {suggestion.uniqueid}
             </MenuItem>
         );
     }

@@ -11,7 +11,8 @@ import {
     CHANGE_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG,
     CHANGE_INPUT_GEOFENCE_ASSIGNMENT_DIALOG,
     KEY_DOWN_INPUT_GEOFENCE_ASSIGNMENT_DIALOG,
-    DELETE_TEXT_GEOFENCE_ASSIGNMENT_DIALOG
+    DELETE_TEXT_GEOFENCE_ASSIGNMENT_DIALOG,
+    RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG
 } from '../action-types/index'
 
 const initialState = fromJS({
@@ -54,6 +55,8 @@ function geofenceAssignmentDialog(state = initialState, action) {
             return state.setIn(['addDevicesComponents', 'devicesToAdd'], action.payload.item)
         case DELETE_TEXT_GEOFENCE_ASSIGNMENT_DIALOG:
             return state.setIn(['addDevicesComponents', 'inputValue'], '')
+        case RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG:
+            return state.setIn(['addDevicesComponents', 'devicesToAdd'], [])
 
         default:
             return state

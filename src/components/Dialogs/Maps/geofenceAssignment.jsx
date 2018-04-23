@@ -7,7 +7,7 @@ import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
-import { Close, Done,Add,Remove } from 'material-ui-icons';
+import { Close, Done, Add, Remove } from 'material-ui-icons';
 import Slide from 'material-ui/transitions/Slide';
 import {
     FormLabel,
@@ -46,6 +46,8 @@ const GeofenceAssignment = (props) => {
         devices,
         visibilityDevicesComponent,
         _toggleDeviceComponents,
+        handleSaveDevicesInGeofence,
+        selectedItem
     } = props;
 
     return (
@@ -62,9 +64,10 @@ const GeofenceAssignment = (props) => {
                     <Typography variant="title" color="inherit" className={classes.flex}>
                         Asignar vehiculos a Geocercas
                     </Typography>
-                    <Button color="inherit">
+                    {/* para proximo update con mejor experiencia de usuario
+                     <Button color="inherit">
                         Guardar Cambios
-                    </Button>
+                    </Button> */}
                 </Toolbar>
             </AppBar>
             <Grid container
@@ -107,16 +110,25 @@ const GeofenceAssignment = (props) => {
                                 <FormLabel component="legend">Presiona el boton de agregar vehiculo para agregarlo a la geocerca.</FormLabel>
                                 <Grid container justify='flex-start' direction='row' alignItems='flex-start'>
                                     <Grid item xs={2} className={classes.buttons}>
-                                        {!visibilityDevicesComponent
+
+                                        {radioButtonValue === 0
                                             ?
-                                            <Button variant="fab" mini color="primary" aria-label="add" onClick={_toggleDeviceComponents} className={classes.button}>
+                                            <Button variant="fab" mini disabled color="primary" aria-label="add" onClick={_toggleDeviceComponents} className={classes.button}>
                                                 <Add />
                                             </Button>
                                             :
-                                            <Button variant="fab" mini color="secondary" aria-label="add" onClick={_toggleDeviceComponents} className={classes.button}>
-                                                <Remove />
-                                            </Button>
+                                            !visibilityDevicesComponent
+                                                ?
+                                                <Button variant="fab" mini color="primary" aria-label="add" onClick={_toggleDeviceComponents} className={classes.button}>
+                                                    <Add />
+                                                </Button>
+                                                :
+                                                <Button variant="fab" mini color="secondary" aria-label="remove" onClick={_toggleDeviceComponents} className={classes.button}>
+                                                    <Remove />
+                                                </Button>
+
                                         }
+
                                     </Grid>
                                     {visibilityDevicesComponent &&
                                         <Grid item xs={8}>
@@ -125,9 +137,16 @@ const GeofenceAssignment = (props) => {
                                     }
                                     {visibilityDevicesComponent &&
                                         <Grid item xs={2} className={classes.buttons}>
-                                            <Button variant="fab" mini color="primary" aria-label="add" className={classes.button}>
-                                                <Done />
-                                            </Button>
+                                            {selectedItem.length > 0
+                                                ?
+                                                <Button variant="fab" mini color="primary" aria-label="add" onClick={handleSaveDevicesInGeofence} className={classes.button}>
+                                                    <Done />
+                                                </Button>
+                                                :
+                                                <Button variant="fab" mini disabled color="primary" aria-label="add" onClick={handleSaveDevicesInGeofence} className={classes.button}>
+                                                    <Done />
+                                                </Button>
+                                            }
                                         </Grid>
                                     }
                                 </Grid>

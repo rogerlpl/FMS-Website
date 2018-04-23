@@ -32,7 +32,27 @@ class HeaderLinks extends React.Component {
   handleRadioChange = event => {
     this.props.actions.radioButtonChangeGeofenceAssignmentDialog(event.target.value)
     this.props.actions.fetchDevicesInGeofence(event.target.value)
+    this.props.actions.fetchSearchDevices(event.target.value)
+    this.props.actions.resetDevicesToAddGeofenceAssignmentDialog()
   //  this.props.actions.fetchAddDevicesToAGeofence(9,event.target.value)
+  }
+  handleSaveDevicesInGeofence = () =>{
+    this.props.selectedItem.forEach(selectedItem => {
+      alert(selectedItem)
+      this.props.devicesSearch.forEach(device => {
+        if(device.uniqueid===selectedItem){
+          alert(device.id);
+          this.props.actions.fetchAddDevicesToAGeofence(device.id,this.props.radioButtonValue)
+        }
+      })
+    })
+    this.props.actions.resetDevicesToAddGeofenceAssignmentDialog()
+    setTimeout(()=>{
+      this.props.actions.fetchDevicesInGeofence(this.props.radioButtonValue)    
+      this.props.actions.fetchSearchDevices(this.props.radioButtonValue)
+    },3000)
+    
+    
   }
   render() {
     const { classes } = this.props;
@@ -57,6 +77,8 @@ class HeaderLinks extends React.Component {
           radioButtonValue={this.props.radioButtonValue}
           visibilityDevicesComponent ={this.props.visibilityDevicesComponent}
           _toggleDeviceComponents = {this.props.actions.toggleDeviceComponents}
+          handleSaveDevicesInGeofence={this.handleSaveDevicesInGeofence}
+          selectedItem ={this.props.selectedItem}
         />
 
         {/* Boton para las cuentas */}
@@ -84,6 +106,8 @@ function mapStateToProps(state, props) {
     radioButtonValue: state.getIn(['geofenceAssignmentDialog','radioButtonValue']),
     devices: state.getIn(['geofenceAssignmentDialog','devicesInCurrentGeofence']),
     visibilityDevicesComponent: state.getIn(['geofenceAssignmentDialog','addDevicesComponents','visibility']),
+    selectedItem: state.getIn(['geofenceAssignmentDialog', 'addDevicesComponents', 'devicesToAdd']),
+    devicesSearch: state.getIn(['geofenceAssignmentDialog', 'addDevicesComponents', 'devicesSearch']),
   }
 
 }

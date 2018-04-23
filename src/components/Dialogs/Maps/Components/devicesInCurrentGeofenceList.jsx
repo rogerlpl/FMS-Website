@@ -21,7 +21,7 @@ const DevicesInCurrentGeofenceList = props => {
                     <Avatar>
                         <DirectionsBus />
                     </Avatar>
-                    <ListItemText primary={device.name} secondary={`Numero de Identificacion -> ${device.uniqueid}`} />
+                    <ListItemText primary={`Ficha: ${device.uniqueid}`}  />
 
                 </ListItem>
             ))
