@@ -13,6 +13,7 @@ class LocationsMap extends PureComponent {
     window.addEventListener('load', this.handleLoad);
     this.props.actions.fetchDevicesData()
     this.props.actions.fetchGeofencesData()
+    this.props.actions.fetchSearchDevices()
    /// this.refreshLocation = setInterval(()=>this.props.actions.fetchDevicesData(),30000)
   }
   componentWillUnmount = () => {

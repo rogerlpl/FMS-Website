@@ -31,6 +31,8 @@ class HeaderLinks extends React.Component {
   };
   handleRadioChange = event => {
     this.props.actions.radioButtonChangeGeofenceAssignmentDialog(event.target.value)
+    this.props.actions.fetchDevicesInGeofence(event.target.value)
+  //  this.props.actions.fetchAddDevicesToAGeofence(9,event.target.value)
   }
   render() {
     const { classes } = this.props;
@@ -50,8 +52,11 @@ class HeaderLinks extends React.Component {
           visibility={this.props.geofenceAssignmentVisibility}
           handleToggleGeofenceAssignment={this.props.actions.toggleGeofenceAssignmentDialog}
           geofences={this.props.geofences}
+          devices={this.props.devices}
           radioChange={this.handleRadioChange}
           radioButtonValue={this.props.radioButtonValue}
+          visibilityDevicesComponent ={this.props.visibilityDevicesComponent}
+          _toggleDeviceComponents = {this.props.actions.toggleDeviceComponents}
         />
 
         {/* Boton para las cuentas */}
@@ -76,7 +81,9 @@ function mapStateToProps(state, props) {
   return {
     geofenceAssignmentVisibility: state.getIn(['geofenceAssignmentDialog', 'visibility']),
     geofences: state.getIn(['geofenceAssignmentDialog', 'geofences']),
-    radioButtonValue: state.getIn(['geofenceAssignmentDialog','radioButtonValue'])
+    radioButtonValue: state.getIn(['geofenceAssignmentDialog','radioButtonValue']),
+    devices: state.getIn(['geofenceAssignmentDialog','devicesInCurrentGeofence']),
+    visibilityDevicesComponent: state.getIn(['geofenceAssignmentDialog','addDevicesComponents','visibility']),
   }
 
 }

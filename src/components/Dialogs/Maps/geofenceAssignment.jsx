@@ -7,16 +7,16 @@ import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
-import { Close } from 'material-ui-icons';
+import { Close, Done,Add,Remove } from 'material-ui-icons';
 import Slide from 'material-ui/transitions/Slide';
 import {
     FormLabel,
     FormControl,
-    FormGroup,
-    FormControlLabel,
 } from 'material-ui/Form';
-import Checkbox from 'material-ui/Checkbox';
 import GeofencesRadioButtons from './Components/geofencesRadioButtons'
+import DevicesInCurrentGeofenceList from './Components/devicesInCurrentGeofenceList'
+import IntegrationDownshift from './Components/Autocomplete/integrationDownShift'
+
 
 const styles = {
     appBar: {
@@ -25,6 +25,10 @@ const styles = {
     flex: {
         flex: 1,
     },
+    subheading:
+        {
+            paddingTop: '20px'
+        },
 };
 
 function Transition(props) {
@@ -34,7 +38,15 @@ function Transition(props) {
 
 const GeofenceAssignment = (props) => {
 
-    const { classes, handleToggleGeofenceAssignment, geofences, radioChange, radioButtonValue } = props;
+    const { classes,
+        handleToggleGeofenceAssignment,
+        geofences,
+        radioChange,
+        radioButtonValue,
+        devices,
+        visibilityDevicesComponent,
+        _toggleDeviceComponents,
+    } = props;
 
     return (
         <Dialog
@@ -61,17 +73,17 @@ const GeofenceAssignment = (props) => {
                 direction='row'
                 justify='flex-start'
             >
-            {/* radiobuttons de las geocercas existentes */}
+                {/* radiobuttons de las geocercas existentes */}
                 <Grid item xs={6}>
                     <Grid container justify='center' direction='column' alignItems='center'>
                         <Grid item>
                             <Typography variant="title" color="inherit" className={classes.flex}>
                                 Geocercas
-                    </Typography>
+                            </Typography>
                         </Grid>
                         <Grid item>
                             <FormControl component="fieldset" required className={classes.formControl}>
-                                <FormLabel component="legend">Escoja una geocerca para asignarle vehiculos</FormLabel>
+                                <FormLabel component="legend">Escoja una geocerca para asignarle vehiculos.</FormLabel>
 
 
                                 {geofences.length > 0 && <GeofencesRadioButtons classes={classes} radioButtonValue={radioButtonValue} radioChange={radioChange} geofences={geofences} />}
@@ -82,35 +94,67 @@ const GeofenceAssignment = (props) => {
                     </Grid>
 
                 </Grid>
-
                 {/* vehiculos dependiendo de la geocerca */}
                 <Grid item xs={6}>
-                    <Grid container justify='center'>
+                    <Grid container justify='center' direction='column' alignItems='center'>
                         <Grid item>
                             <Typography variant="title" color="inherit" className={classes.flex}>
                                 Vehiculos
-                    </Typography>
-                            <Grid item>
-                                <FormControl component="fieldset">
-                                    <FormLabel component="legend">Assign responsibility</FormLabel>
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    color='primary'
-                                                    value="gilad"
-                                                />
-                                            }
-                                            label="Gilad Gray"
-                                        />
-                                    </FormGroup>
-                                </FormControl>
-                            </Grid>
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <FormControl component="fieldset" required className={classes.formControl}>
+                                <FormLabel component="legend">Presiona el boton de agregar vehiculo para agregarlo a la geocerca.</FormLabel>
+                                <Grid container justify='flex-start' direction='row' alignItems='flex-start'>
+                                    <Grid item xs={2} className={classes.buttons}>
+                                        {!visibilityDevicesComponent
+                                            ?
+                                            <Button variant="fab" mini color="primary" aria-label="add" onClick={_toggleDeviceComponents} className={classes.button}>
+                                                <Add />
+                                            </Button>
+                                            :
+                                            <Button variant="fab" mini color="secondary" aria-label="add" onClick={_toggleDeviceComponents} className={classes.button}>
+                                                <Remove />
+                                            </Button>
+                                        }
+                                    </Grid>
+                                    {visibilityDevicesComponent &&
+                                        <Grid item xs={8}>
+                                            <IntegrationDownshift />
+                                        </Grid>
+                                    }
+                                    {visibilityDevicesComponent &&
+                                        <Grid item xs={2} className={classes.buttons}>
+                                            <Button variant="fab" mini color="primary" aria-label="add" className={classes.button}>
+                                                <Done />
+                                            </Button>
+                                        </Grid>
+                                    }
+                                </Grid>
+                                <Grid container justify='center' >
+
+                                    {
+                                        radioButtonValue === 0
+                                            ?
+                                            <Typography variant="subheading" color="primary" className={classes.subheading} align='center'>
+                                                Selecciona una Geocerca para visualizar los vehiculos que estan asignados a ella.
+                                        </Typography>
+                                            :
+                                            devices.length > 0
+                                                ?
+                                                <DevicesInCurrentGeofenceList devices={devices} />
+                                                :
+                                                <Typography variant="subheading" color="primary" className={classes.subheading} align='center'>
+                                                    A esta geocerca no se le ha asignado un vehiculo todavía.
+                                            </Typography>
+                                    }
+                                </Grid>
+                            </FormControl>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-        </Dialog>
+            </Grid >
+        </Dialog >
     )
 }
 

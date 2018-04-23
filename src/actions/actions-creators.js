@@ -13,12 +13,19 @@ import {
     FETCH_GEOFENCES,
     RADIO_BUTTON_CHANGE_GEOFENCE_ASSIGNMENT_DIALOG,
     FETCH_DEVICES_IN_CURRENT_GEOFENCE,
-    ADD_DEVICES_TO_A_GEOFENCE
+    ADD_DEVICES_TO_A_GEOFENCE,
+    TOGGLE_DEVICES_COMPONENT_ASSIGNMENT_DIALOG,
+    FETCH_SEARCH_DEVICES
 }
     from '../action-types/index'
 
 const baseAPIURL = 'http://localhost:58496/api'
 
+export function toggleDeviceComponents() {
+    return {
+        type: TOGGLE_DEVICES_COMPONENT_ASSIGNMENT_DIALOG,
+    }
+}
 export function toggleGeofenceModal() {
     return {
         type: TOGGLE_GEOFENCE_MODAL,
@@ -185,6 +192,27 @@ export function fetchDevicesInGeofence(geofenceid) {
     }
     }
 }
+export function fetchSearchDevicesSucced(devices) {
+    return {
+        type: FETCH_SEARCH_DEVICES,
+        payload:{
+            devices
+        }
+    }
+}
+
+export function fetchSearchDevices() {
+    return async (dispatch) => {
+       try{
+        const response = await fetch(`${baseAPIURL}/devices/`);
+        const devices = await response.json();
+
+        dispatch(fetchSearchDevicesSucced(devices)) 
+    }catch(err){
+        console.log("Ha ocurrido un error en el servidor trayendo la data de los dispostivos para el buscador: " + err)
+    }
+    }
+}
 export function fetchAddDevicesToAGeofenceSucced() {
     return {
         type: ADD_DEVICES_TO_A_GEOFENCE,
@@ -194,7 +222,10 @@ export function fetchAddDevicesToAGeofenceSucced() {
 export function fetchAddDevicesToAGeofence(deviceid,geofenceid) {
     return async (dispatch) => {
        try{
-        const response = await fetch(`${baseAPIURL}/devicesgeofences?deviceid=${deviceid}&geofenceid=${geofenceid}`);
+         await fetch(`${baseAPIURL}/devicesgeofences?deviceid=${deviceid}&geofenceid=${geofenceid}`,
+            {
+            method: "post"
+            });
         //const devices = await response.json();
 
         dispatch(fetchAddDevicesToAGeofenceSucced()) 

@@ -9,6 +9,7 @@
     "@types/markerclustererplus": "2.1.33",
     "chartist": "0.10.1",
     "classnames": "2.2.5",
+    "downshift": "1.31.12",
     "googlemaps": "3.0.0",
     "immutable": "3.8.2",
     "markerclustererplus": "2.1.29",
