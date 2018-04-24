@@ -149,9 +149,9 @@ class DownshiftMultiple extends Component {
 function mapStateToProps(state, props) {
 
     return {
-        devicesSearch: state.getIn(['geofenceAssignmentDialog', 'addDevicesComponents', 'devicesSearch']),
-        selectedItem: state.getIn(['geofenceAssignmentDialog', 'addDevicesComponents', 'devicesToAdd']),
-        inputValue: state.getIn(['geofenceAssignmentDialog', 'addDevicesComponents', 'inputValue'])
+        devicesSearch: state.getIn(['geofences', 'addDevicesComponents', 'devicesSearch']),
+        selectedItem: state.getIn(['geofences', 'addDevicesComponents', 'devicesToAdd']),
+        inputValue: state.getIn(['geofences', 'addDevicesComponents', 'inputValue'])
     }
 
 }

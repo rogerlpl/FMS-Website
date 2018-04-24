@@ -5,7 +5,6 @@
 import {
   defaultFont,
   dangerColor,
-  primaryColor,
   primaryBoxShadow
 } from "variables/styles";
 
@@ -47,7 +46,8 @@ const headerLinksStyle = theme => ({
   top: {
     top: "-6px",
     zIndex: "4",
-    marginTop: "25px"
+    marginTop: "25px",
+    color: "white"
   },
   searchIcon: {
     width: "17px",
@@ -119,7 +119,7 @@ const headerLinksStyle = theme => ({
   },
   dropdownItem: {
     ...defaultFont,
-    fontSize: "13px",
+    fontSize: "16px",
     padding: "10px 20px",
     margin: "0 5px",
     borderRadius: "2px",
@@ -131,7 +131,7 @@ const headerLinksStyle = theme => ({
     color: "#333",
     whiteSpace: "nowrap",
     "&:hover": {
-      backgroundColor: primaryColor,
+      backgroundColor: '#F44336',
       color: "#FFFFFF",
       ...primaryBoxShadow
     }

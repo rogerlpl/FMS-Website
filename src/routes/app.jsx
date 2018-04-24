@@ -4,24 +4,49 @@ import LocationsMap from "views/Maps/LocationsMap.jsx";
 import {
   Dashboard,
   LocationOn,
+  Videocam,
+  Mood,
+  People
 } from "material-ui-icons";
 
 const appRoutes = [
   {
-    path: "/dashboard",
-    sidebarName: "Dashboard",
-    navbarName: "Material Dashboard",
+    path: "/estadisticas",
+    sidebarName: "Estadisticas",
+    navbarName: "Estadisticas y Reportes",
     icon: Dashboard,
     component: DashboardPage
   },
   {
     path: "/maps",
-    sidebarName: "Rastreo",
-    navbarName: "Rastreo Vehicular",
+    sidebarName: "Operaciones",
+    navbarName: "Modulo de Gestion de Operaciones",
     icon: LocationOn,
     component: LocationsMap
   },
-  { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
+  {
+    path: "/seguimiento",
+    sidebarName: "Seguimiento vehicular",
+    navbarName: "Modulo de Seguimiento vehicular",
+    icon: Videocam,
+    component: DashboardPage
+  },
+  {
+    path: "/conductores",
+    sidebarName: "Conductores",
+    navbarName: "Modulo de Gestion de conductores",
+    icon: People,
+    component: DashboardPage
+  },
+  {
+    path: "/pasajeros",
+    sidebarName: "Pasajeros",
+    navbarName: "Modulo de atencion al cliente",
+    icon: Mood,
+    component: DashboardPage
+  },
+  //
+  { redirect: true, path: "/", to: "/estadisticas", navbarName: "Redirect" }
 ];
 
 export default appRoutes;

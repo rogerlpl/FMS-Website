@@ -21,7 +21,9 @@ import {
     CHANGE_INPUT_GEOFENCE_ASSIGNMENT_DIALOG,
     KEY_DOWN_INPUT_GEOFENCE_ASSIGNMENT_DIALOG,
     DELETE_TEXT_GEOFENCE_ASSIGNMENT_DIALOG,
-    RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG
+    RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG,
+    TOGGLE_OPEN_GEOFENCES_VISIBILITY_MENU,
+    FALSE_OPEN_GEOFENCES_VISIBILITY_MENU
 }
     from '../action-types/index'
 
@@ -30,6 +32,16 @@ const baseAPIURL = 'http://localhost:58496/api'
 export function toggleDeviceComponents() {
     return {
         type: TOGGLE_DEVICES_COMPONENT_ASSIGNMENT_DIALOG,
+    }
+}
+export function falseGeofencesMenu() {
+    return {
+        type: FALSE_OPEN_GEOFENCES_VISIBILITY_MENU,
+    }
+}
+export function toggleGeofencesMenu() {
+    return {
+        type: TOGGLE_OPEN_GEOFENCES_VISIBILITY_MENU,
     }
 }
 export function deteleTextGeofenceAssignmentDialog() {

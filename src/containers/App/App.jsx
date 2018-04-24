@@ -121,7 +121,6 @@ class App extends React.Component {
                 iconAddress={Bus}
                 defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
               />
-
             )}
           <ModalContainer>
             {this.props.modal.get('visibility') &&
@@ -167,7 +166,7 @@ class App extends React.Component {
               </ Modal>
             }
           </ ModalContainer>
-          {this.getRoute() ? <Footer /> : null}
+          {this.getRoute() ? <Footer />  : null}
         </div>
       </div>
     );
