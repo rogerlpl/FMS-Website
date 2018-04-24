@@ -23,7 +23,9 @@ import {
     DELETE_TEXT_GEOFENCE_ASSIGNMENT_DIALOG,
     RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG,
     TOGGLE_OPEN_GEOFENCES_VISIBILITY_MENU,
-    FALSE_OPEN_GEOFENCES_VISIBILITY_MENU
+    FALSE_OPEN_GEOFENCES_VISIBILITY_MENU,
+    DRAW_GEOFENCES_LOCATION_MAP,
+    DELETE_GEOFENCES_LOCATION_MAP
 }
     from '../action-types/index'
 
@@ -80,6 +82,22 @@ export function saveGeofenceName(name) {
         }
     }
 }
+export function drawGeofencesLocationMap(geofence) {
+    return {
+        type: DRAW_GEOFENCES_LOCATION_MAP,
+        payload: {
+            geofence
+        }
+    }
+}
+export function deleteGeofenceLocationMap(geofenceid) {
+    return {
+        type: DELETE_GEOFENCES_LOCATION_MAP,
+        payload: {
+            geofenceid
+        }
+    }
+}
 export function resetDevicesToAddGeofenceAssignmentDialog() {
     return {
         type: RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG,
@@ -122,6 +140,10 @@ export function saveCurrentGeofence(paths, name) {
         dispatch(isDrawingGeofences())
         dispatch(saveGeofencePath(paths))
 
+        const attributes = {
+            visibile: false
+        }
+
         try {
             await fetch(`${baseAPIURL}/geofences`, {
                 method: "post",
@@ -132,6 +154,7 @@ export function saveCurrentGeofence(paths, name) {
                 body: JSON.stringify({
                     name: name,
                     area: JSON.stringify(paths),
+                    attributes: JSON.stringify(attributes),
                     type: 'Polygon'
                 })
             })

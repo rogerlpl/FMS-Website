@@ -44,7 +44,7 @@ function mapStateToProps(state,props){
     google: state.get('mapData').get('google'),
     devices: state.getIn(['mapData','locationMap','devices']),
     googleReady: state.getIn(['mapData', 'locationMap','googleReady']),
-    paths: state.getIn(['modal','geofencesMap','paths'])
+    paths: state.getIn(['mapData','locationMap','visibleGeofences'])
   }
 
 }
