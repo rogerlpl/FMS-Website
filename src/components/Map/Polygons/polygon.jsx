@@ -6,9 +6,10 @@ import {
  const  PolygonGeofences = (props) => {
 
     if (props.google) {
-      console.log('entre')
       return (
+        
        props.paths.map(geofence => (
+       geofence.attributes.visible && geofence.type === 'Polygon' && 
         <Polygon
         path={geofence.area}
         onClick={props._onClick}
