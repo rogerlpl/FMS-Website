@@ -9,7 +9,7 @@ import {
       return (
         
        props.paths.map(geofence => (
-       geofence.attributes.visible && geofence.type === 'Polygon' && 
+       geofence.attributes.visible && geofence.type === 'polygon' && 
         <Polygon
         path={geofence.area}
         onClick={props._onClick}

@@ -71,12 +71,9 @@ class App extends React.Component {
     for (let i = 0; i < polygonBounds.length; i++) {
       paths.push({ lat: polygonBounds.getAt(i).lat(), lng: polygonBounds.getAt(i).lng() });
     }
-
-    
-    console.log(paths)
     //console.log(paths);
     //this.isInsideTheGeofence()
-    this.props.actions.saveCurrentGeofence(paths,this.props.geofenceName)
+    this.props.actions.saveCurrentGeofence(paths,this.props.geofenceName,this.props.drewGeofences.get(0).type)
 
   }
   handleReDrawOnClick = () => {

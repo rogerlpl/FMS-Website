@@ -123,7 +123,7 @@ export function changeDevicesToAddGeofenceAssignmentDialog(item) {
         }
     }
 }
-export function saveCurrentGeofence(paths, name) {
+export function saveCurrentGeofence(paths, name,type) {
     return async (dispatch) => {
 
         dispatch(toggleSaveGeofenceDialog())
@@ -132,7 +132,7 @@ export function saveCurrentGeofence(paths, name) {
         dispatch(saveGeofencePath(paths))
 
         const attributes = {
-            visibile: false
+            visible: false
         }
 
         try {
@@ -146,7 +146,7 @@ export function saveCurrentGeofence(paths, name) {
                     name: name,
                     area: JSON.stringify(paths),
                     attributes: JSON.stringify(attributes),
-                    type: 'Polygon'
+                    type: type
                 })
             })
         } catch (err) {
@@ -312,7 +312,6 @@ export function fetchAddDevicesToAGeofence(deviceid, geofenceid) {
                 {
                     method: "post"
                 });
-            //const devices = await response.json();
 
             dispatch(fetchAddDevicesToAGeofenceSucced())
         } catch (err) {
