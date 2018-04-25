@@ -24,8 +24,7 @@ import {
     RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG,
     TOGGLE_OPEN_GEOFENCES_VISIBILITY_MENU,
     FALSE_OPEN_GEOFENCES_VISIBILITY_MENU,
-    DRAW_GEOFENCES_LOCATION_MAP,
-    DELETE_GEOFENCES_LOCATION_MAP
+    TOGGLE_GEOFENCES_LOCATION_MAP,
 }
     from '../action-types/index'
 
@@ -82,19 +81,11 @@ export function saveGeofenceName(name) {
         }
     }
 }
-export function drawGeofencesLocationMap(geofence) {
+export function toggleGeofencesLocationMap(geofences) {
     return {
-        type: DRAW_GEOFENCES_LOCATION_MAP,
+        type: TOGGLE_GEOFENCES_LOCATION_MAP,
         payload: {
-            geofence
-        }
-    }
-}
-export function deleteGeofenceLocationMap(geofenceid) {
-    return {
-        type: DELETE_GEOFENCES_LOCATION_MAP,
-        payload: {
-            geofenceid
+            geofences
         }
     }
 }
@@ -242,6 +233,12 @@ export function fetchGeofencesData() {
         try {
             const response = await fetch(`${baseAPIURL}/geofences`);
             const geofences = await response.json();
+
+            geofences.map(geofence =>{
+                geofence.area = JSON.parse(geofence.area)
+                geofence.attributes = JSON.parse(geofence.attributes)
+                return geofence
+            })
 
             dispatch(fetchGeofencesSucced(geofences))
         } catch (err) {

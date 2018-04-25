@@ -6,12 +6,15 @@ import {
  const  PolygonGeofences = (props) => {
 
     if (props.google) {
+      console.log('entre')
       return (
+       props.paths.map(geofence => (
         <Polygon
-          path={props.paths}
-          onClick={props._onClick}
-          key={Date.now() + Math.random()}
-          />
+        path={geofence.area}
+        onClick={props._onClick}
+        key={Date.now() + Math.random()}
+        />
+       ))
         )
     
     }else{

@@ -23,15 +23,21 @@ class HeaderLinks extends React.Component {
     return window.location.pathname
   }
   handleGeofenceVisibility = geofenceid => event =>{
-      console.log(geofenceid)
+      
     if(event.target.checked){
-    const geofence=  this.props.geofences.filter(geofence=>(
-        geofenceid === geofence.id ? geofence : false
-      ))
-      console.log(geofence)
-     // this.props.drawGeofencesLocationMap()
+    const geofences=  this.props.geofences.map(geofence=>{
+        if(geofenceid === geofence.id ) geofence.attributes.visible = !geofence.attributes.visible 
+        return geofence
+      })
+      this.props.actions.toggleGeofencesLocationMap(geofences)
      }else{
-      //this.props.deleteGeofenceLocationMap(geofenceid)
+      const geofences=  this.props.geofences.map(geofence=>{
+        if(geofenceid === geofence.id ) geofence.attributes.visible = !geofence.attributes.visible 
+        
+        return geofence
+      })
+     this.props.actions.toggleGeofencesLocationMap(geofences)
+      
      }
   }
   handleRadioChange = event => {
@@ -151,6 +157,7 @@ class HeaderLinks extends React.Component {
                   <Grid container justify='center' direction='column' alignItems='center'>
                     {
                       this.props.geofences.map(geofence => (
+                        
 
                         <MenuItem key={geofence.id} >
                           <Grid container alignItems='center' direction='row'>
@@ -160,7 +167,7 @@ class HeaderLinks extends React.Component {
                             </Grid>
                             <Grid item xs={6}>
                               <Switch
-                                checked={geofence.attributes.visible}
+                                checked={geofence.attributes.visibile}
                                 color='primary'
                                 onChange={this.handleGeofenceVisibility(geofence.id)}
                               />
@@ -204,6 +211,7 @@ function mapStateToProps(state, props) {
     selectedItem: state.getIn(['geofences', 'addDevicesComponents', 'devicesToAdd']),
     devicesSearch: state.getIn(['geofences', 'addDevicesComponents', 'devicesSearch']),
     open: state.getIn(['geofences', 'geofencesVisibilityMenu', 'open']),
+    visibleGeofences: state.getIn(['mapData','locationMap','visibleGeofences'])
   }
 
 }

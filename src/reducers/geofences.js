@@ -14,7 +14,8 @@ import {
     DELETE_TEXT_GEOFENCE_ASSIGNMENT_DIALOG,
     RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG,
     TOGGLE_OPEN_GEOFENCES_VISIBILITY_MENU,
-    FALSE_OPEN_GEOFENCES_VISIBILITY_MENU
+    FALSE_OPEN_GEOFENCES_VISIBILITY_MENU,
+    TOGGLE_GEOFENCES_LOCATION_MAP
 } from '../action-types/index'
 
 const initialState = fromJS({
@@ -38,6 +39,8 @@ function geofences(state = initialState, action) {
     switch (action.type) {
         case TOGGLE_GEOFENCE_ASSIGNMENT_DIALOG:
             return state.set('visibility', !state.get('visibility'))
+        case TOGGLE_GEOFENCES_LOCATION_MAP:
+            return state.set('geofences', action.payload.geofences)
         case FALSE_OPEN_GEOFENCES_VISIBILITY_MENU:
             return state.setIn(['geofencesVisibilityMenu','open'], false)
         case TOGGLE_OPEN_GEOFENCES_VISIBILITY_MENU:
