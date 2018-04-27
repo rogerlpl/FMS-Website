@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import  { withStyles, Button } from "material-ui";
+import { withStyles, Button } from "material-ui";
 
 import { Header, Footer, Sidebar } from "components";
 
@@ -53,17 +53,15 @@ class App extends React.Component {
   getRoute() {
     return this.props.location.pathname !== "/maps";
   }
-  componentDidMount() {
+  componentDidMount = () => {
     if (navigator.platform.indexOf('Win') > -1) {
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
 
     }
+
   }
-  isInsideTheGeofence = () => {
-    const currentPosition = new this.props.google.maps.LatLng(18.4744866666667, -69.9149133333333)
-    console.log(this.props.google.maps.geometry.poly.containsLocation(currentPosition, this.props.drewGeofences.get(0).overlay))
-  }
+
   handleSaveGeofence = () => {
     const polygonBounds = this.props.drewGeofences.get(0).overlay.getPath()
     let paths = [];
@@ -71,17 +69,17 @@ class App extends React.Component {
     for (let i = 0; i < polygonBounds.length; i++) {
       paths.push({ lat: polygonBounds.getAt(i).lat(), lng: polygonBounds.getAt(i).lng() });
     }
-    //console.log(paths);
-    //this.isInsideTheGeofence()
-    this.props.actions.saveCurrentGeofence(paths,this.props.geofenceName,this.props.drewGeofences.get(0).type)
+    this.props.actions.saveCurrentGeofence(paths, this.props.geofenceName, this.props.drewGeofences.get(0).type)
 
   }
   handleReDrawOnClick = () => {
     this.props.actions.resetDrewGeofences()
     this.props.actions.isDrawingGeofences()
     this.props.actions.deleteCurrentGeofence(this.props.drewGeofences.get(0).overlay)
+
   }
-  handleGeofenceName = event =>{
+
+  handleGeofenceName = event => {
     this.props.actions.saveGeofenceName(event.target.value)
   }
   componentDidUpdate() {
@@ -147,13 +145,13 @@ class App extends React.Component {
                 }
 
 
-                
+
                 <GeofenceNameDialog
-                 dialogVisibility={this.props.dialogVisibility} 
-                 handleOnClose={this.props.actions.toggleSaveGeofenceDialog} 
-                 handleGeofenceName={this.handleGeofenceName} 
-                 handleSaveGeofence={this.handleSaveGeofence}
-                 />
+                  dialogVisibility={this.props.dialogVisibility}
+                  handleOnClose={this.props.actions.toggleSaveGeofenceDialog}
+                  handleGeofenceName={this.handleGeofenceName}
+                  handleSaveGeofence={this.handleSaveGeofence}
+                />
 
 
                 <GeofenceMap
@@ -163,7 +161,7 @@ class App extends React.Component {
               </ Modal>
             }
           </ ModalContainer>
-          {this.getRoute() ? <Footer />  : null}
+          {this.getRoute() ? <Footer /> : null}
         </div>
       </div>
     );
@@ -183,7 +181,7 @@ function mapStateToProps(state, props) {
     isDrawingGeofences: state.getIn(['modal', 'geofencesMap', 'isDrawingGeofences']),
     drewGeofences: state.getIn(['modal', 'geofencesMap', 'drewGeofences']),
     dialogVisibility: state.getIn(['modal', 'dialog', 'visibility']),
-    geofenceName: state.getIn(['modal', 'dialog', 'geofenceName'])
+    geofenceName: state.getIn(['modal', 'dialog', 'geofenceName']),
   }
 
 }

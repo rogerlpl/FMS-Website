@@ -15,7 +15,10 @@ import {
     RESET_DEVICES_TO_ADD_GEOFENCE_ASSIGNMENT_DIALOG,
     TOGGLE_OPEN_GEOFENCES_VISIBILITY_MENU,
     FALSE_OPEN_GEOFENCES_VISIBILITY_MENU,
-    TOGGLE_GEOFENCES_LOCATION_MAP
+    TOGGLE_GEOFENCES_LOCATION_MAP,
+    FETCH_GEOFENCES_SCAN_DATA,
+    CHANGE_DEVICES_GEOFENCE_ATTRIBUTES
+
 } from '../action-types/index'
 
 const initialState = fromJS({
@@ -23,6 +26,7 @@ const initialState = fromJS({
     geofences: [],
     radioButtonValue: 0,
     devicesInCurrentGeofence: [],
+    devicesInGeofences: [],
     addDevicesComponents: {
         visibility: false,
         devicesSearch: [],
@@ -51,11 +55,15 @@ function geofences(state = initialState, action) {
             return state.set('radioButtonValue', action.payload.value)
         case FETCH_DEVICES_IN_CURRENT_GEOFENCE:
             return state.set('devicesInCurrentGeofence', action.payload.devices)
+        case FETCH_GEOFENCES_SCAN_DATA:
+            return state.set('devicesInGeofences', action.payload.devicesAndGeofences)
         case FETCH_SEARCH_DEVICES:
             return state.setIn(['addDevicesComponents', 'devicesSearch'], action.payload.devices)
         case TOGGLE_DEVICES_COMPONENT_ASSIGNMENT_DIALOG:
             return state.setIn(['addDevicesComponents', 'visibility'], !state.getIn(['addDevicesComponents', 'visibility']))
         case ADD_DEVICES_TO_A_GEOFENCE:
+            return state
+        case CHANGE_DEVICES_GEOFENCE_ATTRIBUTES:
             return state
         case CHANGE_INPUT_GEOFENCE_ASSIGNMENT_DIALOG:
             return state.setIn(['addDevicesComponents', 'inputValue'], action.payload.value)

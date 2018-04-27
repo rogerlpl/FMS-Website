@@ -25,6 +25,8 @@ import {
     TOGGLE_OPEN_GEOFENCES_VISIBILITY_MENU,
     FALSE_OPEN_GEOFENCES_VISIBILITY_MENU,
     TOGGLE_GEOFENCES_LOCATION_MAP,
+    FETCH_GEOFENCES_SCAN_DATA,
+    CHANGE_DEVICES_GEOFENCE_ATTRIBUTES
 }
     from '../action-types/index'
 
@@ -123,7 +125,7 @@ export function changeDevicesToAddGeofenceAssignmentDialog(item) {
         }
     }
 }
-export function saveCurrentGeofence(paths, name,type) {
+export function saveCurrentGeofence(paths, name, type) {
     return async (dispatch) => {
 
         dispatch(toggleSaveGeofenceDialog())
@@ -152,6 +154,8 @@ export function saveCurrentGeofence(paths, name,type) {
         } catch (err) {
             console.log("Ha ocurrido un error en el servidor guardando la geocerca " + err)
         }
+
+
     }
 
 }
@@ -234,7 +238,7 @@ export function fetchGeofencesData() {
             const response = await fetch(`${baseAPIURL}/geofences`);
             const geofences = await response.json();
 
-            geofences.map(geofence =>{
+            geofences.map(geofence => {
                 geofence.area = JSON.parse(geofence.area)
                 geofence.attributes = JSON.parse(geofence.attributes)
                 return geofence
@@ -258,24 +262,24 @@ export function fetchDevicesInGeofenceSucced(devices) {
 
 export function fetchDevicesInGeofence(geofenceid) {
     return async (dispatch) => {
-     
-   
-     const response = await fetch(`${baseAPIURL}/devicesgeofences/${geofenceid}`);
-     const status=response.status
-            try {
-               
-                const devices = await response.json();
-            
-                dispatch(fetchDevicesInGeofenceSucced(devices))
-            } catch (err) {
-               
-                console.log("Ha ocurrido un error en el servidor trayendo la data de los dispostivos en geocercas: " + err)
-                if (status === 404) {
-                    console.clear()
-                }
-                dispatch(fetchDevicesInGeofenceSucced(''))
+
+
+        const response = await fetch(`${baseAPIURL}/devicesgeofences/${geofenceid}`);
+        const status = response.status
+        try {
+
+            const devices = await response.json();
+
+            dispatch(fetchDevicesInGeofenceSucced(devices))
+        } catch (err) {
+
+            console.log("Ha ocurrido un error en el servidor trayendo la data de los dispostivos en geocercas: " + err)
+            if (status === 404) {
+                // console.clear()
             }
-       
+            dispatch(fetchDevicesInGeofenceSucced('No tiene dispositivos'))
+        }
+
     }
 }
 export function fetchSearchDevicesSucced(devices) {
@@ -316,6 +320,63 @@ export function fetchAddDevicesToAGeofence(deviceid, geofenceid) {
             dispatch(fetchAddDevicesToAGeofenceSucced())
         } catch (err) {
             console.log("Ha ocurrido un error en el servidor insertando la data de los dispositivos en las geocercas: " + err)
+        }
+    }
+}
+export function fetchChangeDeviceGeofenceAttributesSucced() {
+    return {
+        type: CHANGE_DEVICES_GEOFENCE_ATTRIBUTES,
+    }
+}
+
+export function fetchChangeDeviceGeofenceAttributes(deviceid, geofenceid, attributes) {
+    return async (dispatch) => {
+        try {
+            await fetch(`${baseAPIURL}/changedevicegeofenceattribute?deviceid=${deviceid}&geofenceid=${geofenceid}&attributes=${attributes}`,
+                {
+                    method: "post"
+                });
+                console.log(deviceid+' '+geofenceid)
+                console.log(attributes)
+            dispatch(fetchChangeDeviceGeofenceAttributesSucced())
+        } catch (err) {
+            console.log("Ha ocurrido un error en el servidor insertando la data de los atributos que estan  dispositivos en las geocercas: " + err)
+        }
+    }
+}
+export function fetchGeofencesScanDataSucced(devicesAndGeofences) {
+    return {
+        type: FETCH_GEOFENCES_SCAN_DATA,
+        payload: {
+            devicesAndGeofences
+        }
+    }
+}
+
+export function fetchGeofencesScanData() {
+    return async (dispatch) => {
+        try {
+
+            const response = await fetch(`${baseAPIURL}/alldevicesgeofences`);
+            const devicesAndGeofences = await response.json();
+
+            devicesAndGeofences.map(geofence => {
+                geofence.geofenceArea = JSON.parse(geofence.geofenceArea)
+
+                if (geofence.devices.length > 0) {
+                    geofence.devices = geofence.devices.map(device => {
+                        device.attributes = JSON.parse(device.attributes)
+                        return device
+                    })
+                }
+
+                return geofence
+            })
+
+            dispatch(fetchGeofencesScanDataSucced(devicesAndGeofences))
+
+        } catch (err) {
+            console.log("Ha ocurrido un error en el servidor trayendo la data para el scan de las geocercas: " + err)
         }
     }
 }
