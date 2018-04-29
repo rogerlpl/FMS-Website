@@ -18,7 +18,7 @@ export const LocationGreenSkinMap =
         zoomControl: false,
         mapTypeControlOptions: {
           style: props.google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-          position: props.google.maps.ControlPosition.LEFT_CENTER
+          position: props.google.maps.ControlPosition.RIGHT_CENTER
         },
         fullscreenControlOptions: {
           position: props.google.maps.ControlPosition.RIGHT_BOTTOM

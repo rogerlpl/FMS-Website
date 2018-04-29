@@ -26,7 +26,13 @@ import {
     FALSE_OPEN_GEOFENCES_VISIBILITY_MENU,
     TOGGLE_GEOFENCES_LOCATION_MAP,
     FETCH_GEOFENCES_SCAN_DATA,
-    CHANGE_DEVICES_GEOFENCE_ATTRIBUTES
+    CHANGE_DEVICES_GEOFENCE_ATTRIBUTES,
+    FETCH_UNREAD_NOTIFICATIONS,
+    FETCH_READ_NOTIFICATIONS,
+    CREATE_EVENT,
+    EVENT_READ,
+    TOGGLE_OPEN_NOTIFICATION_MENU,
+    FALSE_OPEN_NOTIFICATION_MENU
 }
     from '../action-types/index'
 
@@ -35,6 +41,16 @@ const baseAPIURL = 'http://localhost:58496/api'
 export function toggleDeviceComponents() {
     return {
         type: TOGGLE_DEVICES_COMPONENT_ASSIGNMENT_DIALOG,
+    }
+}
+export function toggleNotification() {
+    return {
+        type: TOGGLE_OPEN_NOTIFICATION_MENU,
+    }
+}
+export function falseNotificationMenu() {
+    return {
+        type: FALSE_OPEN_NOTIFICATION_MENU,
     }
 }
 export function falseGeofencesMenu() {
@@ -275,9 +291,9 @@ export function fetchDevicesInGeofence(geofenceid) {
 
             console.log("Ha ocurrido un error en el servidor trayendo la data de los dispostivos en geocercas: " + err)
             if (status === 404) {
-                // console.clear()
+                 console.clear()
             }
-            dispatch(fetchDevicesInGeofenceSucced('No tiene dispositivos'))
+            dispatch(fetchDevicesInGeofenceSucced(''))
         }
 
     }
@@ -336,11 +352,33 @@ export function fetchChangeDeviceGeofenceAttributes(deviceid, geofenceid, attrib
                 {
                     method: "post"
                 });
-                console.log(deviceid+' '+geofenceid)
-                console.log(attributes)
+            
             dispatch(fetchChangeDeviceGeofenceAttributesSucced())
         } catch (err) {
             console.log("Ha ocurrido un error en el servidor insertando la data de los atributos que estan  dispositivos en las geocercas: " + err)
+        }
+    }
+}
+export function fetchEventReadSucced(id) {
+    return {
+        type: EVENT_READ,
+        payload:{
+            id
+        }
+    }
+}
+
+export function fetchEventRead(id, attributes) {
+    return async (dispatch) => {
+        try {
+            await fetch(`${baseAPIURL}/events?id=${id}&attributes=${attributes}`,
+                {
+                    method: "patch"
+                });
+                
+            dispatch(fetchEventReadSucced(id))
+        } catch (err) {
+            console.log("Ha ocurrido un error en el servidor tratando de marcar como leida la notificacion: " + err)
         }
     }
 }
@@ -377,6 +415,56 @@ export function fetchGeofencesScanData() {
 
         } catch (err) {
             console.log("Ha ocurrido un error en el servidor trayendo la data para el scan de las geocercas: " + err)
+        }
+    }
+}
+
+export function fetchReadNotificationsSucced(notifications) {
+    return {
+        type: FETCH_READ_NOTIFICATIONS,
+        payload: {
+            notifications
+        }
+    }
+}
+
+export function fetchUnReadNotificationsSucced(notifications) {
+    return {
+        type: FETCH_UNREAD_NOTIFICATIONS,
+        payload: {
+            notifications
+        }
+    }
+}
+
+export function fetchNotifications() {
+    return async (dispatch) => {
+        try {
+
+            const response = await fetch(`${baseAPIURL}/events`);
+            const notifications = await response.json();
+
+            notifications.map(notification => {
+                notification.attributes = JSON.parse(notification.attributes)
+                return notification
+            })
+
+            const unread = notifications.filter(notification =>{
+                if(!notification.attributes.read) return  notification
+                else return false
+            })
+
+            const read= notifications.filter(notification =>{
+                if(notification.attributes.read) return  notification
+                else return false
+            }) 
+
+            dispatch(fetchUnReadNotificationsSucced(unread))
+            
+            dispatch(fetchReadNotificationsSucced(read))
+
+        } catch (err) {
+            console.log("Ha ocurrido un error en el servidor trayendo las notificaciones: " + err)
         }
     }
 }

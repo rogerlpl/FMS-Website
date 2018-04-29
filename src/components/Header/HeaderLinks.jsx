@@ -1,6 +1,17 @@
 import React from "react";
 import { withStyles, IconButton, Hidden } from "material-ui";
-import { Person, Directions, RemoveRedEye, Assignment } from "material-ui-icons";
+import {
+  Person,
+  Directions,
+  RemoveRedEye,
+  Assignment,
+  Search,
+  Notifications,
+  Drafts
+}
+  from "material-ui-icons";
+
+import { CustomInput } from 'components'
 
 import headerLinksStyle from "variables/styles/headerLinksStyle";
 import Grid from 'material-ui/Grid';
@@ -13,32 +24,35 @@ import { Manager, Target, Popper } from 'react-popper';
 import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
 import Collapse from 'material-ui/transitions/Collapse';
 import Paper from 'material-ui/Paper';
-import { MenuItem } from 'material-ui/Menu';
+import { MenuItem, MenuList } from 'material-ui/Menu';
 import Switch from 'material-ui/Switch';
 
-class HeaderLinks extends React.Component {
+class HeaderLinks extends React.PureComponent {
 
+  componentDidMount = () => {
+    this.props.actions.fetchNotifications()
+  }
 
   getRoute() {
     return window.location.pathname
   }
-  handleGeofenceVisibility = geofenceid => event =>{
-      
-    if(event.target.checked){
-    const geofences=  this.props.geofences.map(geofence=>{
-        if(geofenceid === geofence.id ) geofence.attributes.visible = !geofence.attributes.visible 
+  handleGeofenceVisibility = geofenceid => event => {
+
+    if (event.target.checked) {
+      const geofences = this.props.geofences.map(geofence => {
+        if (geofenceid === geofence.id) geofence.attributes.visible = !geofence.attributes.visible
         return geofence
       })
       this.props.actions.toggleGeofencesLocationMap(geofences)
-     }else{
-      const geofences=  this.props.geofences.map(geofence=>{
-        if(geofenceid === geofence.id ) geofence.attributes.visible = !geofence.attributes.visible 
-        
+    } else {
+      const geofences = this.props.geofences.map(geofence => {
+        if (geofenceid === geofence.id) geofence.attributes.visible = !geofence.attributes.visible
+
         return geofence
       })
-     this.props.actions.toggleGeofencesLocationMap(geofences)
-      
-     }
+      this.props.actions.toggleGeofencesLocationMap(geofences)
+
+    }
   }
   handleRadioChange = event => {
     this.props.actions.radioButtonChangeGeofenceAssignmentDialog(event.target.value)
@@ -63,26 +77,124 @@ class HeaderLinks extends React.Component {
 
 
   }
+  handleMarkRead = (id) => (event) => {
+    event.preventDefault()
+    const attributes ={
+      read: true
+    }
+    this.props.actions.fetchEventRead(id,JSON.stringify(attributes))
+  }
+  handleCloseNotificationsMenu = () => {
+    this.props.actions.falseNotificationMenu()//optimizar esto solo usando una accion para actualizar el estado
+  }
   handleCloseGeofencesMenu = (event) => {
-    if (this.target.contains(event.target)) {
+    if (this.geofence.contains(event.target) || this.notifications.contains(event.target) ) {
       return;
     }
-    this.props.actions.falseGeofencesMenu()
+    this.props.actions.falseGeofencesMenu() //optimizar esto solo usando una accion para actualizar el estado
   }
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.top}>
-        {/* Botones de los mapas */}
-        {/* {
-          this.getRoute() === "/maps" &&
-          // <MapHeaderButtons
-          //   handleToggleGeofenceModal={this.props.actions.toggleGeofenceModal}
-          //   handleToggleGeofenceAssignment={this.props.actions.toggleGeofenceAssignmentDialog}
-          //   classes
-          // />
-        } */}
 
+        {/* Search */}
+        <CustomInput
+          formControlProps={{
+            className: classes.top + " " + classes.search
+          }}
+
+          inputProps={{
+            placeholder: "Buscar ficha",
+            inputProps: {
+              "aria-label": "Search",
+            },
+            style: {
+              "color": "white",
+              "underlineColor": "black"
+            }
+          }}
+        />
+        <IconButton
+          color="inherit"
+          aria-label="edit"
+          className={classes.top + " " + classes.searchButton}
+        >
+          <Search className={classes.searchIcon} />
+        </IconButton>
+        {/* notoficacion */}
+        <Manager style={{ display: "inline-block" }}>
+          <Target>
+            <div
+              ref={node => {
+                this.notifications = node;
+              }}
+            >
+              <IconButton
+                color="inherit"
+                aria-label="Notifications"
+                aria-owns={this.props.visibilityNotification ? "menu-list" : null}
+                aria-haspopup="true"
+                onClick={() => (this.props.actions.toggleNotification())}
+                className={classes.buttonLink}
+              >
+                <Notifications className={classes.links} />
+                {
+                  this.props.unreadNotifications.length > 0 && <span className={classes.notifications}>{this.props.unreadNotifications.length}</span>
+                }
+                <Hidden mdUp>
+                  <p onClick={() => (this.props.actions.toggleNotification())} className={classes.linkText}>
+                    Notificaciones
+                </p>
+                </Hidden>
+              </IconButton>
+            </div>
+          </Target>
+          <Popper
+            placement="bottom-start"
+            eventsEnabled={this.props.visibilityNotification}
+            className={
+              classNames({ [classes.popperClose]: !this.props.visibilityNotification }) +
+              " " +
+              classes.pooperResponsive
+            }
+          >
+            <ClickAwayListener onClickAway={()=>this.handleCloseNotificationsMenu()}>
+              <Collapse
+                in={this.props.visibilityNotification}
+                id="menu-list"
+                style={{ transformOrigin: "0 0 0" }}
+              >
+                <Paper className={classes.dropdown} >
+                  <MenuList role="menu">
+                    {
+                      this.props.unreadNotifications.map(notification => (
+                        <MenuItem
+                        onClick={this.handleMarkRead(notification.id)} 
+                          className={classes.dropdownItem}
+                          key={notification.id}
+                        >
+                          <Grid container alignItems='center' justify='center' direction='row'>
+                            <Grid item xs={10} zeroMinWidth>
+                              {notification.type}
+                            </Grid>
+                            <Grid item xs={2} zeroMinWidth>
+                              <IconButton  color='inherit'>
+                                <Drafts />
+                              </IconButton>
+                            </Grid>
+                          </Grid>
+                        </MenuItem>
+                      ))
+
+                    }
+                  </MenuList>
+                </Paper>
+              </Collapse>
+            </ClickAwayListener>
+          </Popper>
+        </Manager>
+        {/*Dialog para asignar geocercas*/}
         <GeofenceAssignment
           visibility={this.props.geofenceAssignmentVisibility}
           handleToggleGeofenceAssignment={this.props.actions.toggleGeofenceAssignmentDialog}
@@ -95,36 +207,37 @@ class HeaderLinks extends React.Component {
           handleSaveDevicesInGeofence={this.handleSaveDevicesInGeofence}
           selectedItem={this.props.selectedItem}
         />
-        {/* boton para crear geocercas */}
-        <IconButton
-          color="inherit"
-          aria-label="Crear Geocercas"
-          className={classes.buttonLink}
-          onClick={this.props.actions.toggleGeofenceModal}
-        >
-          <Directions className={classes.links} />
-          <Hidden mdUp>
-            <p className={classes.linkText}>Rutas</p>
-          </Hidden>
-        </ IconButton>
         {/* boton para asignar geocercas a dispositivos */}
         <IconButton
           color="inherit"
           aria-label="Asignar Geocercas"
           className={classes.buttonLink}
           onClick={this.props.actions.toggleGeofenceAssignmentDialog}
-        >
+         >
           <Assignment className={classes.links} />
           <Hidden mdUp>
             <p className={classes.linkText}>Asignar Geocercas</p>
           </Hidden>
         </ IconButton>
+        {/* boton para crear geocercas */}
+        <IconButton
+          color="inherit"
+          aria-label="Crear Geocercas"
+          className={classes.buttonLink}
+          onClick={this.props.actions.toggleGeofenceModal}
+         >
+          <Directions className={classes.links} />
+          <Hidden mdUp>
+            <p className={classes.linkText}>Rutas</p>
+          </Hidden>
+        </ IconButton>
+      
         {/*boton para ver las geocercas */}
         <Manager style={{ display: "inline-block" }}>
           <Target>
             <div
               ref={node => {
-                this.target = node;
+                this.geofence = node;
               }}
             >
               <IconButton
@@ -157,13 +270,13 @@ class HeaderLinks extends React.Component {
                   <Grid container justify='center' direction='column' alignItems='center'>
                     {
                       this.props.geofences.map(geofence => (
-                        
+
 
                         <MenuItem key={geofence.id} >
                           <Grid container alignItems='center' direction='row'>
 
                             <Grid item xs={6}>
-                                {geofence.name}
+                              {geofence.name}
                             </Grid>
                             <Grid item xs={6}>
                               <Switch
@@ -211,7 +324,9 @@ function mapStateToProps(state, props) {
     selectedItem: state.getIn(['geofences', 'addDevicesComponents', 'devicesToAdd']),
     devicesSearch: state.getIn(['geofences', 'addDevicesComponents', 'devicesSearch']),
     open: state.getIn(['geofences', 'geofencesVisibilityMenu', 'open']),
-    visibleGeofences: state.getIn(['mapData','locationMap','visibleGeofences'])
+    visibleGeofences: state.getIn(['mapData', 'locationMap', 'visibleGeofences']),
+    unreadNotifications: state.getIn(['notifications', 'type', 'unread']),
+    visibilityNotification: state.getIn(['notifications', 'visibility'])
   }
 
 }

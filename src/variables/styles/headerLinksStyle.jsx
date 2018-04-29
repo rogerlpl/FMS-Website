@@ -40,22 +40,27 @@ const headerLinksStyle = theme => ({
     [theme.breakpoints.down("sm")]: {
       top: "-50px !important",
       marginRight: "22px",
-      float: "right"
+      float: "right",
+
     }
   },
   top: {
     top: "-6px",
     zIndex: "4",
-    marginTop: "25px",
     color: "white"
   },
   searchIcon: {
-    width: "17px",
-    zIndex: "4"
+    width: "60px",
+    height: '30px',
+    zIndex: "4",
+    [theme.breakpoints.down("sm")]:{
+      padding:"0px 0px 15px 40px"
+    }
+
   },
   links: {
-    width: "20px",
-    height: "20px",
+    width: "60px",
+   height:'30px',
     zIndex: "4",
     [theme.breakpoints.down("sm")]: {
       display: "block",
@@ -72,7 +77,7 @@ const headerLinksStyle = theme => ({
       top: "5px",
       border: "1px solid #FFF",
       right: "10px",
-      fontSize: "9px",
+      fontSize: "14px",
       background: dangerColor,
       color: "#FFFFFF",
       minWidth: "16px",
@@ -90,12 +95,15 @@ const headerLinksStyle = theme => ({
     }
   },
   dropdown: {
-    borderRadius: "3px",
+    borderRadius: "10px",
     border: "0",
     boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.26)",
     top: "100%",
     zIndex: "1000",
     minWidth: "200px",
+    maxWidth: "360px",
+    maxHeight: "300px",
+    overflow:'auto',
     padding: "5px 0",
     margin: "2px 0 0",
     fontSize: "14px",
