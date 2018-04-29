@@ -26,6 +26,7 @@ import Collapse from 'material-ui/transitions/Collapse';
 import Paper from 'material-ui/Paper';
 import { MenuItem, MenuList } from 'material-ui/Menu';
 import Switch from 'material-ui/Switch';
+import Tooltip from 'material-ui/Tooltip';
 
 class HeaderLinks extends React.PureComponent {
 
@@ -79,16 +80,16 @@ class HeaderLinks extends React.PureComponent {
   }
   handleMarkRead = (id) => (event) => {
     event.preventDefault()
-    const attributes ={
+    const attributes = {
       read: true
     }
-    this.props.actions.fetchEventRead(id,JSON.stringify(attributes))
+    this.props.actions.fetchEventRead(id, JSON.stringify(attributes))
   }
   handleCloseNotificationsMenu = () => {
     this.props.actions.falseNotificationMenu()//optimizar esto solo usando una accion para actualizar el estado
   }
   handleCloseGeofencesMenu = (event) => {
-    if (this.geofence.contains(event.target) || this.notifications.contains(event.target) ) {
+    if (this.geofence.contains(event.target) || this.notifications.contains(event.target)) {
       return;
     }
     this.props.actions.falseGeofencesMenu() //optimizar esto solo usando una accion para actualizar el estado
@@ -130,24 +131,31 @@ class HeaderLinks extends React.PureComponent {
                 this.notifications = node;
               }}
             >
-              <IconButton
-                color="inherit"
-                aria-label="Notifications"
-                aria-owns={this.props.visibilityNotification ? "menu-list" : null}
-                aria-haspopup="true"
-                onClick={() => (this.props.actions.toggleNotification())}
-                className={classes.buttonLink}
+              <Tooltip
+                id='tootlip-notifications'
+                title='Notificaciones'
+                enterDelay={300}
+                leaveDelay={300}
               >
-                <Notifications className={classes.links} />
-                {
-                  this.props.unreadNotifications.length > 0 && <span className={classes.notifications}>{this.props.unreadNotifications.length}</span>
-                }
-                <Hidden mdUp>
-                  <p onClick={() => (this.props.actions.toggleNotification())} className={classes.linkText}>
-                    Notificaciones
+                <IconButton
+                  color="inherit"
+                  aria-label="Notifications"
+                  aria-owns={this.props.visibilityNotification ? "menu-list" : null}
+                  aria-haspopup="true"
+                  onClick={() => (this.props.actions.toggleNotification())}
+                  className={classes.buttonLink}
+                >
+                  <Notifications className={classes.links} />
+                  {
+                    this.props.unreadNotifications.length > 0 && <span className={classes.notifications}>{this.props.unreadNotifications.length}</span>
+                  }
+                  <Hidden mdUp>
+                    <p onClick={() => (this.props.actions.toggleNotification())} className={classes.linkText}>
+                      Notificaciones
                 </p>
-                </Hidden>
-              </IconButton>
+                  </Hidden>
+                </IconButton>
+              </Tooltip>
             </div>
           </Target>
           <Popper
@@ -159,7 +167,7 @@ class HeaderLinks extends React.PureComponent {
               classes.pooperResponsive
             }
           >
-            <ClickAwayListener onClickAway={()=>this.handleCloseNotificationsMenu()}>
+            <ClickAwayListener onClickAway={() => this.handleCloseNotificationsMenu()}>
               <Collapse
                 in={this.props.visibilityNotification}
                 id="menu-list"
@@ -170,7 +178,7 @@ class HeaderLinks extends React.PureComponent {
                     {
                       this.props.unreadNotifications.map(notification => (
                         <MenuItem
-                        onClick={this.handleMarkRead(notification.id)} 
+                          onClick={this.handleMarkRead(notification.id)}
                           className={classes.dropdownItem}
                           key={notification.id}
                         >
@@ -179,7 +187,7 @@ class HeaderLinks extends React.PureComponent {
                               {notification.type}
                             </Grid>
                             <Grid item xs={2} zeroMinWidth>
-                              <IconButton  color='inherit'>
+                              <IconButton color='inherit'>
                                 <Drafts />
                               </IconButton>
                             </Grid>
@@ -208,30 +216,43 @@ class HeaderLinks extends React.PureComponent {
           selectedItem={this.props.selectedItem}
         />
         {/* boton para asignar geocercas a dispositivos */}
-        <IconButton
-          color="inherit"
-          aria-label="Asignar Geocercas"
-          className={classes.buttonLink}
-          onClick={this.props.actions.toggleGeofenceAssignmentDialog}
-         >
-          <Assignment className={classes.links} />
-          <Hidden mdUp>
-            <p className={classes.linkText}>Asignar Geocercas</p>
-          </Hidden>
-        </ IconButton>
+        <Tooltip
+          id='tootlip-GeofenceAssignment'
+          title='Asignar Geocercas'
+          enterDelay={300}
+          leaveDelay={300}
+          >
+          <IconButton
+            color="inherit"
+            aria-label="Asignar Geocercas"
+            className={classes.buttonLink}
+            onClick={this.props.actions.toggleGeofenceAssignmentDialog}
+          >
+            <Assignment className={classes.links} />
+            <Hidden mdUp>
+              <p className={classes.linkText}>Asignar Geocercas</p>
+            </Hidden>
+          </ IconButton>
+        </ Tooltip>
         {/* boton para crear geocercas */}
-        <IconButton
-          color="inherit"
-          aria-label="Crear Geocercas"
-          className={classes.buttonLink}
-          onClick={this.props.actions.toggleGeofenceModal}
-         >
-          <Directions className={classes.links} />
-          <Hidden mdUp>
-            <p className={classes.linkText}>Rutas</p>
-          </Hidden>
-        </ IconButton>
-      
+        <Tooltip
+          id='tootlip-creategeofence'
+          title='Crear Geocercas'
+          enterDelay={300}
+          leaveDelay={300}
+          >
+          <IconButton
+            color="inherit"
+            aria-label="Crear Geocercas"
+            className={classes.buttonLink}
+            onClick={this.props.actions.toggleGeofenceModal}
+          >
+            <Directions className={classes.links} />
+            <Hidden mdUp>
+              <p className={classes.linkText}>Rutas</p>
+            </Hidden>
+          </ IconButton>
+        </ Tooltip>
         {/*boton para ver las geocercas */}
         <Manager style={{ display: "inline-block" }}>
           <Target>
@@ -240,19 +261,26 @@ class HeaderLinks extends React.PureComponent {
                 this.geofence = node;
               }}
             >
-              <IconButton
-                color="inherit"
-                aria-label="Ver Geocercas"
-                aria-owns={this.props.open ? 'menu-list-collapse' : null}
-                aria-haspopup="true"
-                onClick={this.props.actions.toggleGeofencesMenu}
-                className={classes.buttonLink}
+              <Tooltip
+                id='tootlip-displaygeofences'
+                title='Mostrar Geocercas'
+                enterDelay={300}
+                leaveDelay={300}
               >
-                <RemoveRedEye className={classes.links} />
-                <Hidden mdUp>
-                  <p className={classes.linkText}>Geocercas</p>
-                </Hidden>
-              </ IconButton>
+                <IconButton
+                  color="inherit"
+                  aria-label="Ver Geocercas"
+                  aria-owns={this.props.open ? 'menu-list-collapse' : null}
+                  aria-haspopup="true"
+                  onClick={this.props.actions.toggleGeofencesMenu}
+                  className={classes.buttonLink}
+                >
+                  <RemoveRedEye className={classes.links} />
+                  <Hidden mdUp>
+                    <p className={classes.linkText}>Geocercas</p>
+                  </Hidden>
+                </ IconButton>
+              </ Tooltip>
             </div>
           </Target>
           <Popper
@@ -297,16 +325,23 @@ class HeaderLinks extends React.PureComponent {
           </Popper>
         </Manager>
         {/* Boton para las cuentas */}
-        <IconButton
-          color="inherit"
-          aria-label="Person"
-          className={classes.buttonLink}
-        >
-          <Person className={classes.links} />
-          <Hidden mdUp>
-            <p className={classes.linkText}>Perfil</p>
-          </Hidden>
-        </IconButton>
+        <Tooltip
+          id='tootlip-account'
+          title='Cuenta'
+          enterDelay={300}
+          leaveDelay={300}
+         >
+          <IconButton
+            color="inherit"
+            aria-label="Person"
+            className={classes.buttonLink}
+          >
+            <Person className={classes.links} />
+            <Hidden mdUp>
+              <p className={classes.linkText}>Perfil</p>
+            </Hidden>
+          </IconButton>
+        </ Tooltip>
       </div>
     );
   }
