@@ -382,6 +382,27 @@ export function fetchEventRead(id, attributes) {
         }
     }
 }
+export function fetchCreateEventSucced() {
+    return {
+        type: CREATE_EVENT,
+    }
+}
+
+export function fetchCreateEvent(type,deviceid,geofenceid, attributes) {
+    return async (dispatch) => {
+        try {
+            await fetch(`${baseAPIURL}/CreateEvent?type=${type}&deviceid=${deviceid}&geofenceid=${geofenceid}&attributes=${attributes}`,
+                {
+                    method: "post"
+                });
+
+            dispatch(fetchCreateEventSucced())
+
+        } catch (err) {
+            console.log("Ha ocurrido un error en el servidor tratando de crear un evento: " + err)
+        }
+    }
+}
 export function fetchGeofencesScanDataSucced(devicesAndGeofences) {
     return {
         type: FETCH_GEOFENCES_SCAN_DATA,
@@ -397,12 +418,14 @@ export function fetchGeofencesScanData() {
 
             const response = await fetch(`${baseAPIURL}/alldevicesgeofences`);
             const devicesAndGeofences = await response.json();
-
+            
             devicesAndGeofences.map(geofence => {
                 geofence.geofenceArea = JSON.parse(geofence.geofenceArea)
 
                 if (geofence.devices.length > 0) {
+
                     geofence.devices = geofence.devices.map(device => {
+
                         device.attributes = JSON.parse(device.attributes)
                         return device
                     })
@@ -410,7 +433,7 @@ export function fetchGeofencesScanData() {
 
                 return geofence
             })
-
+            
             dispatch(fetchGeofencesScanDataSucced(devicesAndGeofences))
 
         } catch (err) {

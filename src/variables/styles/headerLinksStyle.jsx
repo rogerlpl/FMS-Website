@@ -101,7 +101,6 @@ const headerLinksStyle = theme => ({
     top: "100%",
     zIndex: "1000",
     minWidth: "200px",
-    maxWidth: "360px",
     maxHeight: "300px",
     overflow:'auto',
     padding: "5px 0",
