@@ -1,12 +1,13 @@
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import LocationsMap from "views/Maps/LocationsMap.jsx";
-
+import Login from '../containers/App/login'
 import {
   Dashboard,
   LocationOn,
   Videocam,
   Mood,
-  People
+  People,
+  ExitToApp
 } from "material-ui-icons";
 
 const appRoutes = [
@@ -17,6 +18,8 @@ const appRoutes = [
     icon: Dashboard,
     component: DashboardPage
   },
+  
+
   {
     path: "/maps",
     sidebarName: "Operaciones",
@@ -44,6 +47,13 @@ const appRoutes = [
     navbarName: "Modulo de atencion al cliente",
     icon: Mood,
     component: DashboardPage
+  },
+  {
+    path: "/Login",
+    sidebarName: "Desconectarse",
+    navbarName: "Desconectarse",
+    icon: ExitToApp,
+    component: Login
   },
   //
   { redirect: true, path: "/", to: "/estadisticas", navbarName: "Redirect" }

@@ -28,12 +28,14 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions/actions-creators'
 import { bindActionCreators } from 'redux'
 
+import Login from './login'
+
 const switchRoutes = (
   <Switch>
     {appRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
-      return <Route path={prop.path} component={prop.component} key={key} />;
+        return <Route path={prop.path} component={prop.component} key={key} />;
     })}
   </Switch>
 );
@@ -54,7 +56,7 @@ class App extends React.Component {
     return this.props.location.pathname !== "/maps";
   }
   componentDidMount = () => {
-    if (navigator.platform.indexOf('Win') > -1) {
+    if (navigator.platform.indexOf('Win') > -1 && this.props.location.pathname !== '/login') {
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
 
@@ -87,84 +89,89 @@ class App extends React.Component {
   }
   render() {
     const { classes, ...rest } = this.props;
-    return (
-      <div className={classes.wrapper}>
-        <Sidebar
-          routes={appRoutes}
-          logoText={""}
-          logo={logo}
-          image={image}
-          handleDrawerToggle={this.handleDrawerToggle}
-          open={this.state.mobileOpen}
-          color="red"
-          {...rest}
-        />
-        <div className={classes.mainPanel} ref="mainPanel">
-          <Header
+    if (this.props.location.pathname === '/login') {
+      return <Login />
+    } else {
+
+      return (
+        <div className={classes.wrapper}>
+          <Sidebar
             routes={appRoutes}
+            logoText={""}
+            logo={logo}
+            image={image}
             handleDrawerToggle={this.handleDrawerToggle}
-            color="danger"
+            open={this.state.mobileOpen}
+            color="red"
             {...rest}
           />
-          {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-          {this.getRoute() ? (
-            <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
-            </div>
-          ) : (
-              <LocationsMap
-                iconAddress={Bus}
-                defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
-              />
-            )}
-          <ModalContainer>
-            {this.props.modal.get('visibility') &&
-              <Modal handleClick={this.handleToggleGeofenceModal} >
-                {!this.props.isDrawingGeofences &&
-                  <div>
-                    <Button
-                      variant="raised"
-                      color="primary"
-                      className={classes.button}
-                      fullWidth={true}
-                      onClick={this.props.actions.toggleSaveGeofenceDialog}
-                    >
-                      Guardar
-                  </Button>
-                    <Button
-                      variant="raised"
-                      color="secondary"
-                      className={classes.button}
-                      fullWidth={true}
-                      onClick={this.handleReDrawOnClick}
-                    >
-                      Volver a dibujar
-                  </Button>
-
-                  </div>
-                }
-
-
-
-                <GeofenceNameDialog
-                  dialogVisibility={this.props.dialogVisibility}
-                  handleOnClose={this.props.actions.toggleSaveGeofenceDialog}
-                  handleGeofenceName={this.handleGeofenceName}
-                  handleSaveGeofence={this.handleSaveGeofence}
-                />
-
-
-                <GeofenceMap
-                  google={this.props.google}
+          <div className={classes.mainPanel} ref="mainPanel">
+            <Header
+              routes={appRoutes}
+              handleDrawerToggle={this.handleDrawerToggle}
+              color="danger"
+              {...rest}
+            />
+            {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
+            {this.getRoute()  ? (
+              <div className={classes.content}>
+                <div className={classes.container}>{switchRoutes}</div>
+              </div>
+            ) : (
+                <LocationsMap
+                  iconAddress={Bus}
                   defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
                 />
-              </ Modal>
-            }
-          </ ModalContainer>
-          {this.getRoute() ? <Footer /> : null}
+              )}
+            <ModalContainer>
+              {this.props.modal.get('visibility') &&
+                <Modal handleClick={this.handleToggleGeofenceModal} >
+                  {!this.props.isDrawingGeofences &&
+                    <div>
+                      <Button
+                        variant="raised"
+                        color="primary"
+                        className={classes.button}
+                        fullWidth={true}
+                        onClick={this.props.actions.toggleSaveGeofenceDialog}
+                      >
+                        Guardar
+                  </Button>
+                      <Button
+                        variant="raised"
+                        color="secondary"
+                        className={classes.button}
+                        fullWidth={true}
+                        onClick={this.handleReDrawOnClick}
+                      >
+                        Volver a dibujar
+                  </Button>
+
+                    </div>
+                  }
+
+
+
+                  <GeofenceNameDialog
+                    dialogVisibility={this.props.dialogVisibility}
+                    handleOnClose={this.props.actions.toggleSaveGeofenceDialog}
+                    handleGeofenceName={this.handleGeofenceName}
+                    handleSaveGeofence={this.handleSaveGeofence}
+                  />
+
+
+                  <GeofenceMap
+                    google={this.props.google}
+                    defaultCenter={{ lat: 18.555353, lng: -70.8627778 }}
+                  />
+                </ Modal>
+              }
+            </ ModalContainer>
+            {this.getRoute() ? <Footer /> : null}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
