@@ -4,18 +4,48 @@ import { withStyles } from "material-ui";
 import background from '../../assets/img/caribe_background.jpg'
 import logo from "assets/img/I-trackLogo.png";
 
+import { connect } from 'react-redux'
+import * as actions from '../../actions/actions-creators'
+import { bindActionCreators } from 'redux'
+
+import { push } from 'react-router-redux'
+
+import passwordHash from 'password-hash'
+
+import Danger from '../../components/Typography/Danger'
 
 class Login extends React.Component {
-  handleSubmit = (event) =>{
+
+  handleSubmit = async (event) => {
     event.preventDefault()
     const $form = document.getElementById('form')
-    
+
     const data = new FormData($form)
     const user = data.get('user')
     const password = data.get('password')
 
-    console.log(user + ' ' + password)
+    // const options = {
+    //   algorithm: 'sha512',
+    //   saltLength: 20,
+    //   iterations: 5
+    // }
+    //const hashedpassword = passwordHash.generate(password, options)
+
+    await this.props.actions.fetchUserData(user)
+
+    const passwordIsCorrect = passwordHash.verify(password, this.props.userData.hashedpassword)
+
+    if (passwordIsCorrect) {
+      this.props.actions.toggleUserLogging()
+      this.props.actions.loggingFailed(false)
+      this.props.redirect('/estadisticas')
+    } else {
+      this.props.actions.loggingFailed(true)
+    }
+
+
   }
+
   render() {
     return (
       <div className='signup-page'>
@@ -92,34 +122,43 @@ class Login extends React.Component {
                         </div>
                       </div>
                       <div className="col-md-5 mr-auto">
-                       
-                          <form id='form' className="form" onSubmit={this.handleSubmit} style={{paddingTop:'50%'}}>
-                            <div className="form-group">
-                              <div className="input-group">
-                                <div className="input-group-prepend">
-                                  <span className="input-group-text">
-                                    <i className="material-icons">person</i>
-                                  </span>
-                                </div>
-                                <input type="text" name="user" className="form-control" placeholder="Usuario..." />
+
+                        <form id='form' className="form" onSubmit={this.handleSubmit} style={{ paddingTop: '50%' }}>
+
+                          <div className="form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">person</i>
+                                </span>
                               </div>
+                              <input type="text" name="user" className="form-control" placeholder="Usuario..." />
                             </div>
-                            <div className="form-group">
-                              <div className="input-group">
-                                <div className="input-group-prepend">
-                                  <span className="input-group-text">
-                                    <i className="material-icons">lock_outline</i>
-                                  </span>
-                                </div>
-                                <input type="password" name="password" placeholder="Contraseña..." className="form-control" />
+                          </div>
+                          <div className="form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">lock_outline</i>
+                                </span>
                               </div>
+                              <input type="password" name="password" placeholder="Contraseña..." className="form-control" />
                             </div>
-                            <div className="text-center">
-                              <input type='submit' className="btn btn-primary btn-round" style={{color:'white'}} value='Iniciar Sesión'/>
+                          </div>
+                          { this.props.loggingFailed &&
+                            <div className="text-center" style={{ paddingLeft: 15 }}>
+                              <Danger>
+                                El usuario o la contraseña es incorrecto, contacte con su administrador en caso de que se le haya olvidado.
+                            </Danger>
                             </div>
-                          </form>
+                          }
+                          <div className="text-center">
+                            <input type='submit' className="btn btn-primary btn-round" style={{ color: 'white' }} value='Iniciar Sesión' />
                           
-                        </div>
+                          </div>
+                        </form>
+
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -147,4 +186,20 @@ class Login extends React.Component {
   }
 }
 
-export default withStyles(stylesheet)(Login) 
+
+function mapStateToProps(state, props) {
+
+  return {
+    userData: state.getIn(['user', 'data']),
+    loggingFailed: state.getIn(['user', 'loggingFailed']),
+  }
+
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch),
+    redirect: bindActionCreators(push,dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(stylesheet)(Login)) 

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect,withRouter } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -12,7 +12,6 @@ import LocationsMap from 'views/Maps/LocationsMap.jsx'
 import GeofenceMap from "../../views/Maps/GeofenceMap";
 
 import appRoutes from "routes/app.jsx";
-
 import appStyle from "variables/styles/appStyle.jsx";
 
 import image from "assets/img/caribe-tours-2.jpg";
@@ -197,4 +196,4 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(actions, dispatch)
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(appStyle)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(appStyle)(App)));

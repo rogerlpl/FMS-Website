@@ -1,40 +1,47 @@
 import React from "react";
 import { render } from "react-dom";
+
 import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
+
+import { Route, Switch } from "react-router-dom";
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import indexRoutes from "routes/index.jsx";
 
 import "assets/css/material-dashboard-react.css";
 
-import indexRoutes from "routes/index.jsx";
-
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import  reducer from './reducers/index'
+import  reducers from './reducers/index'
 import { Map as map } from 'immutable';
 import thunk from 'redux-thunk';
+
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const hist = createBrowserHistory();
+const routeMiddleware = routerMiddleware(hist)
 
 const store = createStore(
-  reducer,
+    reducers, 
   map(),
   composeWithDevTools(
     applyMiddleware(
-      thunk
+      thunk,
+      routeMiddleware
     )
   )
 )
 
+//store.dispatch(push('/login'))
+
 render(
   <Provider store={store}>
-    <Router history={hist}>
+    <ConnectedRouter history={hist}>
       <Switch>
         {indexRoutes.map((prop, key) => {
           return <Route path={prop.path} component={prop.component} key={key} />;
         })}
       </Switch>
-    </Router>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );

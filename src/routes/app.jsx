@@ -7,7 +7,8 @@ import {
   Videocam,
   Mood,
   People,
-  ExitToApp
+  ExitToApp,
+  Settings
 } from "material-ui-icons";
 
 const appRoutes = [
@@ -18,8 +19,6 @@ const appRoutes = [
     icon: Dashboard,
     component: DashboardPage
   },
-  
-
   {
     path: "/maps",
     sidebarName: "Operaciones",
@@ -49,7 +48,14 @@ const appRoutes = [
     component: DashboardPage
   },
   {
-    path: "/Login",
+    path: "/administracion",
+    sidebarName: "Administracion ",
+    navbarName: "Administracion de la Plataforma",
+    icon: Settings,
+    component: DashboardPage
+  },
+  {
+    path: "/login",
     sidebarName: "Desconectarse",
     navbarName: "Desconectarse",
     icon: ExitToApp,

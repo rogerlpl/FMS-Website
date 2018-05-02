@@ -13,6 +13,8 @@ import {
 
 import { CustomInput } from 'components'
 
+import { withRouter } from "react-router-dom";
+
 import headerLinksStyle from "variables/styles/headerLinksStyle";
 import Grid from 'material-ui/Grid';
 import { connect } from 'react-redux'
@@ -32,10 +34,6 @@ class HeaderLinks extends React.PureComponent {
 
   componentDidMount = () => {
     this.props.actions.fetchNotifications()
-  }
-
-  getRoute() {
-    return window.location.pathname
   }
   handleGeofenceVisibility = geofenceid => event => {
 
@@ -202,135 +200,139 @@ class HeaderLinks extends React.PureComponent {
             </ClickAwayListener>
           </Popper>
         </Manager>
-        {/*Dialog para asignar geocercas*/}
-        <GeofenceAssignment
-          visibility={this.props.geofenceAssignmentVisibility}
-          handleToggleGeofenceAssignment={this.props.actions.toggleGeofenceAssignmentDialog}
-          geofences={this.props.geofences}
-          devices={this.props.devices}
-          radioChange={this.handleRadioChange}
-          radioButtonValue={this.props.radioButtonValue}
-          visibilityDevicesComponent={this.props.visibilityDevicesComponent}
-          _toggleDeviceComponents={this.props.actions.toggleDeviceComponents}
-          handleSaveDevicesInGeofence={this.handleSaveDevicesInGeofence}
-          selectedItem={this.props.selectedItem}
-        />
-        {/* boton para asignar geocercas a dispositivos */}
-        <Tooltip
-          id='tootlip-GeofenceAssignment'
-          title='Asignar Geocercas'
-          enterDelay={300}
-          leaveDelay={300}
-          >
-          <IconButton
-            color="inherit"
-            aria-label="Asignar Geocercas"
-            className={classes.buttonLink}
-            onClick={this.props.actions.toggleGeofenceAssignmentDialog}
-          >
-            <Assignment className={classes.links} />
-            <Hidden mdUp>
-              <p className={classes.linkText}>Asignar Geocercas</p>
-            </Hidden>
-          </ IconButton>
-        </ Tooltip>
-        {/* boton para crear geocercas */}
-        <Tooltip
-          id='tootlip-creategeofence'
-          title='Crear Geocercas'
-          enterDelay={300}
-          leaveDelay={300}
-          >
-          <IconButton
-            color="inherit"
-            aria-label="Crear Geocercas"
-            className={classes.buttonLink}
-            onClick={this.props.actions.toggleGeofenceModal}
-          >
-            <Directions className={classes.links} />
-            <Hidden mdUp>
-              <p className={classes.linkText}>Rutas</p>
-            </Hidden>
-          </ IconButton>
-        </ Tooltip>
-        {/*boton para ver las geocercas */}
-        <Manager style={{ display: "inline-block" }}>
-          <Target>
-            <div
-              ref={node => {
-                this.geofence = node;
-              }}
+        { this.props.path === '/maps'&&
+        <div style={{ display: "inline-block" }}>
+            {/*Dialog para asignar geocercas*/ }
+            < GeofenceAssignment
+            visibility={this.props.geofenceAssignmentVisibility}
+            handleToggleGeofenceAssignment={this.props.actions.toggleGeofenceAssignmentDialog}
+            geofences={this.props.geofences}
+            devices={this.props.devices}
+            radioChange={this.handleRadioChange}
+            radioButtonValue={this.props.radioButtonValue}
+            visibilityDevicesComponent={this.props.visibilityDevicesComponent}
+            _toggleDeviceComponents={this.props.actions.toggleDeviceComponents}
+            handleSaveDevicesInGeofence={this.handleSaveDevicesInGeofence}
+            selectedItem={this.props.selectedItem}
+            />
+          {/* boton para asignar geocercas a dispositivos */}
+          <Tooltip
+            id='tootlip-GeofenceAssignment'
+            title='Asignar Geocercas'
+            enterDelay={300}
+            leaveDelay={300}
+           >
+            <IconButton
+              color="inherit"
+              aria-label="Asignar Geocercas"
+              className={classes.buttonLink}
+              onClick={this.props.actions.toggleGeofenceAssignmentDialog}
             >
-              <Tooltip
-                id='tootlip-displaygeofences'
-                title='Mostrar Geocercas'
-                enterDelay={300}
-                leaveDelay={300}
+              <Assignment className={classes.links} />
+              <Hidden mdUp>
+                <p className={classes.linkText}>Asignar Geocercas</p>
+              </Hidden>
+            </ IconButton>
+          </ Tooltip>
+          {/* boton para crear geocercas */}
+          <Tooltip
+            id='tootlip-creategeofence'
+            title='Crear Geocercas'
+            enterDelay={300}
+            leaveDelay={300}
+           >
+            <IconButton
+              color="inherit"
+              aria-label="Crear Geocercas"
+              className={classes.buttonLink}
+              onClick={this.props.actions.toggleGeofenceModal}
+            >
+              <Directions className={classes.links} />
+              <Hidden mdUp>
+                <p className={classes.linkText}>Rutas</p>
+              </Hidden>
+            </ IconButton>
+          </ Tooltip>
+          {/*boton para ver las geocercas */}
+          <Manager style={{ display: "inline-block" }}>
+            <Target>
+              <div
+                ref={node => {
+                  this.geofence = node;
+                }}
               >
-                <IconButton
-                  color="inherit"
-                  aria-label="Ver Geocercas"
-                  aria-owns={this.props.open ? 'menu-list-collapse' : null}
-                  aria-haspopup="true"
-                  onClick={this.props.actions.toggleGeofencesMenu}
-                  className={classes.buttonLink}
+                <Tooltip
+                  id='tootlip-displaygeofences'
+                  title='Mostrar Geocercas'
+                  enterDelay={300}
+                  leaveDelay={300}
                 >
-                  <RemoveRedEye className={classes.links} />
-                  <Hidden mdUp>
-                    <p className={classes.linkText}>Geocercas</p>
-                  </Hidden>
-                </ IconButton>
-              </ Tooltip>
-            </div>
-          </Target>
-          <Popper
-            placement="bottom-start"
-            eventsEnabled={this.props.open}
-            className={classNames({ [classes.popperClose]: !this.props.open }) +
-              " " +
-              classes.pooperResponsive
-            }
+                  <IconButton
+                    color="inherit"
+                    aria-label="Ver Geocercas"
+                    aria-owns={this.props.open ? 'menu-list-collapse' : null}
+                    aria-haspopup="true"
+                    onClick={this.props.actions.toggleGeofencesMenu}
+                    className={classes.buttonLink}
+                  >
+                    <RemoveRedEye className={classes.links} />
+                    <Hidden mdUp>
+                      <p className={classes.linkText}>Geocercas</p>
+                    </Hidden>
+                  </ IconButton>
+                </ Tooltip>
+              </div>
+            </Target>
+            <Popper
+              placement="bottom-start"
+              eventsEnabled={this.props.open}
+              className={classNames({ [classes.popperClose]: !this.props.open }) +
+                " " +
+                classes.pooperResponsive
+              }
 
-          >
-            <ClickAwayListener onClickAway={this.handleCloseGeofencesMenu}>
-              <Collapse in={this.props.open} id="menu-list-collapse" style={{ transformOrigin: '0 0 0' }}>
-                <Paper className={classes.dropdown}>
-                  <Grid container justify='center' direction='column' alignItems='center'>
-                    {
-                      this.props.geofences.map(geofence => (
+            >
+              <ClickAwayListener onClickAway={this.handleCloseGeofencesMenu}>
+                <Collapse in={this.props.open} id="menu-list-collapse" style={{ transformOrigin: '0 0 0' }}>
+                  <Paper className={classes.dropdown}>
+                    <Grid container justify='center' direction='column' alignItems='center'>
+                      {
+                        this.props.geofences.map(geofence => (
 
 
-                        <MenuItem key={geofence.id} >
-                          <Grid container alignItems='center' direction='row'>
+                          <MenuItem key={geofence.id} >
+                            <Grid container alignItems='center' direction='row'>
 
-                            <Grid item xs={6}>
-                              {geofence.name}
+                              <Grid item xs={6}>
+                                {geofence.name}
+                              </Grid>
+                              <Grid item xs={6}>
+                                <Switch
+                                  checked={geofence.attributes.visibile}
+                                  color='primary'
+                                  onChange={this.handleGeofenceVisibility(geofence.id)}
+                                />
+                              </Grid>
                             </Grid>
-                            <Grid item xs={6}>
-                              <Switch
-                                checked={geofence.attributes.visibile}
-                                color='primary'
-                                onChange={this.handleGeofenceVisibility(geofence.id)}
-                              />
-                            </Grid>
-                          </Grid>
-                        </MenuItem>
-                      ))
+                          </MenuItem>
+                        ))
 
-                    }
-                  </Grid>
-                </Paper>
-              </Collapse>
-            </ClickAwayListener>
-          </Popper>
-        </Manager>
+                      }
+                    </Grid>
+                  </Paper>
+                </Collapse>
+              </ClickAwayListener>
+            </Popper>
+          </Manager>
+          </div>
+        }
         {/* Boton para las cuentas */}
         <Tooltip
           id='tootlip-account'
           title='Cuenta'
           enterDelay={300}
           leaveDelay={300}
-         >
+        >
           <IconButton
             color="inherit"
             aria-label="Person"
@@ -361,7 +363,8 @@ function mapStateToProps(state, props) {
     open: state.getIn(['geofences', 'geofencesVisibilityMenu', 'open']),
     visibleGeofences: state.getIn(['mapData', 'locationMap', 'visibleGeofences']),
     unreadNotifications: state.getIn(['notifications', 'type', 'unread']),
-    visibilityNotification: state.getIn(['notifications', 'visibility'])
+    visibilityNotification: state.getIn(['notifications', 'visibility']),
+    path: state.getIn(['router']).location.pathname
   }
 
 }
@@ -372,4 +375,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(headerLinksStyle)(HeaderLinks));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(headerLinksStyle)(HeaderLinks)));

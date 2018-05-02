@@ -32,12 +32,28 @@ import {
     CREATE_EVENT,
     EVENT_READ,
     TOGGLE_OPEN_NOTIFICATION_MENU,
-    FALSE_OPEN_NOTIFICATION_MENU
+    FALSE_OPEN_NOTIFICATION_MENU,
+    TOGGLE_USER_LOGGING,
+    FETCH_USER_DATA,
+    LOGGING_FAILED
 }
     from '../action-types/index'
 
 const baseAPIURL = 'http://localhost:58496/api'
 
+export function toggleUserLogging() {
+    return {
+        type: TOGGLE_USER_LOGGING,
+    }
+}
+export function loggingFailed(state) {
+    return {
+        type: LOGGING_FAILED,
+        payload: {
+            state
+        }
+    }
+}
 export function toggleDeviceComponents() {
     return {
         type: TOGGLE_DEVICES_COMPONENT_ASSIGNMENT_DIALOG,
@@ -488,6 +504,40 @@ export function fetchNotifications() {
 
         } catch (err) {
             console.log("Ha ocurrido un error en el servidor trayendo las notificaciones: " + err)
+        }
+    }
+}
+export function fetchUserDataSucced(data) {
+    return {
+        type: FETCH_USER_DATA,
+        payload: {
+            data
+        }
+    }
+}
+
+export function fetchUserData(name) {
+    return async (dispatch) => {
+
+        const response = await fetch(`${baseAPIURL}/users?name=${name}`);
+        const status = response.status
+        try {
+
+            
+            const userData = await response.json();
+
+            userData.attributes = JSON.parse(userData.attributes)
+
+
+            dispatch(fetchUserDataSucced(userData))
+            
+
+        } catch (err) {
+            console.log("Ha ocurrido un error en el servidor trayendo la data del usuario: " + err)
+            if (status === 404) {
+                console.clear()
+                dispatch(fetchUserDataSucced(''))
+           }
         }
     }
 }
