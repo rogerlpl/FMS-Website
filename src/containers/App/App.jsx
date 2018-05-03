@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect,withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { push } from 'react-router-redux'
+import SwitchRoutes from '../../components/Routes/routes'
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -29,15 +31,7 @@ import { bindActionCreators } from 'redux'
 
 import Login from './login'
 
-const switchRoutes = (
-  <Switch>
-    {appRoutes.map((prop, key) => {
-      if (prop.redirect)
-        return <Redirect from={prop.path} to={prop.to} key={key} />;
-        return <Route path={prop.path} component={prop.component} key={key} />;
-    })}
-  </Switch>
-);
+
 
 class App extends React.Component {
 
@@ -62,7 +56,12 @@ class App extends React.Component {
     }
 
   }
-
+  componentWillMount = () =>{
+       //como no se utiliza el componente switchRoutes para la ruta /maps se debe validar de esta manera para que el usuario  
+        //no pueda acceder si no esta logeado
+    !this.props.isLogged && this.props.path === '/maps' &&
+              this.props.redirect('/login')
+  }
   handleSaveGeofence = () => {
     const polygonBounds = this.props.drewGeofences.get(0).overlay.getPath()
     let paths = [];
@@ -84,7 +83,9 @@ class App extends React.Component {
     this.props.actions.saveGeofenceName(event.target.value)
   }
   componentDidUpdate() {
-    this.refs.mainPanel.scrollTop = 0;
+    if (this.props.location.pathname !== '/login') {
+      this.refs.mainPanel.scrollTop = 0;
+    }
   }
   render() {
     const { classes, ...rest } = this.props;
@@ -112,9 +113,9 @@ class App extends React.Component {
               {...rest}
             />
             {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-            {this.getRoute()  ? (
+            {this.getRoute() ? (
               <div className={classes.content}>
-                <div className={classes.container}>{switchRoutes}</div>
+                <div className={classes.container}><SwitchRoutes isLogged={this.props.isLogged}/></div>
               </div>
             ) : (
                 <LocationsMap
@@ -188,12 +189,16 @@ function mapStateToProps(state, props) {
     drewGeofences: state.getIn(['modal', 'geofencesMap', 'drewGeofences']),
     dialogVisibility: state.getIn(['modal', 'dialog', 'visibility']),
     geofenceName: state.getIn(['modal', 'dialog', 'geofenceName']),
+    userData: state.getIn(['user','data']),
+    isLogged: state.getIn(['user','isLogged']),
+    path: state.getIn(['router']).location.pathname
   }
 
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(actions, dispatch),
+    redirect: bindActionCreators(push,dispatch)
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(appStyle)(App)));

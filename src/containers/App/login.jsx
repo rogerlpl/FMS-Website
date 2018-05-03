@@ -34,7 +34,7 @@ class Login extends React.Component {
     await this.props.actions.fetchUserData(user)
 
     const passwordIsCorrect = passwordHash.verify(password, this.props.userData.hashedpassword)
-
+    console.log(password + ' ' + passwordIsCorrect)
     if (passwordIsCorrect) {
       this.props.actions.toggleUserLogging()
       this.props.actions.loggingFailed(false)
@@ -58,7 +58,7 @@ class Login extends React.Component {
         <nav className='navbar navbar-transparent navbar-absolute navbar-expand-lg' color-on-scroll={100} id="sectionsNav">
           <div className="container">
             <div className="navbar-translate">
-              <a href="index.html">
+              <a href="/">
                 <img src={logo} style={{ width: 100, paddingBottom: 60, display: '"inline-block"' }} alt="logo" />
               </a>
               <button className="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">

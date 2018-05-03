@@ -30,6 +30,8 @@ import { MenuItem, MenuList } from 'material-ui/Menu';
 import Switch from 'material-ui/Switch';
 import Tooltip from 'material-ui/Tooltip';
 
+import { push } from 'react-router-redux'
+
 class HeaderLinks extends React.PureComponent {
 
   componentDidMount = () => {
@@ -371,7 +373,8 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(actions, dispatch),
+    redirect: bindActionCreators(push,dispatch)
   }
 }
 

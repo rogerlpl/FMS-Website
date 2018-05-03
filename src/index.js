@@ -32,6 +32,9 @@ const store = createStore(
 )
 
 //store.dispatch(push('/login'))
+// const isLogged = store.getState().toJSON().user.isLogged
+// console.log(isLogged)
+
 
 render(
   <Provider store={store}>

@@ -101,7 +101,7 @@ class LocationsMap extends PureComponent {
     this.props.actions.googleIsInitalized()
   }
   render() {
-    if (this.props.google) {
+    if (window.google) {
       return (
         <LocationGreenSkinMap
           containerElement={<div style={{ height: `100vh` }} />}
@@ -122,7 +122,6 @@ function mapStateToProps(state, props) {
   return {
     google: state.get('mapData').get('google'),
     devices: state.getIn(['mapData', 'locationMap', 'devices']),
-    googleReady: state.getIn(['mapData', 'locationMap', 'googleReady']),
     paths: state.getIn(['geofences', 'geofences']),
     devicesInGeofences: state.getIn(['geofences', 'devicesInGeofences']),
   }

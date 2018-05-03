@@ -17,49 +17,56 @@ const appRoutes = [
     sidebarName: "Estadisticas",
     navbarName: "Estadisticas y Reportes",
     icon: Dashboard,
-    component: DashboardPage
+    component: DashboardPage,
+    private: true
   },
   {
     path: "/maps",
     sidebarName: "Operaciones",
     navbarName: "Modulo de Gestion de Operaciones",
     icon: LocationOn,
-    component: LocationsMap
+    component: LocationsMap,
+    private: true
   },
   {
     path: "/seguimiento",
     sidebarName: "Seguimiento vehicular",
     navbarName: "Modulo de Seguimiento vehicular",
     icon: Videocam,
-    component: DashboardPage
+    component: DashboardPage,
+    private: true
   },
   {
     path: "/conductores",
     sidebarName: "Conductores",
     navbarName: "Modulo de Gestion de conductores",
     icon: People,
-    component: DashboardPage
+    component: DashboardPage,
+    private: true
   },
   {
     path: "/pasajeros",
     sidebarName: "Pasajeros",
     navbarName: "Modulo de atencion al cliente",
     icon: Mood,
-    component: DashboardPage
+    component: DashboardPage,
+    private: true
   },
   {
     path: "/administracion",
     sidebarName: "Administracion ",
     navbarName: "Administracion de la Plataforma",
     icon: Settings,
-    component: DashboardPage
+    component: DashboardPage,
+    private: true
   },
   {
     path: "/login",
     sidebarName: "Desconectarse",
     navbarName: "Desconectarse",
     icon: ExitToApp,
-    component: Login
+    component: Login,
+    private: false
   },
   //
   { redirect: true, path: "/", to: "/estadisticas", navbarName: "Redirect" }
