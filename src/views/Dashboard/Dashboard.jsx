@@ -3,23 +3,21 @@ import PropTypes from "prop-types";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 import {
-  ContentCopy,
-  Store,
-  InfoOutline,
-  Warning,
+  Schedule,
+  DirectionsBus,
   DateRange,
+  RemoveRedEye,
   LocalOffer,
+  FormatColorFill,
   Update,
-  ArrowUpward,
-  AccessTime,
-  Accessibility
+  Opacity,
+  AccessTime
 } from "material-ui-icons";
 import { withStyles, Grid } from "material-ui";
 
 import {
   StatsCard,
   ChartCard,
-  TasksCard,
   RegularCard,
   Table,
   ItemGrid
@@ -50,44 +48,46 @@ class Dashboard extends React.Component {
         <Grid container>
           <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
-              icon={ContentCopy}
+              icon={DirectionsBus}
               iconColor="orange"
-              title="Used Space"
+              title="Cantidad de Bus en operaciones"
               description="49/50"
-              small="GB"
-              statIcon={Warning}
-              statIconColor="danger"
-              statLink={{ text: "Get More Space...", href: "#pablo" }}
+              small="Fichas"
+              statIcon={RemoveRedEye}
+              statText="Ver por tipo de servicio"
             />
           </ItemGrid>
           <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
-              icon={Store}
+              icon={FormatColorFill}
               iconColor="green"
-              title="Revenue"
-              description="$34,245"
+              title="Total de existencia en movimiento"
+              description="48,000"
+              small="Galones"
               statIcon={DateRange}
-              statText="Last 24 Hours"
+              statText="Mostrar reporte de consumo por rutas y servicios"
             />
           </ItemGrid>
           <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
-              icon={InfoOutline}
+              icon={Opacity}
               iconColor="red"
-              title="Fixed Issues"
+              title="Consumo total promedio flota"
               description="75"
+              small="Galones/Kilometro"
               statIcon={LocalOffer}
-              statText="Tracked from Github"
+              statText="Obtener reportes e indicadores de consumo"
             />
           </ItemGrid>
           <ItemGrid xs={12} sm={6} md={3}>
             <StatsCard
-              icon={Accessibility}
+              icon={Schedule}
               iconColor="blue"
-              title="Followers"
-              description="+245"
+              title="Tiempo promedio por viajes"
+              description="3.8"
+              small="Horas"
               statIcon={Update}
-              statText="Just Updated"
+              statText="Ver tablas de arribos y retrasos"
             />
           </ItemGrid>
         </Grid>
@@ -104,18 +104,7 @@ class Dashboard extends React.Component {
                 />
               }
               chartColor="green"
-              title="Daily Sales"
-              text={
-                <span>
-                  <span className={this.props.classes.successText}>
-                    <ArrowUpward
-                      className={this.props.classes.upArrowCardCategory}
-                    />{" "}
-                    55%
-                  </span>{" "}
-                  increase in today sales.
-                </span>
-              }
+              title="Consumo Promedio de Combustible por Hora"
               statIcon={AccessTime}
               statText="updated 4 minutes ago"
             />
@@ -133,8 +122,7 @@ class Dashboard extends React.Component {
                 />
               }
               chartColor="orange"
-              title="Email Subscriptions"
-              text="Last Campaign Performance"
+              title="Consumo Promedio por Tipo de Servicio"
               statIcon={AccessTime}
               statText="campaign sent 2 days ago"
             />
@@ -151,31 +139,43 @@ class Dashboard extends React.Component {
                 />
               }
               chartColor="red"
-              title="Completed Tasks"
-              text="Last Campaign Performance"
+              title="Cantidad de Violaciones en Circulacion"
               statIcon={AccessTime}
-              statText="campaign sent 2 days ago"
             />
           </ItemGrid>
         </Grid>
         <Grid container>
           <ItemGrid xs={12} sm={12} md={6}>
-            <TasksCard />
+          <RegularCard
+              headerColor="red"
+              cardTitle="Control de Eventos de Seguridad en Flota"
+              content={
+                <Table
+                  tableHeaderColor="warning"
+                  tableHead={["ID", "Fecha", "Ficha", "Chofer","Zona","Tipo de Violacion"]}
+                  tableData={[
+                    ['1','5/2/2018 14:22:27','156','Ardella Almeida','Carhué','Salida de Ruta'],
+                    ['2','5/2/2018 11:55:13','289','Elliot Causon','Tshikapa','Retraso en el Arribo'],
+                    ["3",'5/2/2018 4:25:27','893','Emmeline Degoy','Pilcuyo', 'Parada Fuera de Lugar'],
+                    ["4",'5/2/2018 5:12:17','414','Gabbie Knowler','Jadowniki','Salida de Ruta']
+                  ]}
+                />
+              }
+            />
           </ItemGrid>
           <ItemGrid xs={12} sm={12} md={6}>
             <RegularCard
               headerColor="orange"
-              cardTitle="Employees Stats"
-              cardSubtitle="New employees on 15th September, 2016"
+              cardTitle="Control de Eventos de Operaciones"
               content={
                 <Table
                   tableHeaderColor="warning"
-                  tableHead={["ID", "Name", "Salary", "Country"]}
+                  tableHead={["ID", "Fecha", "Ficha", "Chofer","Parada","Tiempo de Retras"]}
                   tableData={[
-                    ["1", "Dakota Rice", "$36,738", "Niger"],
-                    ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                    ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                    ["4", "Philip Chaney", "$38,735", "Korea, South"]
+                    ['1','5/2/2018 14:22:27','156','Ardella Almeida','Carhué','0 Minutos'],
+                    ['2','5/2/2018 11:55:13','289','Elliot Causon','Tshikapa','12 Minutos'],
+                    ["3",'5/2/2018 4:25:27','893','Emmeline Degoy','Pilcuyo', '1 Minutos'],
+                    ["4",'5/2/2018 5:12:17','414','Gabbie Knowler','Jadowniki','4 Minutos']
                   ]}
                 />
               }

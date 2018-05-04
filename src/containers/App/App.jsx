@@ -31,7 +31,7 @@ import { bindActionCreators } from 'redux'
 
 import Login from './login'
 
-
+const loginRoute = '/itrack/caribetrack/app/login'
 
 class App extends React.Component {
 
@@ -46,10 +46,10 @@ class App extends React.Component {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
   getRoute() {
-    return this.props.location.pathname !== "/maps";
+    return this.props.location.pathname !== "/itrack/caribetrack/app/maps";
   }
   componentDidMount = () => {
-    if (navigator.platform.indexOf('Win') > -1 && this.props.location.pathname !== '/login') {
+    if (navigator.platform.indexOf('Win') > -1 && this.props.location.pathname !== loginRoute) {
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
 
@@ -58,9 +58,10 @@ class App extends React.Component {
   }
   componentWillMount = () =>{
        //como no se utiliza el componente switchRoutes para la ruta /maps se debe validar de esta manera para que el usuario  
-        //no pueda acceder si no esta logeado
-    !this.props.isLogged && this.props.path === '/maps' &&
-              this.props.redirect('/login')
+        //no pueda acceder si no esta logeado se hace la validacion en el will mount debido a que si se hace en el render y se debe redireccionar
+        //se ejecutaria una accion en medio del actualizado de este componente y violaria uno de los patrones de react
+    !this.props.isLogged && this.props.path === '/itrack/caribetrack/app/maps' &&
+              this.props.redirect(loginRoute)
   }
   handleSaveGeofence = () => {
     const polygonBounds = this.props.drewGeofences.get(0).overlay.getPath()
@@ -83,13 +84,13 @@ class App extends React.Component {
     this.props.actions.saveGeofenceName(event.target.value)
   }
   componentDidUpdate() {
-    if (this.props.location.pathname !== '/login') {
+    if (this.props.location.pathname !== loginRoute) {
       this.refs.mainPanel.scrollTop = 0;
     }
   }
   render() {
     const { classes, ...rest } = this.props;
-    if (this.props.location.pathname === '/login') {
+    if (this.props.location.pathname === loginRoute) {
       return <Login />
     } else {
 

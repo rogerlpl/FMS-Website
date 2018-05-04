@@ -17,7 +17,7 @@ var delays2 = 80,
 
 const dailySalesChart = {
   data: {
-    labels: ["M", "T", "W", "T", "F", "S", "S"],
+    labels: ["0", "4", "8", "12", "16", "20", "24"],
     series: [[12, 17, 7, 17, 23, 18, 38]]
   },
   options: {
@@ -72,20 +72,13 @@ const dailySalesChart = {
 const emailsSubscriptionChart = {
   data: {
     labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "Mai",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "Interurbano",
+      "Turismo",
+      "Ejecutivo",
+      "Rutas"
+
     ],
-    series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]]
+    series: [[542, 443, 320, 780]]
   },
   options: {
     axisX: {

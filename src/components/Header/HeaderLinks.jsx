@@ -202,7 +202,7 @@ class HeaderLinks extends React.PureComponent {
             </ClickAwayListener>
           </Popper>
         </Manager>
-        { this.props.path === '/maps'&&
+        { this.props.path === '/itrack/caribetrack/app/maps'&&
         <div style={{ display: "inline-block" }}>
             {/*Dialog para asignar geocercas*/ }
             < GeofenceAssignment

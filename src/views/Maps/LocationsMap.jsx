@@ -107,14 +107,14 @@ class LocationsMap extends PureComponent {
           containerElement={<div style={{ height: `100vh` }} />}
           mapElement={<div style={{ height: `100%` }} />}
           iconAddress={this.props.iconAddress}
-          google={this.props.google}
+          google={window.google}
           devices={this.props.devices}
           defaultCenter={this.props.defaultCenter}
           paths={this.props.paths}
         />
       );
     }
-    return 'No ha cargado google'
+    return <div>No ha cargado google</div>
   }
 }
 function mapStateToProps(state, props) {

@@ -29,16 +29,15 @@ class Login extends React.Component {
     //   saltLength: 20,
     //   iterations: 5
     // }
-    //const hashedpassword = passwordHash.generate(password, options)
-
+    // const hashedpassword = passwordHash.generate('12345', options)
     await this.props.actions.fetchUserData(user)
 
     const passwordIsCorrect = passwordHash.verify(password, this.props.userData.hashedpassword)
-    console.log(password + ' ' + passwordIsCorrect)
+   
     if (passwordIsCorrect) {
       this.props.actions.toggleUserLogging()
       this.props.actions.loggingFailed(false)
-      this.props.redirect('/estadisticas')
+      this.props.redirect('/itrack/caribetrack/app/estadisticas')
     } else {
       this.props.actions.loggingFailed(true)
     }

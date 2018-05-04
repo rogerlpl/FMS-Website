@@ -7,6 +7,8 @@ import {DrawingManager} from 'react-google-maps/lib/components/drawing/DrawingMa
 import DevicesList from './Markers/devicesList'
 import PolygonGeofences from './Polygons/polygon'
 
+
+
 export const LocationGreenSkinMap =
   withGoogleMap(props => (
     <GoogleMap

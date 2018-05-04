@@ -17,7 +17,7 @@ class GeofenceMap extends PureComponent {
       <GeofenceGreenSkinMap
         containerElement={<div style={{ height: `60vh` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-        google={this.props.google}
+        google={window.google}
         defaultCenter={this.props.defaultCenter}
         isDrawingGeofences={this.props.isDrawingGeofences}
         handleOverlayComplete={this.handleOverlayComplete}

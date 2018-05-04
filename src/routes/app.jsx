@@ -1,6 +1,7 @@
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import LocationsMap from "views/Maps/LocationsMap.jsx";
 import Login from '../containers/App/login'
+import Mantenimiento from 'views/Mantenimiento/mantenimiento'
 import {
   Dashboard,
   LocationOn,
@@ -13,7 +14,7 @@ import {
 
 const appRoutes = [
   {
-    path: "/estadisticas",
+    path: "/itrack/caribetrack/app/estadisticas",
     sidebarName: "Estadisticas",
     navbarName: "Estadisticas y Reportes",
     icon: Dashboard,
@@ -21,7 +22,7 @@ const appRoutes = [
     private: true
   },
   {
-    path: "/maps",
+    path: "/itrack/caribetrack/app/maps",
     sidebarName: "Operaciones",
     navbarName: "Modulo de Gestion de Operaciones",
     icon: LocationOn,
@@ -29,39 +30,39 @@ const appRoutes = [
     private: true
   },
   {
-    path: "/seguimiento",
+    path: "/itrack/caribetrack/app/seguimiento",
     sidebarName: "Seguimiento vehicular",
     navbarName: "Modulo de Seguimiento vehicular",
     icon: Videocam,
-    component: DashboardPage,
+    component: Mantenimiento,
     private: true
   },
   {
-    path: "/conductores",
+    path: "/itrack/caribetrack/app/conductores",
     sidebarName: "Conductores",
     navbarName: "Modulo de Gestion de conductores",
     icon: People,
-    component: DashboardPage,
+    component: Mantenimiento,
     private: true
   },
   {
-    path: "/pasajeros",
+    path: "/itrack/caribetrack/app/pasajeros",
     sidebarName: "Pasajeros",
     navbarName: "Modulo de atencion al cliente",
     icon: Mood,
-    component: DashboardPage,
+    component: Mantenimiento,
     private: true
   },
   {
-    path: "/administracion",
+    path: "/itrack/caribetrack/app/administracion",
     sidebarName: "Administracion ",
     navbarName: "Administracion de la Plataforma",
     icon: Settings,
-    component: DashboardPage,
+    component: Mantenimiento,
     private: true
   },
   {
-    path: "/login",
+    path: "/itrack/caribetrack/app/login",
     sidebarName: "Desconectarse",
     navbarName: "Desconectarse",
     icon: ExitToApp,
@@ -69,7 +70,7 @@ const appRoutes = [
     private: false
   },
   //
-  { redirect: true, path: "/", to: "/estadisticas", navbarName: "Redirect" }
+  { redirect: true, path: "/", to: "/itrack/caribetrack/app/estadisticas", navbarName: "Redirect" }
 ];
 
 export default appRoutes;

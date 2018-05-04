@@ -34,7 +34,15 @@ const store = createStore(
 //store.dispatch(push('/login'))
 // const isLogged = store.getState().toJSON().user.isLogged
 // console.log(isLogged)
-
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+//   <Route {...rest} render={props => (
+//     isLogged ? (
+//       <Component {...props}/>
+//     ) : (
+//       store.dispatch(push('/login'))
+//     )
+//   )}/>
+// )
 
 render(
   <Provider store={store}>
@@ -42,6 +50,7 @@ render(
       <Switch>
         {indexRoutes.map((prop, key) => {
           return <Route path={prop.path} component={prop.component} key={key} />;
+
         })}
       </Switch>
     </ConnectedRouter>

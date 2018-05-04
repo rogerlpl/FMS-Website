@@ -8,7 +8,7 @@ const SwitchRoutes = (props) => (
         if (prop.redirect)
           return <Redirect from={prop.path} to={prop.to} key={key} />;
           if(prop.private && !props.isLogged){ 
-            return <Redirect to={{ pathname: '/login', state: { from: props.location } } } key={key}/>
+            return <Redirect to={{ pathname: '/itrack/caribetrack/app/login', state: { from: props.location } } } key={key}/>
           }else{
           return <Route path={prop.path} component={prop.component} key={key} />;
           }

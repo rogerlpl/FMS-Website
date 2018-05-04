@@ -39,7 +39,8 @@ import {
 }
     from '../action-types/index'
 
-const baseAPIURL = 'http://localhost:58496/api'
+// const baseAPIURL = 'http://localhost:58496/api'
+const baseAPIURL = 'http://imecap.com.do/api/api'
 
 export function toggleUserLogging() {
     return {
