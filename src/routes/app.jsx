@@ -1,6 +1,7 @@
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import LocationsMap from "views/Maps/LocationsMap.jsx";
 import Login from '../containers/App/login'
+import Monitoring from 'views/Monitoring/Monitoring'
 import Mantenimiento from 'views/Mantenimiento/mantenimiento'
 import {
   Dashboard,
@@ -34,7 +35,7 @@ const appRoutes = [
     sidebarName: "Seguimiento vehicular",
     navbarName: "Modulo de Seguimiento vehicular",
     icon: Videocam,
-    component: Mantenimiento,
+    component: Monitoring,
     private: true
   },
   {

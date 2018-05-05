@@ -122,7 +122,7 @@ class Login extends React.Component {
                       </div>
                       <div className="col-md-5 mr-auto">
 
-                        <form id='form' className="form" onSubmit={this.handleSubmit} style={{ paddingTop: '50%' }}>
+                        <form id='form' className="form"  autoComplete="off" onSubmit={this.handleSubmit} style={{ paddingTop: '50%' }}>
 
                           <div className="form-group">
                             <div className="input-group">
