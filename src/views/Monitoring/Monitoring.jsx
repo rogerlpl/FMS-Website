@@ -8,7 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import Player from './Components/Player'
 import AutocompleteFiltroTipo from './Components/Autocomplete/FiltroTipo/AutocompleteFiltroTipo'
 import AutocompleteFiltroFicha from './Components/Autocomplete/FiltroFicha/AutocompleteFiltroFicha'
-
+import "./Components/video-react.css"; // import css
 const styles = theme => ({
 
     textField: {
@@ -74,8 +74,19 @@ class Monitoring extends Component {
 
                 <Grid item xs={6}>
 
-                    <Paper style={{ height: 815, width: '100%' }} elevation={4} >
-                        <Player />
+                    <Paper style={{ height: 815, width: '100%', float: 'right' }} elevation={4} >
+
+
+
+
+
+                        <Grid container direction='row'  justify='center' alignItems='center'>
+                            <Player />
+                            <Player />
+                            <Player />
+                            <Player />
+                        </Grid>
+
                     </Paper>
                 </Grid>
 

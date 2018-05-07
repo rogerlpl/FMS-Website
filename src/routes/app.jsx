@@ -10,7 +10,8 @@ import {
   Mood,
   People,
   ExitToApp,
-  Settings
+  Settings,
+  Receipt
 } from "material-ui-icons";
 
 const appRoutes = [
@@ -36,7 +37,7 @@ const appRoutes = [
     navbarName: "Modulo de Seguimiento vehicular",
     icon: Videocam,
     component: Monitoring,
-    private: true
+    private: false
   },
   {
     path: "/itrack/caribetrack/app/conductores",
@@ -51,6 +52,14 @@ const appRoutes = [
     sidebarName: "Pasajeros",
     navbarName: "Modulo de atencion al cliente",
     icon: Mood,
+    component: Mantenimiento,
+    private: true
+  },
+  {
+    path: "/itrack/caribetrack/app/reportes",
+    sidebarName: "Reportes",
+    navbarName: "Modulo de Reportes",
+    icon: Receipt,
     component: Mantenimiento,
     private: true
   },

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Player, BigPlayButton,ControlBar } from 'video-react';
-import "./video-react.css"; // import css
+import video from '../../../assets/video/video.mp4'
 export default (props) => {
     return (
         <Player
         fluid={false}
-        height={815}
-        width='auto'
-        // src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+        height={417}
+        width={395}
+         src={video}
         >
             <ControlBar autoHide={false} />
             <BigPlayButton position="center" />

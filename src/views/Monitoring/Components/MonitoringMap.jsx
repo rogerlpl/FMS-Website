@@ -100,6 +100,9 @@ class LocationsMap extends PureComponent {
   handleLoad = () => {
     this.props.actions.googleIsInitalized()
   }
+  handleClick = ()=>{
+    this.props.actions.toggleInfoWindow()
+  }
   render() {
     if (window.google) {
       return (
@@ -111,6 +114,8 @@ class LocationsMap extends PureComponent {
           devices={this.props.devices}
           defaultCenter={this.props.defaultCenter}
           paths={this.props.paths}
+          isOpen={this.props.isOpen}
+          onClick={this.handleClick}
         />
       );
     }
@@ -124,6 +129,7 @@ function mapStateToProps(state, props) {
     devices: state.getIn(['mapData', 'locationMap', 'devices']),
     paths: state.getIn(['geofences', 'geofences']),
     devicesInGeofences: state.getIn(['geofences', 'devicesInGeofences']),
+    isOpen: state.getIn(['mapData','locationMap','infoWindowIsOpen'])
   }
 
 }

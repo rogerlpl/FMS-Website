@@ -87,7 +87,7 @@ export const LocationGreenSkinMap =
         ]
       }}
     >
-      <DevicesList google={props.google} devices={props.devices} iconAddress={props.iconAddress} />
+      <DevicesList google={props.google} onClick={props.onClick} isOpen={props.isOpen} devices={props.devices} iconAddress={props.iconAddress} />
      { props.paths.length > 0 && <PolygonGeofences google={props.google} paths={props.paths}/>}
     </GoogleMap>
   ))

@@ -35,7 +35,8 @@ import {
     FALSE_OPEN_NOTIFICATION_MENU,
     TOGGLE_USER_LOGGING,
     FETCH_USER_DATA,
-    LOGGING_FAILED
+    LOGGING_FAILED,
+    TOGGLE_INFOWINDOW
 }
     from '../action-types/index'
 
@@ -45,6 +46,11 @@ const baseAPIURL = 'http://imecap.com.do/api/api'
 export function toggleUserLogging() {
     return {
         type: TOGGLE_USER_LOGGING,
+    }
+}
+export function toggleInfoWindow() {
+    return {
+        type: TOGGLE_INFOWINDOW,
     }
 }
 export function loggingFailed(state) {
