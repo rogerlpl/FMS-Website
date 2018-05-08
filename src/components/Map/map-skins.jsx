@@ -3,6 +3,7 @@ import {
   withGoogleMap,
   GoogleMap
 } from "react-google-maps";
+import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer'
 import {DrawingManager} from 'react-google-maps/lib/components/drawing/DrawingManager'
 import DevicesList from './Markers/devicesList'
 import PolygonGeofences from './Polygons/polygon'
@@ -87,7 +88,16 @@ export const LocationGreenSkinMap =
         ]
       }}
     >
-      <DevicesList google={props.google} onClick={props.onClick} isOpen={props.isOpen} devices={props.devices} iconAddress={props.iconAddress} />
+    <MarkerClusterer
+        averageCenter
+        enableRetinaIcons
+        gridSize={60}
+      >
+      {props.devices.map(device =>(
+        <DevicesList key={device.id} google={props.google} device={device} iconAddress={props.iconAddress} />
+      ))
+      }
+      </MarkerClusterer>
      { props.paths.length > 0 && <PolygonGeofences google={props.google} paths={props.paths}/>}
     </GoogleMap>
   ))

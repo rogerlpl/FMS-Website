@@ -14,7 +14,7 @@ class LocationsMap extends PureComponent {
     this.props.actions.fetchDevicesData()
     this.props.actions.fetchGeofencesData()
     this.props.actions.fetchGeofencesScanData()
-   // this.refreshLocation = setInterval(() => (this.scan()), 30000)
+    // this.refreshLocation = setInterval(() => (this.scan()), 30000)
   }
   scan = () => {
     this.props.actions.fetchGeofencesScanData()
@@ -45,20 +45,20 @@ class LocationsMap extends PureComponent {
             if (!device.attributes.isInside) {
               device.attributes.isInside = true
               this.props.actions.fetchChangeDeviceGeofenceAttributes(device.id, all.geofenceId, JSON.stringify(device.attributes))
-             
+
               const message = `La ficha:${device.uniqueid} ha entrado a ${all.geofenceName}`
-             
+
               if (device.attributes.notify) {
                 const attributes = {
                   read: false
                 }
-                this.props.actions.fetchCreateEvent(message,device.id,all.geofenceId,JSON.stringify(attributes))
-                setTimeout(()=>this.props.actions.fetchNotifications(),3000)
-               }else{
+                this.props.actions.fetchCreateEvent(message, device.id, all.geofenceId, JSON.stringify(attributes))
+                setTimeout(() => this.props.actions.fetchNotifications(), 3000)
+              } else {
                 const attributes = {
                   read: true
                 }
-                this.props.actions.fetchCreateEvent(message,device.id,all.geofenceId,JSON.stringify(attributes))
+                this.props.actions.fetchCreateEvent(message, device.id, all.geofenceId, JSON.stringify(attributes))
               }
             }
           } else {
@@ -69,18 +69,18 @@ class LocationsMap extends PureComponent {
               this.props.actions.fetchChangeDeviceGeofenceAttributes(device.id, all.geofenceId, JSON.stringify(device.attributes))
 
               const message = `La ficha:${device.uniqueid} ha salido de ${all.geofenceName}`
-             
+
               if (device.attributes.notify) {
                 const attributes = {
                   read: false
                 }
-                this.props.actions.fetchCreateEvent(message,device.id,all.geofenceId,JSON.stringify(attributes))
-                
-                }else{
+                this.props.actions.fetchCreateEvent(message, device.id, all.geofenceId, JSON.stringify(attributes))
+
+              } else {
                 const attributes = {
                   read: true
                 }
-                this.props.actions.fetchCreateEvent(message,device.id,all.geofenceId,JSON.stringify(attributes))
+                this.props.actions.fetchCreateEvent(message, device.id, all.geofenceId, JSON.stringify(attributes))
               }
 
             }
@@ -92,17 +92,15 @@ class LocationsMap extends PureComponent {
 
     })
 
-    setTimeout(()=>this.props.actions.fetchNotifications(),3000)
+    setTimeout(() => this.props.actions.fetchNotifications(), 3000)
   }
   componentWillUnmount = () => {
-   //  clearInterval(this.refreshLocation);
+    //  clearInterval(this.refreshLocation);
   }
   handleLoad = () => {
     this.props.actions.googleIsInitalized()
   }
-  handleClick = ()=>{
-    this.props.actions.toggleInfoWindow()
-  }
+ 
   render() {
     if (window.google) {
       return (
@@ -114,8 +112,6 @@ class LocationsMap extends PureComponent {
           devices={this.props.devices}
           defaultCenter={this.props.defaultCenter}
           paths={this.props.paths}
-          isOpen={this.props.isOpen}
-          onClick={this.handleClick}
         />
       );
     }
@@ -128,8 +124,7 @@ function mapStateToProps(state, props) {
     google: state.get('mapData').get('google'),
     devices: state.getIn(['mapData', 'locationMap', 'devices']),
     paths: state.getIn(['geofences', 'geofences']),
-    devicesInGeofences: state.getIn(['geofences', 'devicesInGeofences']),
-    isOpen: state.getIn(['mapData','locationMap','infoWindowIsOpen'])
+    devicesInGeofences: state.getIn(['geofences', 'devicesInGeofences'])
   }
 
 }

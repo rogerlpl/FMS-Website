@@ -1,8 +1,7 @@
 import { fromJS } from 'immutable'
 import { 
   GOOGLE_IS_INITALIZED,
-  FETCH_DEVICES_DATA,
-  TOGGLE_INFOWINDOW
+  FETCH_DEVICES_DATA
 } from '../action-types/index'
 
 
@@ -11,7 +10,6 @@ const initialState = fromJS({
        google: '',
        locationMap: {
          devices: [],
-         infoWindowIsOpen: false,
          googleReady: false,
          visibleGeofences: []
        },
@@ -25,8 +23,6 @@ const mapData = ( state = initialState, action ) => {
       }
       case FETCH_DEVICES_DATA:
       return state.setIn(['locationMap','devices'], action.payload.devicesData)
-      case TOGGLE_INFOWINDOW:
-      return state.setIn(['locationMap','infoWindowIsOpen'],!state.getIn(['locationMap','infoWindowIsOpen'] ))
       default:
         return state
     }
