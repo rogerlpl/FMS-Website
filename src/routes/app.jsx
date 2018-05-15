@@ -3,6 +3,7 @@ import LocationsMap from "views/Maps/LocationsMap.jsx";
 import Login from '../containers/App/login'
 import Monitoring from 'views/Monitoring/Monitoring'
 import Mantenimiento from 'views/Mantenimiento/mantenimiento'
+import Conductores from 'views/Conductores/conductores'
 import {
   Dashboard,
   LocationOn,
@@ -44,7 +45,7 @@ const appRoutes = [
     sidebarName: "Conductores",
     navbarName: "Modulo de Gestion de conductores",
     icon: People,
-    component: Mantenimiento,
+    component: Conductores,
     private: true
   },
   {
