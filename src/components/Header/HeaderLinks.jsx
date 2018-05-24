@@ -5,9 +5,12 @@ import {
   Directions,
   RemoveRedEye,
   Assignment,
+  AssignmentInd,
   Search,
   Notifications,
-  Drafts
+  Drafts,
+  Schedule,
+  FiberDvr
 }
   from "material-ui-icons";
 
@@ -202,6 +205,7 @@ class HeaderLinks extends React.PureComponent {
             </ClickAwayListener>
           </Popper>
         </Manager>
+        {/* Botones de operacion */}
         { this.props.path === '/itrack/caribetrack/app/maps'&&
         <div style={{ display: "inline-block" }}>
             {/*Dialog para asignar geocercas*/ }
@@ -328,13 +332,76 @@ class HeaderLinks extends React.PureComponent {
           </Manager>
           </div>
         }
+        {/* Botones para administracion */}
+        { this.props.path === '/itrack/caribetrack/app/administracion'&&
+        <div style={{ display: "inline-block" }}>
+          
+          {/* boton para asignar roles a usuarios */}
+          <Tooltip
+            id='tootlip-RolesAssignment'
+            title='Administrar Usuarios'
+            enterDelay={300}
+            leaveDelay={300}
+           >
+            <IconButton
+              color="inherit"
+              aria-label="Administrar Usuarios"
+              className={classes.buttonLink}
+              onClick={()=>{alert('Me presionaste Administrar Usuarios')}}
+            >
+              <AssignmentInd className={classes.links} />
+              <Hidden mdUp>
+                <p className={classes.linkText}>Administrar Usuarios</p>
+              </Hidden>
+            </ IconButton>
+          </ Tooltip>
+          {/* boton para administrar horarios de rutas */}
+          <Tooltip
+            id='tootlip-scheduleRoutes'
+            title='Administrar Horarios de Rutas'
+            enterDelay={300}
+            leaveDelay={300}
+           >
+            <IconButton
+              color="inherit"
+              aria-label="Administrar Horarios de Rutas"
+              className={classes.buttonLink}
+              onClick={()=>{alert('Me presionaste administrar horarios')}}
+            >
+              <Schedule className={classes.links} />
+              <Hidden mdUp>
+                <p className={classes.linkText}>Administrar Horarios de Rutas</p>
+              </Hidden>
+            </ IconButton>
+          </ Tooltip>
+          {/* boton para administrar mdvr */}
+          <Tooltip
+            id='tootlip-scheduleRoutes'
+            title='Administrar MDVR'
+            enterDelay={300}
+            leaveDelay={300}
+           >
+            <IconButton
+              color="inherit"
+              aria-label="Administrar MDVR"
+              className={classes.buttonLink}
+              onClick={()=>{alert('Me presionaste Administrar MDVR')}}
+            >
+              <FiberDvr className={classes.links} />
+              <Hidden mdUp>
+                <p className={classes.linkText}>Administrar MDVR</p>
+              </Hidden>
+            </ IconButton>
+          </ Tooltip>
+        </div>
+        }
         {/* Boton para las cuentas */}
         <Tooltip
           id='tootlip-account'
           title='Cuenta'
           enterDelay={300}
           leaveDelay={300}
-        >
+         >
           <IconButton
             color="inherit"
             aria-label="Person"

@@ -4,6 +4,10 @@ import { Grid } from "material-ui";
 import { RegularCard, Table, ItemGrid } from "components";
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
+import InputLabel from 'material-ui/Input/InputLabel';
+import MenuItem from 'material-ui/Menu/MenuItem';
+import FormControl from 'material-ui/Form/FormControl'
+import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 
 const styles = theme => ({
@@ -12,8 +16,7 @@ const styles = theme => ({
         flexWrap: 'wrap',
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        margin: theme.spacing.unit,
         width: 200,
     },
     menu: {
@@ -22,10 +25,30 @@ const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
         float: 'right'
-      },
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 200,
+    },
 });
 
 class Conductores extends Component {
+    state = {
+        ficha: '',
+        open: false,
+    };
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
     render() {
         const { classes } = this.props;
         return (
@@ -64,6 +87,39 @@ class Conductores extends Component {
                                             className={classes.textField}
                                             margin="normal"
                                         />
+
+                                    </ItemGrid>
+                                    <ItemGrid xs={6} sm={6} md={6}>
+                                        <TextField
+                                            id="code"
+                                            label="Codigo Conductor"
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                    </ItemGrid>
+                                    <ItemGrid xs={6} sm={6} md={6}>
+                                        <FormControl className={classes.formControl}>
+                                            <InputLabel htmlFor="controlled-open-select">Ficha Asignada</InputLabel>
+                                            <Select
+                                                open={this.state.open}
+                                                onClose={this.handleClose}
+                                                onOpen={this.handleOpen}
+                                                value={this.state.ficha}
+                                                onChange={this.handleChange}
+                                                inputProps={{
+                                                    name: 'ficha',
+                                                    id: 'controlled-open-select',
+                                                }}
+                                            >
+                                                <MenuItem value="">
+                                                    <em>Ninguna</em>
+                                                </MenuItem>
+                                                <MenuItem value={104}>104</MenuItem>
+                                                <MenuItem value={246}>246</MenuItem>
+                                                <MenuItem value={146}>146</MenuItem>
+                                            </Select>
+                                        </FormControl>
+
                                     </ItemGrid>
                                     <ItemGrid xs={12} sm={12} md={12}>
                                         <Button variant="raised" color="primary" className={classes.button}>
@@ -80,17 +136,17 @@ class Conductores extends Component {
                 </ItemGrid>
                 <ItemGrid xs={12} sm={12} md={6}>
                     <RegularCard
-                        headerColor="orange"
+                        headerColor="green"
                         cardTitle="Ultimos conductores registrados"
                         content={
                             <Table
                                 tableHeaderColor="warning"
                                 tableHead={["Nombres", "Apellidos", "Cedula", "No. Licencia"]}
                                 tableData={[
-                                    [ 'Ardella Almeida', 'Carhué','4563212365', '541514514'],
-                                    [ 'Elliot Causon', 'Tshikapa','4563212365', '541514514'],
-                                    ['Emmeline Degoy', 'Pilcuyo','4563212365', '541514514'],
-                                    ['Gabbie Knowler', 'Jadowniki','4563212365', '541514514']
+                                    ['Ardella Almeida', 'Carhué', '4563212365', '541514514'],
+                                    ['Elliot Causon', 'Tshikapa', '4563212365', '541514514'],
+                                    ['Emmeline Degoy', 'Pilcuyo', '4563212365', '541514514'],
+                                    ['Gabbie Knowler', 'Jadowniki', '4563212365', '541514514']
                                 ]}
                             />
                         }
@@ -98,7 +154,7 @@ class Conductores extends Component {
                 </ItemGrid>
                 <ItemGrid xs={12} sm={12} md={12}>
                     <RegularCard
-                        headerColor="red"
+                        headerColor="orange"
                         cardTitle="Ultimos incidentes de conductores"
                         content={
                             <Table

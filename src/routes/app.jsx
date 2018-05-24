@@ -4,6 +4,7 @@ import Login from '../containers/App/login'
 import Monitoring from 'views/Monitoring/Monitoring'
 import Mantenimiento from 'views/Mantenimiento/mantenimiento'
 import Conductores from 'views/Conductores/conductores'
+import Administracion from 'views/Administracion/administracion'
 import {
   Dashboard,
   LocationOn,
@@ -12,7 +13,8 @@ import {
   People,
   ExitToApp,
   Settings,
-  Receipt
+  InsertChart,
+  ViewModule
 } from "material-ui-icons";
 
 const appRoutes = [
@@ -60,16 +62,24 @@ const appRoutes = [
     path: "/itrack/caribetrack/app/reportes",
     sidebarName: "Reportes",
     navbarName: "Modulo de Reportes",
-    icon: Receipt,
+    icon: InsertChart,
     component: Mantenimiento,
     private: true
+  }, 
+  {
+    path: "/itrack/caribetrack/app/videowall",
+    sidebarName: "Video Wall",
+    navbarName: "Modulo de Gestion del centro de monitoreo",
+    icon: ViewModule,
+    component: Mantenimiento,
+    private: false
   },
   {
     path: "/itrack/caribetrack/app/administracion",
     sidebarName: "Administracion ",
     navbarName: "Administracion de la Plataforma",
     icon: Settings,
-    component: Mantenimiento,
+    component: Administracion,
     private: true
   },
   {
