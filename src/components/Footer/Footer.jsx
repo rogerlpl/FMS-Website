@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { List, ListItem, withStyles } from "material-ui";
-
+// import Button from 'material-ui/Button';
 import footerStyle from "variables/styles/footerStyle";
 
 function Footer({ ...props }) {

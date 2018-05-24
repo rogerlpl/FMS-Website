@@ -3,7 +3,7 @@ import Grid from 'material-ui/Grid';
 import MonitoringMap from './Components/MonitoringMap'
 import Bus from '../../assets/img/bus-marker.png'
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
+// import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 import Player from './Components/Player'
 import AutocompleteFiltroTipo from './Components/Autocomplete/FiltroTipo/AutocompleteFiltroTipo'
@@ -14,6 +14,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
+        marginTop:'50%',
         width: 200,
     },
     text: {
@@ -24,7 +25,7 @@ const styles = theme => ({
 class Monitoring extends Component {
 
     render() {
-        const { classes } = this.props;
+        // const { classes } = this.props;
         return (
             <Grid container direction='row' justify='center' alignItems='flex-start'>
 
@@ -34,27 +35,14 @@ class Monitoring extends Component {
                         <Grid item xs={12} >
                             <Paper style={{ height: 200, width: '100%' }} elevation={4}>
                                 <form noValidate autoComplete="off">
-                                    <Grid container direction='column' justify="center" alignItems='center' spacing={8}>
                                         <Grid container direction='row' justify='center' alignItems='center' spacing={8}>
-                                            <Grid item xs={12} sm={3}>
-                                                <AutocompleteFiltroTipo className={classes.textField} />
+                                            <Grid item xs={6} >
+                                                <AutocompleteFiltroTipo />
                                             </Grid>
-                                            <Grid item >
-                                                <AutocompleteFiltroFicha />
+                                            <Grid item xs={6}>
+                                                <AutocompleteFiltroFicha  />
                                             </Grid>
                                         </Grid>
-                                        <Grid container direction='row' justify='center' alignItems='center' spacing={8}>
-                                            <Grid item>
-                                                <TextField
-                                                    id="canalNumbers"
-                                                    label="Número de Canales"
-                                                    type="number"
-                                                    margin="normal"
-                                                    className={classes.textField}
-                                                />
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
                                 </form>
                             </Paper>
                         </Grid>

@@ -7,6 +7,7 @@ import FiltroTipodownShiftMultiple from './FiltroTipodownShiftMultiple'
 const styles = theme => ({
   root: {
       flexGrow: 1,
+      marginTop: 50
       //height: 250,
   },
   container: {

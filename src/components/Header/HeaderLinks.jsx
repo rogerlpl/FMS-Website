@@ -393,6 +393,7 @@ class HeaderLinks extends React.PureComponent {
               </Hidden>
             </ IconButton>
           </ Tooltip>
+          
         </div>
         }
         {/* Boton para las cuentas */}

@@ -5,6 +5,8 @@ import Monitoring from 'views/Monitoring/Monitoring'
 import Mantenimiento from 'views/Mantenimiento/mantenimiento'
 import Conductores from 'views/Conductores/conductores'
 import Administracion from 'views/Administracion/administracion'
+import Reportes from 'views/Reportes/reportes'
+
 import {
   Dashboard,
   LocationOn,
@@ -40,7 +42,7 @@ const appRoutes = [
     navbarName: "Modulo de Seguimiento vehicular",
     icon: Videocam,
     component: Monitoring,
-    private: false
+    private: true
   },
   {
     path: "/itrack/caribetrack/app/conductores",
@@ -63,8 +65,8 @@ const appRoutes = [
     sidebarName: "Reportes",
     navbarName: "Modulo de Reportes",
     icon: InsertChart,
-    component: Mantenimiento,
-    private: true
+    component: Reportes,
+    private: false
   }, 
   {
     path: "/itrack/caribetrack/app/videowall",
@@ -72,7 +74,7 @@ const appRoutes = [
     navbarName: "Modulo de Gestion del centro de monitoreo",
     icon: ViewModule,
     component: Mantenimiento,
-    private: false
+    private: true
   },
   {
     path: "/itrack/caribetrack/app/administracion",
