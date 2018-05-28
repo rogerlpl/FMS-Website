@@ -5,7 +5,8 @@ import {
 } from "react-google-maps";
 import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer'
 import {DrawingManager} from 'react-google-maps/lib/components/drawing/DrawingManager'
-import DevicesList from './Markers/devicesList'
+import Device from './Markers/device'
+
 import PolygonGeofences from './Polygons/polygon'
 
 
@@ -94,7 +95,7 @@ export const LocationGreenSkinMap =
         gridSize={60}
       >
       {props.devices.map(device =>(
-        <DevicesList key={device.id} google={props.google} device={device} iconAddress={props.iconAddress} />
+        <Device key={device.id} google={props.google} device={device} iconAddress={props.iconAddress} />
       ))
       }
       </MarkerClusterer>
