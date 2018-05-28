@@ -2,7 +2,7 @@
 // // // Footer styles
 // #############################
 
-import { defaultFont, container, primaryColor } from "variables/styles";
+import { defaultFont, container } from "variables/styles";
 
 const footerStyle = {
   block: {
@@ -35,7 +35,7 @@ const footerStyle = {
   },
   container,
   a: {
-    color: primaryColor,
+    color: '#9c27b0',
     textDecoration: "none",
     backgroundColor: "transparent"
   },

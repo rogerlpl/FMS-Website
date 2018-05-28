@@ -12,12 +12,12 @@ function Footer({ ...props }) {
         <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
-              <a href="/dashboard" className={classes.block}>
+              <a href="itrack/caribetrack/app/dashboard" className={classes.block}>
                 Pagina Principal
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a href="http://imecap.com.do" className={classes.block}>
+              <a href="http://imecap.com.do/itrack/caribetrack/" className={classes.block}>
                 Compañia
               </a>
             </ListItem>
@@ -26,7 +26,7 @@ function Footer({ ...props }) {
         <p className={classes.right}>
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
-            <a href="http://imecap.com.do" className={classes.a}>
+            <a href="http://imecap.com.do/itrack/caribetrack/" className={classes.a}>
               IMECAP
             </a>
           </span>

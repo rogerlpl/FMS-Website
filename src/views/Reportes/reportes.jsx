@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Grid } from "material-ui";
+import { Grid, IconButton } from "material-ui";
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography'
+// import Typography from 'material-ui/Typography'
 
 import InputLabel from 'material-ui/Input/InputLabel';
 import MenuItem from 'material-ui/Menu/MenuItem';
@@ -10,6 +10,12 @@ import FormControl from 'material-ui/Form/FormControl'
 import Select from 'material-ui/Select';
 
 import BasicDatePicker from '../../components/Datepicker/basicDatePicker.jsx'
+
+import {
+    Print,
+    Save
+}
+    from "material-ui-icons";
 
 const styles = theme => ({
     paperHead: theme.mixins.gutters({
@@ -62,6 +68,7 @@ class Reportes extends Component {
 
         return (
             <Grid container direction='column' alignItems='center'>
+                {/* Header de los reportes */}
                 <Grid item xs={12}>
                     <Paper className={classes.paperHead} elevation={4}>
                         <Grid container direction='row' alignItems='center'>
@@ -79,6 +86,7 @@ class Reportes extends Component {
                                             id: 'controlled-open-select',
                                         }}
                                     >
+
                                         <MenuItem value="">
                                             <em>Ninguna</em>
                                         </MenuItem>
@@ -111,7 +119,7 @@ class Reportes extends Component {
                                     >
                                         <MenuItem value="">
                                             <em>Ninguna</em>
-                                        </MenuItem>  
+                                        </MenuItem>
                                         <MenuItem value={104}>Turismo</MenuItem>
                                         <MenuItem value={246}>Interurbano</MenuItem>
                                         <MenuItem value={146}>Rutas</MenuItem>
@@ -125,14 +133,31 @@ class Reportes extends Component {
                         </Grid>
                     </Paper>
                 </Grid>
+                {/* Body de los reportes */}
                 <Grid item xs={12}>
                     <Paper className={classes.paperBody} elevation={4}>
-                        <Typography variant="headline" component="h3">
-                            This is a sheet of paper.
-                        </Typography>
-                        <Typography component="p">
-                            Paper can be used to build surface or other elements for your application.
-                        </Typography>
+                    {/* Botones del header de reportes */}
+                        <Grid container direction='row' justify='flex-end' alignItems='flex-start'>
+                            <Grid item>
+                                <IconButton
+                                    color="inherit"
+                                    aria-label="Guardar"
+                                    className={classes.buttonLink}
+                                >
+                                    <Save />
+                                </IconButton>
+                            </Grid>
+                            <Grid item>
+                                <IconButton
+                                    color="inherit"
+                                    aria-label="Imprimir"
+                                    className={classes.buttonLink}
+                                 >
+                                    <Print />
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+                        
                     </Paper>
                 </Grid>
             </Grid>
