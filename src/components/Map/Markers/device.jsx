@@ -5,8 +5,12 @@ import {
 } from "react-google-maps";
 import Paper from 'material-ui/Paper';
 
-class Device extends React.Component {
 
+class Device extends React.Component {
+  constructor(props) {
+    super(props)
+    this.menu = React.createRef();
+  }
   state = {
     isOpenInfoLeftClick: false,
     isOpenInfoRightClick: false
@@ -17,12 +21,7 @@ class Device extends React.Component {
       isOpenInfoRightClick: true
     });
 
-    // let el = document.getElementById('infowindow-content').parentNode.parentNode;
-    //  console.log(document.getElementById('infowindow-content').parentNode)
 
-    // el = el.previousElementSibling || el.previousSibling;
-    // el.children[0].setAttribute('class', 'hidden');
-    // el.children[2].setAttribute('class', 'hidden');
   }
 
   handleToggleCloseInfoRightClick = () => {
@@ -72,18 +71,17 @@ class Device extends React.Component {
         }
         {this.state.isOpenInfoRightClick &&
           <InfoWindow
-            className ='infowindow-content'
+            ref={this.menu}
             position={{ lat: this.props.device.latitude, lng: this.props.device.longitude }}
             onCloseClick={this.handleToggleCloseInfoRightClick}
             options={{ pixelOffset: new window.google.maps.Size(185, 75) }}
           >
-            <Paper>
-              <span>Me dieron click derecho</span>
-              <br />
-              <span>Ultima sincronizacion: {this.props.device.lastupdate}</span>
-            </Paper>
+              <Paper>
+                <span>Me dieron click derecho</span>
+                <br />
+                <span>Ultima sincronizacion: {this.props.device.lastupdate}</span>
+              </Paper>
           </InfoWindow>
-
         }
       </Marker>
 

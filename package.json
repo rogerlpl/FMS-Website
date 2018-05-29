@@ -14,6 +14,7 @@
     "date-fns": "2.0.0-alpha.7",
     "downshift": "1.31.12",
     "immutable": "3.8.2",
+    "jsreport-browser-client-dist": "^1.1.0",
     "material-ui": "1.0.0-beta.34",
     "material-ui-icons": "1.0.0-beta.17",
     "material-ui-pickers": "1.0.0-rc.9",

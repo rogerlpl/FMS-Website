@@ -35,7 +35,8 @@ import {
     FALSE_OPEN_NOTIFICATION_MENU,
     TOGGLE_USER_LOGGING,
     FETCH_USER_DATA,
-    LOGGING_FAILED
+    LOGGING_FAILED,
+    RENDER_REPORT
 }
     from '../action-types/index'
 
@@ -308,7 +309,7 @@ export function fetchDevicesInGeofence(geofenceid) {
 
             console.log("Ha ocurrido un error en el servidor trayendo la data de los dispostivos en geocercas: " + err)
             if (status === 404) {
-                 console.clear()
+                console.clear()
             }
             dispatch(fetchDevicesInGeofenceSucced(''))
         }
@@ -369,7 +370,7 @@ export function fetchChangeDeviceGeofenceAttributes(deviceid, geofenceid, attrib
                 {
                     method: "post"
                 });
-            
+
             dispatch(fetchChangeDeviceGeofenceAttributesSucced())
         } catch (err) {
             console.log("Ha ocurrido un error en el servidor insertando la data de los atributos que estan  dispositivos en las geocercas: " + err)
@@ -379,7 +380,7 @@ export function fetchChangeDeviceGeofenceAttributes(deviceid, geofenceid, attrib
 export function fetchEventReadSucced(id) {
     return {
         type: EVENT_READ,
-        payload:{
+        payload: {
             id
         }
     }
@@ -392,7 +393,7 @@ export function fetchEventRead(id, attributes) {
                 {
                     method: "patch"
                 });
-                
+
             dispatch(fetchEventReadSucced(id))
         } catch (err) {
             console.log("Ha ocurrido un error en el servidor tratando de marcar como leida la notificacion: " + err)
@@ -405,7 +406,7 @@ export function fetchCreateEventSucced() {
     }
 }
 
-export function fetchCreateEvent(type,deviceid,geofenceid, attributes) {
+export function fetchCreateEvent(type, deviceid, geofenceid, attributes) {
     return async (dispatch) => {
         try {
             await fetch(`${baseAPIURL}/CreateEvent?type=${type}&deviceid=${deviceid}&geofenceid=${geofenceid}&attributes=${attributes}`,
@@ -435,7 +436,7 @@ export function fetchGeofencesScanData() {
 
             const response = await fetch(`${baseAPIURL}/alldevicesgeofences`);
             const devicesAndGeofences = await response.json();
-            
+
             devicesAndGeofences.map(geofence => {
                 geofence.geofenceArea = JSON.parse(geofence.geofenceArea)
 
@@ -450,7 +451,7 @@ export function fetchGeofencesScanData() {
 
                 return geofence
             })
-            
+
             dispatch(fetchGeofencesScanDataSucced(devicesAndGeofences))
 
         } catch (err) {
@@ -489,18 +490,18 @@ export function fetchNotifications() {
                 return notification
             })
 
-            const unread = notifications.filter(notification =>{
-                if(!notification.attributes.read) return  notification
+            const unread = notifications.filter(notification => {
+                if (!notification.attributes.read) return notification
                 else return false
             })
 
-            const read= notifications.filter(notification =>{
-                if(notification.attributes.read) return  notification
+            const read = notifications.filter(notification => {
+                if (notification.attributes.read) return notification
                 else return false
-            }) 
+            })
 
             dispatch(fetchUnReadNotificationsSucced(unread))
-            
+
             dispatch(fetchReadNotificationsSucced(read))
 
         } catch (err) {
@@ -524,22 +525,31 @@ export function fetchUserData(name) {
         const status = response.status
         try {
 
-            
+
             const userData = await response.json();
 
             userData.attributes = JSON.parse(userData.attributes)
 
 
             dispatch(fetchUserDataSucced(userData))
-            
+
 
         } catch (err) {
             console.log("Ha ocurrido un error en el servidor trayendo la data del usuario: " + err)
             if (status === 404) {
                 console.clear()
                 dispatch(fetchUserDataSucced(''))
-           }
+            }
         }
     }
 }
 
+export function renderReport(file) {
+    return {
+        type: RENDER_REPORT,
+        payload: {
+            file
+        }
+    }
+
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, IconButton } from "material-ui";
+import { Grid } from "material-ui";
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 // import Typography from 'material-ui/Typography'
@@ -11,11 +11,11 @@ import Select from 'material-ui/Select';
 
 import BasicDatePicker from '../../components/Datepicker/basicDatePicker.jsx'
 
-import {
-    Print,
-    Save
-}
-    from "material-ui-icons";
+import { connect } from 'react-redux'
+import * as actions from '../../actions/actions-creators'
+import { bindActionCreators } from 'redux'
+import jsreport from 'jsreport-browser-client-dist'
+
 
 const styles = theme => ({
     paperHead: theme.mixins.gutters({
@@ -63,6 +63,22 @@ class Reportes extends Component {
     handleOpen2 = () => {
         this.setState({ open2: true });
     };
+
+    componentDidMount = () => {
+        // this.props.actions.renderReport()
+        jsreport.serverUrl = 'https://imecap.jsreportonline.net/';
+        jsreport.headers['Authorization'] = 'Basic bHIubG9wZXp1bGxvYUBpbWVjYXAuY29tLmRvOmF3bW90M3E1M2Rl'
+
+        const request = {
+            template: {
+                name: 'Invoice'
+            }
+        };
+
+        jsreport.renderAsync(request).then( (res)=> {
+            this.props.actions.renderReport(res.toObjectURL())
+        });
+    }
     render() {
         const { classes } = this.props;
 
@@ -136,28 +152,7 @@ class Reportes extends Component {
                 {/* Body de los reportes */}
                 <Grid item xs={12}>
                     <Paper className={classes.paperBody} elevation={4}>
-                    {/* Botones del header de reportes */}
-                        <Grid container direction='row' justify='flex-end' alignItems='flex-start'>
-                            <Grid item>
-                                <IconButton
-                                    color="inherit"
-                                    aria-label="Guardar"
-                                    className={classes.buttonLink}
-                                >
-                                    <Save />
-                                </IconButton>
-                            </Grid>
-                            <Grid item>
-                                <IconButton
-                                    color="inherit"
-                                    aria-label="Imprimir"
-                                    className={classes.buttonLink}
-                                 >
-                                    <Print />
-                                </IconButton>
-                            </Grid>
-                        </Grid>
-                        
+                        <embed src={this.props.file} type='application/pdf' width="100%" height="100%" />
                     </Paper>
                 </Grid>
             </Grid>
@@ -166,4 +161,19 @@ class Reportes extends Component {
     }
 }
 
-export default withStyles(styles)(Reportes)
+
+function mapStateToProps(state, props) {
+
+    return {
+        file: state.getIn(['report', 'file']),
+
+    }
+
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(actions, dispatch),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Reportes))
