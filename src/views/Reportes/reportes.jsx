@@ -70,9 +70,11 @@ class Reportes extends Component {
         jsreport.headers['Authorization'] = 'Basic bHIubG9wZXp1bGxvYUBpbWVjYXAuY29tLmRvOmF3bW90M3E1M2Rl'
 
         const request = {
-            template: {
-                name: 'Invoice'
-            }
+            'template': {
+                'name': 'Invoice'
+            },
+            "options": {  "Content-Disposition": "attachment; filename=myreport.pdf" }
+
         };
 
         jsreport.renderAsync(request).then( (res)=> {

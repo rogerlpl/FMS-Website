@@ -14,7 +14,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        marginTop:'50%',
+        marginTop: '50%',
         width: 200,
     },
     text: {
@@ -35,14 +35,14 @@ class Monitoring extends Component {
                         <Grid item xs={12} >
                             <Paper style={{ height: 200, width: '100%' }} elevation={4}>
                                 <form noValidate autoComplete="off">
-                                        <Grid container direction='row' justify='center' alignItems='center' spacing={8}>
-                                            <Grid item xs={6} >
-                                                <AutocompleteFiltroTipo />
-                                            </Grid>
-                                            <Grid item xs={6}>
-                                                <AutocompleteFiltroFicha  />
-                                            </Grid>
+                                    <Grid container direction='row' justify='center' alignItems='center' spacing={8}>
+                                        <Grid item xs={6} >
+                                            <AutocompleteFiltroTipo />
                                         </Grid>
+                                        <Grid item xs={6}>
+                                            <AutocompleteFiltroFicha />
+                                        </Grid>
+                                    </Grid>
                                 </form>
                             </Paper>
                         </Grid>
@@ -62,20 +62,39 @@ class Monitoring extends Component {
 
                 <Grid item xs={6}>
 
-                    <Paper style={{ height: 815, width: '100%', float: 'right' }} elevation={4} >
+                    <div style={{ height: 815, width: '100%', paddingTop:'10%' }} elevation={4} >
 
 
 
 
 
-                        <Grid container direction='row'  justify='center' alignItems='center'>
-                            <Player />
-                            <Player />
-                            <Player />
-                            <Player />
+                        <Grid container direction='row' justify='center' alignItems='center'>
+                            <Grid item xs={6}>
+                                <Player />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <Player />
+                            </Grid>
                         </Grid>
 
-                    </Paper>
+
+                        <Grid container direction='row' justify='center' alignItems='center'>
+
+
+                            <Grid item xs={6}>
+                                <Player />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <Player />
+                            </Grid>
+                        </Grid>
+
+
+
+
+                    </div>
                 </Grid>
 
             </Grid>

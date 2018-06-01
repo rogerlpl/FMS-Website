@@ -4,7 +4,7 @@ import video from '../../../assets/video/video.mp4'
 export default (props) => {
     return (
         <Player
-        fluid={false}
+        fluid={true}
         height={417}
         width={395}
          src={video}
