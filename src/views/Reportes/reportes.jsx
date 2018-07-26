@@ -68,18 +68,25 @@ class Reportes extends Component {
         // this.props.actions.renderReport()
         jsreport.serverUrl = 'https://imecap.jsreportonline.net/';
         jsreport.headers['Authorization'] = 'Basic bHIubG9wZXp1bGxvYUBpbWVjYXAuY29tLmRvOmF3bW90M3E1M2Rl'
+  
 
         const request = {
-            'template': {
-                'name': 'Invoice'
+            template: {
+                name: 'Invoice'
             },
-            "options": {  "Content-Disposition": "attachment; filename=myreport.pdf" }
-
+            options:{
+              'Content-Disposition' : "inline; filename=myreport.pdf" 
+            }
         };
 
         jsreport.renderAsync(request).then( (res)=> {
+            res.export={
+                filename:'example'
+            }
             this.props.actions.renderReport(res.toObjectURL())
         });
+
+        jsreport.render('reportPlaceholder', request);
     }
     render() {
         const { classes } = this.props;
@@ -154,7 +161,9 @@ class Reportes extends Component {
                 {/* Body de los reportes */}
                 <Grid item xs={12}>
                     <Paper className={classes.paperBody} elevation={4}>
-                        <embed src={this.props.file} type='application/pdf' width="100%" height="100%" />
+                        {/* <embed src={this.props.file} type='application/pdf' width="100%" height="100%" /> */}
+                        <div id='reportPlaceholder'  style={{height:"100%"}}>
+                        </div>
                     </Paper>
                 </Grid>
             </Grid>
