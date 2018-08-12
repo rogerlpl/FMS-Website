@@ -1,7 +1,7 @@
 {
-  "name": "i-track",
+  "name": "vtp",
   "version": "1.0.0",
-  "description": "I-track vehicular tracking platform",
+  "description": "vehicular tracking platform",
   "private": true,
   "main": "index.js",
   "dependencies": {
