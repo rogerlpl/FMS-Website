@@ -96,7 +96,7 @@ const sidebarStyle = theme => ({
     border: "0"
   },
   imgWithoutText:{
-    width: "100px",
+    width: "150px",
     top: "22px",
     paddingLeft: "45px",
     verticalAlign: "middle",

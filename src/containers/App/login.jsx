@@ -1,8 +1,8 @@
 import React from 'react'
 import stylesheet from "../../assets/css/material-kit.css?v=2.0.2"
 import { withStyles } from "material-ui";
-import background from '../../assets/img/caribe_background.jpg'
-import logo from "assets/img/I-trackLogo.png";
+import background from '../../assets/img/bus-city-dark-1040486.jpg'
+import logo from "assets/img/logo.png";
 
 import { connect } from 'react-redux'
 import * as actions from '../../actions/actions-creators'
@@ -10,11 +10,14 @@ import { bindActionCreators } from 'redux'
 
 import { push } from 'react-router-redux'
 
-import passwordHash from 'password-hash'
+//Uncomment this if want to use an api for authentication
+//import passwordHash from 'password-hash'
 
 import Danger from '../../components/Typography/Danger'
 
 class Login extends React.Component {
+/*
+Uncomment this if want to use an api for authentication
 
   handleSubmit = async (event) => {
     event.preventDefault()
@@ -23,13 +26,15 @@ class Login extends React.Component {
     const data = new FormData($form)
     const user = data.get('user')
     const password = data.get('password')
-
+    
+    //generate a hash with salt
     // const options = {
     //   algorithm: 'sha512',
     //   saltLength: 20,
     //   iterations: 5
     // }
     // const hashedpassword = passwordHash.generate('12345', options)
+
     await this.props.actions.fetchUserData(user)
 
     const passwordIsCorrect = passwordHash.verify(password, this.props.userData.hashedpassword)
@@ -44,6 +49,32 @@ class Login extends React.Component {
 
 
   }
+  
+  */
+
+ handleSubmit =  (event) => {
+  event.preventDefault()
+  const $form = document.getElementById('form')
+
+  const data = new FormData($form)
+  const user = data.get('user')
+  const password = data.get('password')
+  
+  
+  
+
+  const passwordIsCorrect = (user === 'test' && password === '12345') ? true : false;
+ 
+  if (passwordIsCorrect) {
+    this.props.actions.toggleUserLogging()
+    this.props.actions.loggingFailed(false)
+    this.props.redirect('/itrack/caribetrack/app/estadisticas')
+  } else {
+    this.props.actions.loggingFailed(true)
+  }
+
+
+}
 
   render() {
     return (
@@ -113,15 +144,16 @@ class Login extends React.Component {
                             <i className="material-icons">group</i>
                           </div>
                           <div className="description">
-                            <h4 className="info-title">Soporte técnico</h4>
+                            <h4 className="info-title">Default User</h4>
                             <p className="description">
-                              Estamos para hacer que sus dificultades en la plataforma desaparezcan, mejorar su rendimiento y aumentar su productividad.
+                              User: test
+                              Password: 12345
                             </p>
                           </div>
                         </div>
                       </div>
                       <div className="col-md-5 mr-auto">
-
+                        
                         <form id='form' className="form"  autoComplete="off" onSubmit={this.handleSubmit} style={{ paddingTop: '50%' }}>
 
                           <div className="form-group">
@@ -146,7 +178,7 @@ class Login extends React.Component {
                           </div>
                           { this.props.loggingFailed &&
                             <div className="text-center" style={{ paddingLeft: 15 }}>
-                              <Danger>
+                            <Danger>
                                 El usuario o la contraseña es incorrecto, contacte con su administrador en caso de que se le haya olvidado.
                             </Danger>
                             </div>
@@ -168,7 +200,7 @@ class Login extends React.Component {
             <div className="container">
               <div className="copyright pull-right">
                 © 2018, Creado por
-                <a href="http://www.imecap.com.do" target="_blank" rel='noopener noreferrer'> IMECAP</a>
+                <a href="" target="_blank" rel='noopener noreferrer'> Rogelio Ulloa</a>
               </div>
             </div>
           </footer>

@@ -65,7 +65,7 @@ const appRoutes = [
     sidebarName: "Reportes",
     navbarName: "Modulo de Reportes",
     icon: InsertChart,
-    component: Mantenimiento,
+    component: Reportes,
     private: false
   }, 
   {

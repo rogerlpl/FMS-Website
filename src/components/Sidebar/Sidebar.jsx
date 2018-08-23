@@ -56,7 +56,7 @@ const Sidebar = ({ ...props }) => {
   );
   const brandWithText = (
     <div className={classes.logo}>
-      <a href="http://imecap.com.do" className={classes.logoLink}>
+      <a href="" className={classes.logoLink}>
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>
@@ -66,7 +66,7 @@ const Sidebar = ({ ...props }) => {
   );
   const brandWithoutText = (
     <div className={classes.logo}>
-      <a href="http://imecap.com.do">
+      <a href="">
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.imgWithoutText} />
         </div>

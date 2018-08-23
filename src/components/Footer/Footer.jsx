@@ -17,7 +17,7 @@ function Footer({ ...props }) {
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a href="http://imecap.com.do/itrack/caribetrack/" className={classes.block}>
+              <a href="" className={classes.block}>
                 Compañia
               </a>
             </ListItem>
@@ -26,8 +26,8 @@ function Footer({ ...props }) {
         <p className={classes.right}>
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
-            <a href="http://imecap.com.do/itrack/caribetrack/" className={classes.a}>
-              IMECAP
+            <a href="" className={classes.a}>
+              Rogelio Ulloa
             </a>
           </span>
         </p>

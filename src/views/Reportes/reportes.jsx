@@ -66,27 +66,27 @@ class Reportes extends Component {
 
     componentDidMount = () => {
         // this.props.actions.renderReport()
-        jsreport.serverUrl = 'https://imecap.jsreportonline.net/';
-        jsreport.headers['Authorization'] = 'Basic bHIubG9wZXp1bGxvYUBpbWVjYXAuY29tLmRvOmF3bW90M3E1M2Rl'
+        // jsreport.serverUrl = 'https://imecap.jsreportonline.net/';
+        // jsreport.headers['Authorization'] = 'Basic bHIubG9wZXp1bGxvYUBpbWVjYXAuY29tLmRvOmF3bW90M3E1M2Rl'
   
 
-        const request = {
-            template: {
-                name: 'Invoice'
-            },
-            options:{
-              'Content-Disposition' : "inline; filename=myreport.pdf" 
-            }
-        };
+        // const request = {
+        //     template: {
+        //         name: 'Invoice'
+        //     },
+        //     options:{
+        //       'Content-Disposition' : "inline; filename=myreport.pdf" 
+        //     }
+        // };
 
-        jsreport.renderAsync(request).then( (res)=> {
-            res.export={
-                filename:'example'
-            }
-            this.props.actions.renderReport(res.toObjectURL())
-        });
+        // jsreport.renderAsync(request).then( (res)=> {
+        //     res.export={
+        //         filename:'example'
+        //     }
+        //     this.props.actions.renderReport(res.toObjectURL())
+        // });
 
-        jsreport.render('reportPlaceholder', request);
+        // jsreport.render('reportPlaceholder', request);
     }
     render() {
         const { classes } = this.props;

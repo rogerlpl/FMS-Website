@@ -16,8 +16,8 @@ import GeofenceMap from "../../views/Maps/GeofenceMap";
 import appRoutes from "routes/app.jsx";
 import appStyle from "variables/styles/appStyle.jsx";
 
-import image from "assets/img/caribe-tours-2.jpg";
-import logo from "assets/img/I-trackLogo.png";
+import image from "assets/img/bus-business-chairs-276691.jpg";
+import logo from "assets/img/logo.png";
 import Bus from '../../assets/img/bus-marker.png'
 
 import ModalContainer from '../../widgets/containers/modal';
